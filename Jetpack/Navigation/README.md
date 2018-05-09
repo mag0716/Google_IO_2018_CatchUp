@@ -50,6 +50,8 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * Action Bar, Navigation Drawer, Bottom Navigation Bar とのやりとりを簡単にする
 * NavigationController
   * ボタンクリックなどのイベントで NavigationController#navigate を呼び出す
+* デフォルトでは遷移時のアニメーションはない
+  * NavOptions を NavigationController#navigate に渡せばアニメーションを変更できる
 
 ## 疑問点
 
