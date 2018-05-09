@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigationMenu(navController: NavController) {
-        findViewById<NavigationView>(R.id.nav_view)?. let { navigationView ->
+        findViewById<NavigationView>(R.id.nav_view)?.let { navigationView ->
             NavigationUI.setupWithNavController(navigationView, navController)
         }
     }

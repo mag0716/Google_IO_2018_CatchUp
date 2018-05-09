@@ -56,6 +56,12 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * Actions を利用すると、Navigation Graph が全ての遷移を管理するリソースになる
   * Action を使うと遷移を抽象的なレベルで提供でき、遷移処理の実装が共通化できる
     * 例：Navigation Graph では全て next_action で定義しているが繊維元によって遷移先を変えている
+* menu, drawers, bottom navigation との連携
+  * NavigationUI
+  * navigation-ui-ktx
+  * menu
+    * NavigationUI#onNavDestinationSelected
+    * menu の id が Navigation Graph の ID と一致している必要がある
 
 ## 疑問点
 
