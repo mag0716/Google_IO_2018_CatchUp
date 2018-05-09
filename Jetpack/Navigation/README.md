@@ -1,0 +1,49 @@
+# Navigation
+
+* [The Navigation Architecture Component](https://developer.android.com/topic/libraries/architecture/navigation)
+* [Navigation Codelab](https://codelabs.developers.google.com/codelabs/android-navigation)
+
+## 概要
+
+アプリ内の遷移の実装を容易にする
+
+### Principles of Navigation
+
+https://developer.android.com/topic/libraries/architecture/navigation/navigation-principles
+
+* アプリは固定の destination を持っていること
+  * 1度きりの設定やログイン画面などを持っている場合は対象外としてよい
+* スタックは navigation state として利用されること
+  * スタックは LIFO で構成されるべき
+* Up ボタンでアプリを終了してはならない
+* Up ボタンとバックキーは同じ動作になる
+  * バックキーでアプリが終了されない場合、Up ボタンとバックキーは同じ動作をすること
+  * [疑問点] Up ボタンとバックキーが異なる動作になることはありえるはず
+* Deepリンクでも通常の起動と同じスタックとなること
+  * Deepリンク起動時に残っていたスタックは削除か置き換えられる
+
+### Implement navigation with the Navigation Architecture Component
+
+https://developer.android.com/topic/libraries/architecture/navigation/navigation-implementing
+
+* デフォルトでは Navigation Architecuter Component は Activity, Fragment のサポートしている
+  * それ以外の destination についてもカスタマイズできる
+* Navigation Graph は「actions」と呼ばれる destination 同士を繋ぐコネクションを持っている
+
+#### setup
+
+* build.gradle に定義追加
+* res/navigation 以下に xml ファイルを追加
+
+#### Navigation Editor
+
+*
+
+## サンプル
+
+* res/navigation 以下に xml ファイルを配置する
+* destination：ユーザが遷移可能な場所で通常は Activity や Fragment
+
+## 疑問点
+
+* Navigation Editor の Create Destination で候補に上がるのは何？
