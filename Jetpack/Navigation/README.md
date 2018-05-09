@@ -43,7 +43,16 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 
 * res/navigation 以下に xml ファイルを配置する
 * destination：ユーザが遷移可能な場所で通常は Activity や Fragment
+* Activity に NavHostFragment を持たせる必要がある
+  * Navigation Graph を通じて Fragment の遷移を切り替える
+  * app:defaultNavHost="true" を追加してバックボタンで遷移できるようにする
+* NavigationUI
+  * Action Bar, Navigation Drawer, Bottom Navigation Bar とのやりとりを簡単にする
+* NavigationController
+  * ボタンクリックなどのイベントで NavigationController#navigate を呼び出す
 
 ## 疑問点
 
 * Navigation Editor の Create Destination で候補に上がるのは何？
+* 遷移先での結果が必要な場合(startActivityForResult)ではどうする？
+* 遷移時にデータを渡す場合はどうする？
