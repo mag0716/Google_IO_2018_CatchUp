@@ -19,18 +19,13 @@
         android:name="com.example.android.codelabs.navigation.MainFragment"
         android:label="@string/home"
         tools:layout="@layout/main_fragment">
-
-        <!-- TODO STEP 8 - Add action with transitions -->
-        <!--<action-->
-        <!--android:id="@+id/next_action"-->
-        <!--app:destination="@+id/flow_step_one"-->
-        <!--app:enterAnim="@anim/slide_in_right"-->
-        <!--app:exitAnim="@anim/slide_out_left"-->
-        <!--app:popEnterAnim="@anim/slide_in_left"-->
-        <!--app:popExitAnim="@anim/slide_out_right" />-->
-
-        <!-- TODO ENDSTEP -->
-
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/flow_step_one"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment

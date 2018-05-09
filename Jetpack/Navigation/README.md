@@ -52,9 +52,14 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * ボタンクリックなどのイベントで NavigationController#navigate を呼び出す
 * デフォルトでは遷移時のアニメーションはない
   * NavOptions を NavigationController#navigate に渡せばアニメーションを変更できる
+* Actions
+  * Actions を利用すると、Navigation Graph が全ての遷移を管理するリソースになる
+  * Action を使うと遷移を抽象的なレベルで提供でき、遷移処理の実装が共通化できる
+    * 例：Navigation Graph では全て next_action で定義しているが繊維元によって遷移先を変えている
 
 ## 疑問点
 
 * Navigation Editor の Create Destination で候補に上がるのは何？
 * 遷移先での結果が必要な場合(startActivityForResult)ではどうする？
 * 遷移時にデータを渡す場合はどうする？
+  * NavigationController#navigate に Bundle を渡せる
