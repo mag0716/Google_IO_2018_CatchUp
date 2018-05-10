@@ -39,3 +39,30 @@ https://developer.android.com/preview/
 ## Videos
 
 * [Developer Keynote (Google I/O '18)](https://www.youtube.com/watch?v=flU42CTF3MQ)
+
+### 1日目
+
+* ★Developer Keynote
+* Customize Material Components for your product
+* What's new in Android
+* ★What's new in Android development tools
+* Build the new, modular Android App Bundle
+* Modern Android development: Android Jetpack, Kotlin, and more
+
+### 2日目
+
+* Android Jetpack: how to smartly use Fragments in your UI
+* Best practices for testing your Actions
+* Protips: a fresh look at advanced topics for Android experts
+* ★Android Jetpack: what's new in Architecture Components
+* Android Jetpack: what’s new in Android Support Library
+* ★Android Jetpack: easy background processing with WorkManager
+
+### 3日目
+
+* ★Android Jetpack: manage UI navigation with Navigation Controller
+* How to Kotlin - from the Lead Kotlin Language Designer
+* Building feature-rich media apps with ExoPlayer
+* Effective ProGuard keep rules for smaller applications
+* ★What's new with ConstraintLayout and Android Studio design tools
+* Android Jetpack: manage infinite lists with RecyclerView and Paging
