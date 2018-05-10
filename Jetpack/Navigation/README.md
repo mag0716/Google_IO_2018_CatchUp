@@ -62,6 +62,9 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * menu
     * NavigationUI#onNavDestinationSelected
     * menu の id が Navigation Graph の ID と一致している必要がある
+* Safe Args
+  * safe args と呼ばれる Gradle Plugin を持っている
+  * destinations と actions に指定する type-safe な引数を生成する
 
 ## 疑問点
 
