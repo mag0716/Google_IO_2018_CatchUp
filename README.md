@@ -18,6 +18,10 @@ https://developer.android.com/preview/
 
 ### Android App Bundle
 
+#### 参考
+
+* [Android App Bundle/Dynamic feature modulesにみるモジュール化の未来](http://tomoima525.hatenablog.com/entry/2018/05/10/092208)
+
 ### Android Jetpack
 
 * Navigation
