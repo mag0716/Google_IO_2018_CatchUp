@@ -2,6 +2,7 @@
 
 * [The Navigation Architecture Component](https://developer.android.com/topic/libraries/architecture/navigation)
 * [Navigation Codelab](https://codelabs.developers.google.com/codelabs/android-navigation)
+* [サンプル](https://github.com/googlesamples/android-architecture-components/tree/master/NavigationBasicSample)
 
 ## 概要
 
@@ -90,3 +91,5 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * NavigationController#navigate に Bundle を渡せる
   * <arguments> タグでも渡せる
 * サンプルでは Home タブの Fragment はタブ切り替えで破棄される。残す場合はどう設定すればいいのか？
+* Activity 間の遷移
+* Fragment から ChildFragment への遷移
