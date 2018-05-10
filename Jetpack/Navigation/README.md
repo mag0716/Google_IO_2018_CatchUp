@@ -117,7 +117,7 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * キャンセルボタンなどで同じ画面に遷移させる場合などでは、Global Action を作成するとよい
 * Graph Editor で destination を選択中に右クリックで Add Action -> Global で作成できる
 
-## サンプル
+## Codelabs
 
 * res/navigation 以下に xml ファイルを配置する
 * destination：ユーザが遷移可能な場所で通常は Activity や Fragment
