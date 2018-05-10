@@ -38,7 +38,84 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 
 #### Navigation Editor
 
-*
+* The Desitinations list：destinations の一覧
+* The Graph Editor：Navigation Graph を UI 操作で編集できる
+* The Attributes Editor：Attributes の編集
+
+#### Identify destinatinos
+
+* Activity と複数の Fragment のために設計されている
+* Activity 毎に Navigation Graph を作成する
+
+#### Connect destinations
+
+* app:destination には Fragment or Activity が指定できる
+
+#### Modify an activity to host navigation
+
+* NavHost インタフェースを Activity のレイアウトに追加する必要がある
+  * デフォルトで用意されている NavHostFragment は NavHost を implements している
+* バックボタンの動作は AppCompatActivity#onSupportNavigateUp を override することで上書きできる
+
+#### Tie destinations to UI widgets
+
+* Up ボタン：NavController#navigateUp
+* バックボタン：NavController#popBackStack
+* ボタン用に Navigation#createNavigateOnClickListener も利用できる
+
+##### Tie destinations to menu-drive UI components
+
+* NavigationView#setupWithNavController：メニューでの遷移を紐づける
+
+#### Pass data between destinations
+
+* 2つの方法がある
+  * Bundle
+  * safeargs Gradle plugin
+
+#### Pass data between destinations in a type-safe way
+
+* XXXDirections#confirmAction
+* 引数が渡されると XXXArgs が生成される
+
+#### Group destinations into a nested navigation graph
+
+* nested graph はログインフローなどを分けるのに便利
+* Navigation Editor で destinations を複数選択し、nested graph に変更できる
+* nested graph 内の destinatinos にも navigate で遷移できる
+
+#### Create a deep link for a destination
+
+##### Assign a deep link to a destination
+
+* Auto Verify       
+  * https://developer.android.com/training/app-links/verify-site-associations
+
+##### Add an intent filter for a deep link
+
+* Android Studio 3.2 以上から、<nav-graph> が利用できる
+
+#### Create a transition between destinations
+
+### Migrate to the Navigation Architecture Component
+
+* Activity 毎にフォーカスして Navigation Graph を作成する
+* Activity 毎に完了したら、startActivity の代わりに Activity 間の遷移を Navigation Graph で作成する
+* Activity をまとめられるなら、直接 Navigation Graph を組み合わせる
+
+### Add support for new destination types
+
+### Implement conditional navigation
+
+* ログインなどの条件付きの遷移がある場合
+  * destinatinos を分ける
+  * nested graph
+  * ログインが終わったら popBackStack を呼び出す必要がある
+
+### Identify a common destination for several UI elements
+
+* キャンセルボタンなどで同じ画面に遷移させる場合などでは、Global Action を作成するとよい
+* Graph Editor で destination を選択中に右クリックで Add Action -> Global で作成できる
 
 ## サンプル
 
@@ -93,3 +170,5 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * サンプルでは Home タブの Fragment はタブ切り替えで破棄される。残す場合はどう設定すればいいのか？
 * Activity 間の遷移
 * Fragment から ChildFragment への遷移
+* Navigation Editor の The Destinations list に Host というのがあるがこれは何？
+* <argment> の type には何が指定できる？
