@@ -65,6 +65,16 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * Safe Args
   * safe args と呼ばれる Gradle Plugin を持っている
   * destinations と actions に指定する type-safe な引数を生成する
+  * <argument> タグを指定すると XXXArgs が生成される
+* Deep Linking
+  * URL や Notification からアプリの遷移の途中に飛ぶ
+  * NavDeepLinkBuilder
+    * デフォルトでは lancher Activity が起動される
+    * setComponentName で別の Activity を設定できる
+  * バックスタックはどうやって決定されるのか？
+    * Navigation Graph から決定される
+    * Navigation Graph が複数存在する場合はそれぞれの app:startDestination がバックスタックを決定する
+  * NavController#createDeepLlink でも生成可能
 
 ## 疑問点
 
