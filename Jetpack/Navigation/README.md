@@ -75,6 +75,12 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
     * Navigation Graph から決定される
     * Navigation Graph が複数存在する場合はそれぞれの app:startDestination がバックスタックを決定する
   * NavController#createDeepLlink でも生成可能
+* Web Link
+  * <deepLink> タグを指定して Web Link からの起動を可能にする
+  * app:uri には、{xxx} で指定できる
+  * ワイルドカード指定も可能
+  * NavController は自動的に ACTION_VIEW をハンドリングする
+  * AndroidManifest.xml には <nav-graph> タグを指定する
 
 ## 疑問点
 
@@ -82,3 +88,5 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * 遷移先での結果が必要な場合(startActivityForResult)ではどうする？
 * 遷移時にデータを渡す場合はどうする？
   * NavigationController#navigate に Bundle を渡せる
+  * <arguments> タグでも渡せる
+* サンプルでは Home タブの Fragment はタブ切り替えで破棄される。残す場合はどう設定すればいいのか？

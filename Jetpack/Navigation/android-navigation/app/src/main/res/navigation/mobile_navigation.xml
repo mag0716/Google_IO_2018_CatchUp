@@ -68,14 +68,9 @@
         android:name="com.example.android.codelabs.navigation.DeepLinkFragment"
         android:label="@string/deeplink"
         tools:layout="@layout/deeplink_fragment">
-
         <argument
             android:name="myarg"
             android:defaultValue="Android!" />
-        <!-- TODO STEP 12 - Add a deep link to www.iana.org/domains/{myarg}/ -->
-
-        <!--<deepLink app:uri="www.example.com/{myarg}/" />-->
-
-        <!-- TODO END STEP 12 -->
+        <deepLink app:uri="www.example.com/{myarg}/" />
     </fragment>
 </navigation>
