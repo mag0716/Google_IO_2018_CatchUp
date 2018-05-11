@@ -29,4 +29,11 @@
   * 定期的なデータの同期
 * https://developer.android.com/guide/background/ に従う
 
+### クラス概要
+
+* WorkerUtils：実際の blur 処理を行なっている
+* BlurActivity：blur レベルを選択して、blur を実行する Activity
+* BlurViewModel：BlurActivity の ViewModel
+* SelectImageActivity：画像選択 Activity
+
 ## 疑問点
