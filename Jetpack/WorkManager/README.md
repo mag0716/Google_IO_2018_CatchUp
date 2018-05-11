@@ -36,4 +36,20 @@
 * BlurViewModel：BlurActivity の ViewModel
 * SelectImageActivity：画像選択 Activity
 
+### WorkManager Basics
+
+* Worker
+  * 実際のバックグラウンド処理を実装するクラス
+  * doWork メソッドに実装する
+  * OneTimeWorkRequest
+    * 一度だけ実行される
+  * PeriodicWorkRequest
+    * 何度も繰り返し実行される
+* WorkRequest
+  * Worker から生成されるリクエストクラス
+  * Constraints を指定できる
+* WorkManager
+  * WorkRequest を実行するクラス
+
+
 ## 疑問点
