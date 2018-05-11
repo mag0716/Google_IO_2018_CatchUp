@@ -56,7 +56,7 @@ https://developer.android.com/preview/
 - [ ] Protips: a fresh look at advanced topics for Android experts
 - [ ] ★Android Jetpack: what's new in Architecture Components
 - [ ] Android Jetpack: what’s new in Android Support Library
-- [ ] ★Android Jetpack: easy background processing with WorkManager
+- [x] ★Android Jetpack: easy background processing with WorkManager
 
 ### 3日目
 
