@@ -18,6 +18,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def work_version = "1.0.0-alpha01"
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -57,4 +59,6 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$versions.atsl_runner"
     androidTestImplementation "com.android.support.test:rules:$versions.atsl_runner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espresso"
+
+    implementation "android.arch.work:work-runtime:$work_version"
 }
