@@ -36,6 +36,16 @@
 * Chain Work
   * WorkerManager#beginWith
     * WorkContinuation が返却され、WorkerRequest を指定してチェインする
+    * 引数は List
+
+* Unique Work
+  * ローカルデータをサーバと同期させるような処理
+    * 他の同期を開始する前に最初の同期を完了させたい
+  * beginUniqueWork を利用する
+  * ExistingWorkPolicy
+    * REPLACE
+    * KEEY
+    * APPEND
 
 ### クラス概要
 
