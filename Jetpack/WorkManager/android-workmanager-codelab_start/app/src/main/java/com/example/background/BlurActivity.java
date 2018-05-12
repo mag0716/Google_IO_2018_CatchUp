@@ -63,6 +63,7 @@ public class BlurActivity extends AppCompatActivity {
             WorkStatus workStatus = listOfWorkStatuses.get(0);
 
             boolean finished = workStatus.getState().isFinished();
+            Log.d("xxx", "Status : " + workStatus.getState());
             if (!finished) {
                 showWorkInProgress();
             } else {

@@ -65,6 +65,11 @@
 * Cancel work
   * ID, Tag, ユニークなチェイン名を指定することでキャンセルできる
 
+* Constraints
+  * Constraints.Builder で生成し、WorkerRequest にセットする
+  * Constraints に合致しない状況だと、その状況になるまで待機され続ける
+    * Status -> ENQUEUED
+
 ### クラス概要
 
 * WorkerUtils：実際の blur 処理を行なっている
