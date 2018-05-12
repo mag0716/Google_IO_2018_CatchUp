@@ -47,6 +47,18 @@
     * KEEY
     * APPEND
 
+* Tag and Work Status
+  * LiveData を通じて WorkRequest から WorkStatus を取得する
+  * WorkStatus
+    * BLOCKED, CANCELLED, ENQUEUED, FAILED, RUNNING, SUCCEEDED
+  * LiveData の取得
+    * getStatusById
+      * WorkManager が WorkRequest 毎に生成する unique ID を使う
+    * getStatuesForUniqueWork
+      * 自分で指定した unique ID を指定する
+    * getStatuesByTag
+      * WorkRequest に複数追加できる Tag を使う
+
 ### クラス概要
 
 * WorkerUtils：実際の blur 処理を行なっている

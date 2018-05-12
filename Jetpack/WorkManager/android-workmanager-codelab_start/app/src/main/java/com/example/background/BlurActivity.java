@@ -29,6 +29,8 @@ import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
 
+import androidx.work.WorkStatus;
+
 
 public class BlurActivity extends AppCompatActivity {
 
@@ -45,6 +47,24 @@ public class BlurActivity extends AppCompatActivity {
 
         // Get the ViewModel
         mViewModel = ViewModelProviders.of(this).get(BlurViewModel.class);
+        mViewModel.getOutputStatus().observe(this, listOfWorkStatuses -> {
+
+            // If there are no matching work statuses, do nothing
+            if (listOfWorkStatuses == null || listOfWorkStatuses.isEmpty()) {
+                return;
+            }
+
+            // We only care about the one output status.
+            // Every continuation has only one worker tagged TAG_OUTPUT
+            WorkStatus workStatus = listOfWorkStatuses.get(0);
+
+            boolean finished = workStatus.getState().isFinished();
+            if (!finished) {
+                showWorkInProgress();
+            } else {
+                showWorkFinished();
+            }
+        });
 
         // Get all of the Views
         mImageView = findViewById(R.id.image_view);
@@ -86,12 +106,13 @@ public class BlurActivity extends AppCompatActivity {
 
     /**
      * Get the blur level from the radio button as an integer
+     *
      * @return Integer representing the amount of times to blur the image
      */
     private int getBlurLevel() {
         RadioGroup radioGroup = findViewById(R.id.radio_blur_group);
 
-        switch(radioGroup.getCheckedRadioButtonId()) {
+        switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_blur_lv_1:
                 return 1;
             case R.id.radio_blur_lv_2:
