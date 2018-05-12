@@ -22,6 +22,7 @@ import android.text.TextUtils;
 
 import com.example.background.workers.BlurWorker;
 
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -40,7 +41,10 @@ public class BlurViewModel extends ViewModel {
      * @param blurLevel The amount to blur the image
      */
     void applyBlur(int blurLevel) {
-        mWorkManager.enqueue(OneTimeWorkRequest.from(BlurWorker.class));
+        final OneTimeWorkRequest blurRequest = new OneTimeWorkRequest.Builder(BlurWorker.class)
+                .setInputData(createInputDataForUri())
+                .build();
+        mWorkManager.enqueue(blurRequest);
     }
 
     private Uri uriOrNull(String uriString) {
@@ -62,6 +66,14 @@ public class BlurViewModel extends ViewModel {
      */
     Uri getImageUri() {
         return mImageUri;
+    }
+
+    private Data createInputDataForUri() {
+        final Data.Builder builder = new Data.Builder();
+        if (mImageUri != null) {
+            builder.putString(Constants.KEY_IMAGE_URI, mImageUri.toString());
+        }
+        return builder.build();
     }
 
 }

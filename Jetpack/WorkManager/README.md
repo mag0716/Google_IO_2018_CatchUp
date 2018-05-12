@@ -29,6 +29,9 @@
   * 定期的なデータの同期
 * https://developer.android.com/guide/background/ に従う
 
+* Data
+  * key-value で管理するコンテナ。保存できる量は少ない
+
 ### クラス概要
 
 * WorkerUtils：実際の blur 処理を行なっている
