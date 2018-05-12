@@ -98,6 +98,10 @@ public class BlurViewModel extends ViewModel {
         return mOutputUri;
     }
 
+    void cancelWork() {
+        mWorkManager.cancelUniqueWork(Constants.IMAGE_MANIPULATION_WORK_NAME);
+    }
+
     private Uri uriOrNull(String uriString) {
         if (!TextUtils.isEmpty(uriString)) {
             return Uri.parse(uriString);

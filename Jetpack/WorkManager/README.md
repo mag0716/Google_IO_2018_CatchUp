@@ -62,6 +62,9 @@
     * getStatuesByTag で指定した Tag の WorkerRequest を取得する
   * WorkStatus#getState().isFinished() で終了しているかどうかをチェックできる
 
+* Cancel work
+  * ID, Tag, ユニークなチェイン名を指定することでキャンセルできる
+
 ### クラス概要
 
 * WorkerUtils：実際の blur 処理を行なっている

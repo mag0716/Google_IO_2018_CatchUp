@@ -22,6 +22,10 @@ public class BlurWorker extends Worker {
     @Override
     public WorkerResult doWork() {
         final Context applicationContext = getApplicationContext();
+
+        WorkerUtils.makeStatusNotification("Doing " + TAG, applicationContext);
+        WorkerUtils.sleep();
+
         final String resourceUri = getInputData().getString(Constants.KEY_IMAGE_URI, null);
         try {
             if (TextUtils.isEmpty(resourceUri)) {
