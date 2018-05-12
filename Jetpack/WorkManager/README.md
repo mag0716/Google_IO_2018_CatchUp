@@ -30,7 +30,12 @@
 * https://developer.android.com/guide/background/ に従う
 
 * Data
-  * key-value で管理するコンテナ。保存できる量は少ない
+  * key-value で管理するコンテナで WorkRequest の入力、出力に利用される
+  * Data.Builder を使って生成する
+
+* Chain Work
+  * WorkerManager#beginWith
+    * WorkContinuation が返却され、WorkerRequest を指定してチェインする
 
 ### クラス概要
 

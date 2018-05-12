@@ -21,9 +21,12 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.example.background.workers.BlurWorker;
+import com.example.background.workers.CleanupWorker;
+import com.example.background.workers.SaveImageToFileWorker;
 
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkContinuation;
 import androidx.work.WorkManager;
 
 public class BlurViewModel extends ViewModel {
@@ -41,10 +44,33 @@ public class BlurViewModel extends ViewModel {
      * @param blurLevel The amount to blur the image
      */
     void applyBlur(int blurLevel) {
-        final OneTimeWorkRequest blurRequest = new OneTimeWorkRequest.Builder(BlurWorker.class)
-                .setInputData(createInputDataForUri())
-                .build();
-        mWorkManager.enqueue(blurRequest);
+        // Add WorkRequest to Cleanup temporary images
+        WorkContinuation continuation =
+                mWorkManager.beginWith(OneTimeWorkRequest.from(CleanupWorker.class));
+
+        // Add WorkRequests to blur the image the number of times requested
+        for (int i = 0; i < blurLevel; i++) {
+            OneTimeWorkRequest.Builder blurBuilder =
+                    new OneTimeWorkRequest.Builder(BlurWorker.class);
+
+            // Input the Uri if this is the first blur operation
+            // After the first blur operation the input will be the output of previous
+            // blur operations.
+            if (i == 0) {
+                blurBuilder.setInputData(createInputDataForUri());
+            }
+
+            continuation = continuation.then(blurBuilder.build());
+        }
+
+        // Add WorkRequest to save the image to the filesystem
+        OneTimeWorkRequest save =
+                new OneTimeWorkRequest.Builder(SaveImageToFileWorker.class)
+                        .build();
+        continuation = continuation.then(save);
+
+        // Actually start the work
+        continuation.enqueue();
     }
 
     private Uri uriOrNull(String uriString) {
