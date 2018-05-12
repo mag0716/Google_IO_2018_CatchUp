@@ -58,6 +58,9 @@
       * 自分で指定した unique ID を指定する
     * getStatuesByTag
       * WorkRequest に複数追加できる Tag を使う
+  * Tag
+    * getStatuesByTag で指定した Tag の WorkerRequest を取得する
+  * WorkStatus#getState().isFinished() で終了しているかどうかをチェックできる
 
 ### クラス概要
 
@@ -83,3 +86,5 @@
 
 
 ## 疑問点
+
+* Work Status を LiveData から取得しているが前回アプリ実行時の処理結果が取得できているが正しい動作なのか？
