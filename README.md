@@ -1,8 +1,9 @@
-# Android_P
+# Google IO 2018 CatchUp
 
-Android P での新機能などを試すリポジトリ
+Google IO 2018 で発表された内容から気になるものを調査し情報をまとめるリポジトリ
+優先は仕事で利用する可能性の高いもの
 
-## Android P 概要
+## Google IO 2018 概要
 
 https://developer.android.com/preview/
 [New features in Android Studio Preview](https://developer.android.com/studio/preview/features)
@@ -33,8 +34,6 @@ https://developer.android.com/preview/
 * [What is Android Jetpack?](https://android.jlelse.eu/what-is-android-jetpack-737095e88161)
 
 ### Material Theming
-
-### cutout
 
 ## Videos
 
