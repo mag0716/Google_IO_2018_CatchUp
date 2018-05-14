@@ -43,7 +43,7 @@ https://developer.android.com/preview/
 
 - [ ] ★Developer Keynote
 - [ ] Customize Material Components for your product
-- [ ] What's new in Android
+- [x] What's new in Android
 - [x] ★What's new in Android development tools
 - [ ] Build the new, modular Android App Bundle
 - [ ] Modern Android development: Android Jetpack, Kotlin, and more
@@ -51,7 +51,6 @@ https://developer.android.com/preview/
 ### 2日目
 
 - [ ] Android Jetpack: how to smartly use Fragments in your UI
-- [ ] Best practices for testing your Actions
 - [ ] Protips: a fresh look at advanced topics for Android experts
 - [ ] ★Android Jetpack: what's new in Architecture Components
 - [ ] Android Jetpack: what’s new in Android Support Library
