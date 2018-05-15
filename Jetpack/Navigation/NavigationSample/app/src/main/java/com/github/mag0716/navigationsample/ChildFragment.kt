@@ -46,7 +46,9 @@ class ChildFragment : Fragment() {
         super.onResume()
         val activity = activity
         if (activity is MainActivity) {
-            activity.updateToolbar("Child$count", true)
+            activity.updateToolbar(getTitle(), true)
         }
     }
+
+    fun getTitle(): String = "Child$count"
 }
