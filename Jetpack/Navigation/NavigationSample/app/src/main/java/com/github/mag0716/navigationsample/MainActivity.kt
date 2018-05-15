@@ -7,22 +7,22 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var homeFragment: LabelFragment? = null
-    var dashboardFragment: LabelFragment? = null
-    var notificationsFragment: LabelFragment? = null
+    var homeFragment: ParentFragment? = null
+    var dashboardFragment: ParentFragment? = null
+    var notificationsFragment: ParentFragment? = null
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                replaceFragment(item.itemId)
+                switchTab(item.itemId)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                replaceFragment(item.itemId)
+                switchTab(item.itemId)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                replaceFragment(item.itemId)
+                switchTab(item.itemId)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -36,28 +36,36 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         if (savedInstanceState == null) {
-            replaceFragment(R.id.navigation_home)
+            switchTab(R.id.navigation_home)
         }
     }
 
-    fun replaceFragment(id: Int) {
-        var fragment: LabelFragment? = null
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    fun switchTab(id: Int) {
+        var title: String? = null
+        var fragment: ParentFragment? = null
         when (id) {
             R.id.navigation_home -> {
+                title = "home"
                 if (homeFragment == null) {
-                    homeFragment = LabelFragment.newInstance("home")
+                    homeFragment = ParentFragment.newInstance(title)
                 }
                 fragment = homeFragment
             }
             R.id.navigation_dashboard -> {
+                title = "dashboard"
                 if (dashboardFragment == null) {
-                    dashboardFragment = LabelFragment.newInstance("dashboard")
+                    dashboardFragment = ParentFragment.newInstance(title)
                 }
                 fragment = dashboardFragment
             }
             R.id.navigation_notifications -> {
+                title = "notifications"
                 if (notificationsFragment == null) {
-                    notificationsFragment = LabelFragment.newInstance("notifications")
+                    notificationsFragment = ParentFragment.newInstance(title)
                 }
                 fragment = notificationsFragment
             }
@@ -68,5 +76,14 @@ class MainActivity : AppCompatActivity() {
             transaction.replace(R.id.container, fragment)
             transaction.commit()
         }
+
+        if (title != null) {
+            updateToolbar(title)
+        }
+    }
+
+    fun updateToolbar(title: String, hasUpKey: Boolean = false) {
+        supportActionBar?.title = title
+        supportActionBar?.setDisplayHomeAsUpEnabled(hasUpKey)
     }
 }

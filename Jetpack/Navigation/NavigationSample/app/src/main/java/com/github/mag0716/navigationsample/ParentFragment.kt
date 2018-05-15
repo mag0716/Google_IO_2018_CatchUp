@@ -6,25 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import kotlinx.android.synthetic.main.fragment_label.*
+import kotlinx.android.synthetic.main.fragment_parent.*
 
-class LabelFragment : Fragment() {
+class ParentFragment : Fragment() {
 
     companion object {
         const val KEY = "label"
-        fun newInstance(label: String): LabelFragment {
-            return LabelFragment().apply {
+        fun newInstance(label: String): ParentFragment {
+            return ParentFragment().apply {
                 arguments = bundleOf(KEY to label)
             }
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_label, container, false)
+        return inflater.inflate(R.layout.fragment_parent, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        text.text = arguments?.getString(KEY)
+        button.setOnClickListener {
+            pushFragment(0)
+        }
+    }
+
+    fun pushFragment(count: Int) {
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, ChildFragment.newInstance(count))
+        transaction.addToBackStack("$count")
+        transaction.commit()
     }
 }
