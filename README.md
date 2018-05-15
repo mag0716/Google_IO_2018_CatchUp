@@ -42,7 +42,7 @@ https://developer.android.com/preview/
 ### 1日目
 
 - [x] ★Developer Keynote
-- [ ] Customize Material Components for your product
+- [x] Customize Material Components for your product
 - [x] What's new in Android
 - [x] ★What's new in Android development tools
 - [ ] Build the new, modular Android App Bundle
