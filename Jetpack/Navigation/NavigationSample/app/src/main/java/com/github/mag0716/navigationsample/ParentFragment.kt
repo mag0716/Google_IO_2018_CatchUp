@@ -60,6 +60,7 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
     }
 
     fun popAllFragment() {
+        childFragmentManager.popBackStack("0", FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     private fun getCurrentFragmentTitle(): String {

@@ -2,9 +2,8 @@ package com.github.mag0716.navigationsample
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +39,19 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             switchTab(R.id.navigation_home)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                val fragment = supportFragmentManager.findFragmentById(R.id.container)
+                if (fragment is ParentFragment) {
+                    fragment.popAllFragment()
+                }
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun switchTab(id: Int) {
