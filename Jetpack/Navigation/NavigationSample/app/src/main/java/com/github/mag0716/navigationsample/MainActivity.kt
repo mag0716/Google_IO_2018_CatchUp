@@ -1,9 +1,11 @@
 package com.github.mag0716.navigationsample
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -55,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate : $homeFragment, $dashboardFragment, $notificationsFragment")
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -63,6 +70,9 @@ class MainActivity : AppCompatActivity() {
                     fragment.popAllFragment()
                 }
                 return true
+            }
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
