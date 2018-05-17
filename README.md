@@ -46,7 +46,7 @@ https://developer.android.com/preview/
 - [x] What's new in Android
 - [x] ★What's new in Android development tools
 - [ ] Build the new, modular Android App Bundle
-- [ ] Modern Android development: Android Jetpack, Kotlin, and more
+- [x] Modern Android development: Android Jetpack, Kotlin, and more
 
 ### 2日目
 
