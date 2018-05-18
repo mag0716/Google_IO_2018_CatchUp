@@ -163,7 +163,10 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 ## 疑問点
 
 * Navigation Editor の Create Destination で候補に上がるのは何？
+  * NavHostsFragment が定義されているリソース
 * 遷移先での結果が必要な場合(startActivityForResult)ではどうする？
+  * 1.0.0-alpha1 では対応していないので、今まで通り実装する必要がある
+  * https://issuetracker.google.com/issues/79672220
 * 遷移時にデータを渡す場合はどうする？
   * NavigationController#navigate に Bundle を渡せる
   * <arguments> タグでも渡せる
