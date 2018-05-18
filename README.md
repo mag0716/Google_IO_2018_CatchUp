@@ -50,7 +50,7 @@ https://developer.android.com/preview/
 
 ### 2日目
 
-- [ ] Android Jetpack: how to smartly use Fragments in your UI
+- [x] Android Jetpack: how to smartly use Fragments in your UI
 - [ ] Protips: a fresh look at advanced topics for Android experts
 - [ ] ★Android Jetpack: what's new in Architecture Components
 - [ ] Android Jetpack: what’s new in Android Support Library
