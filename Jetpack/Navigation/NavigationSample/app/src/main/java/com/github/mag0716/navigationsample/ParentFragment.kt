@@ -37,12 +37,12 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
 
     override fun onResume() {
         super.onResume()
-        childFragmentManager.addOnBackStackChangedListener(this)
+//        childFragmentManager.addOnBackStackChangedListener(this)
     }
 
     override fun onPause() {
         super.onPause()
-        childFragmentManager.removeOnBackStackChangedListener(this)
+//        childFragmentManager.removeOnBackStackChangedListener(this)
     }
 
     override fun onBackStackChanged() {
@@ -53,29 +53,30 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
     }
 
     fun pushFragment(count: Int) {
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, ChildFragment.newInstance(count))
-        transaction.addToBackStack("$count")
-        transaction.commit()
+//        val transaction = childFragmentManager.beginTransaction()
+//        transaction.replace(R.id.container, ChildFragment.newInstance(count))
+//        transaction.addToBackStack("$count")
+//        transaction.commit()
     }
 
     fun popAllFragment() {
-        childFragmentManager.popBackStack("0", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//        childFragmentManager.popBackStack("0", FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     private fun getCurrentFragmentTitle(): String {
-        if (childFragmentManager.backStackEntryCount > 0) {
-            val fragment = childFragmentManager.findFragmentById(R.id.container)
-            if (fragment is ChildFragment) {
-                return fragment.getTitle()
-            }
-        } else {
-            return label
-        }
+//        if (childFragmentManager.backStackEntryCount > 0) {
+//            val fragment = childFragmentManager.findFragmentById(R.id.container)
+//            if (fragment is ChildFragment) {
+//                return fragment.getTitle()
+//            }
+//        } else {
+//            return label
+//        }
         return ""
     }
 
     private fun needsUpKey(): Boolean {
-        return childFragmentManager.backStackEntryCount > 0
+//        return childFragmentManager.backStackEntryCount > 0
+        return false
     }
 }

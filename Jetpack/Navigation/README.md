@@ -160,6 +160,10 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * NavController は自動的に ACTION_VIEW をハンドリングする
   * AndroidManifest.xml には <nav-graph> タグを指定する
 
+## サンプル実装で気づいた点
+
+* Activity は destination に設定できるが「Set Start Destination」ができない
+
 ## 疑問点
 
 * Navigation Editor の Create Destination で候補に上がるのは何？

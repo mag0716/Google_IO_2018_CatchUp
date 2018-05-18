@@ -103,52 +103,52 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun switchTab(id: Int) {
         Log.d(TAG, "switchTab : $id")
         var title: String? = null
-        var fragment: ParentFragment? = null
-        var newFragment = true
-        when (id) {
-            R.id.navigation_home -> {
-                title = HOME
-                if (homeFragment == null) {
-                    homeFragment = ParentFragment.newInstance(title)
-                } else {
-                    newFragment = false
-                }
-                fragment = homeFragment
-            }
-            R.id.navigation_dashboard -> {
-                title = DASHBOARD
-                if (dashboardFragment == null) {
-                    dashboardFragment = ParentFragment.newInstance(title)
-                } else {
-                    newFragment = false
-                }
-                fragment = dashboardFragment
-            }
-            R.id.navigation_notifications -> {
-                title = NOTIFICATIONS
-                if (notificationsFragment == null) {
-                    notificationsFragment = ParentFragment.newInstance(title)
-                } else {
-                    newFragment = false
-                }
-                fragment = notificationsFragment
-            }
-        }
-
-        if (fragment != null) {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.setPrimaryNavigationFragment(fragment)
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
-            if (currentFragment != null) {
-                transaction.detach(currentFragment)
-            }
-            if (newFragment) {
-                transaction.add(R.id.container, fragment, title)
-            } else {
-                transaction.attach(fragment)
-            }
-            transaction.commit()
-        }
+//        var fragment: ParentFragment? = null
+//        var newFragment = true
+//        when (id) {
+//            R.id.navigation_home -> {
+//                title = HOME
+//                if (homeFragment == null) {
+//                    homeFragment = ParentFragment.newInstance(title)
+//                } else {
+//                    newFragment = false
+//                }
+//                fragment = homeFragment
+//            }
+//            R.id.navigation_dashboard -> {
+//                title = DASHBOARD
+//                if (dashboardFragment == null) {
+//                    dashboardFragment = ParentFragment.newInstance(title)
+//                } else {
+//                    newFragment = false
+//                }
+//                fragment = dashboardFragment
+//            }
+//            R.id.navigation_notifications -> {
+//                title = NOTIFICATIONS
+//                if (notificationsFragment == null) {
+//                    notificationsFragment = ParentFragment.newInstance(title)
+//                } else {
+//                    newFragment = false
+//                }
+//                fragment = notificationsFragment
+//            }
+//        }
+//
+//        if (fragment != null) {
+//            val transaction = supportFragmentManager.beginTransaction()
+//            transaction.setPrimaryNavigationFragment(fragment)
+//            val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
+//            if (currentFragment != null) {
+//                transaction.detach(currentFragment)
+//            }
+//            if (newFragment) {
+//                transaction.add(R.id.container, fragment, title)
+//            } else {
+//                transaction.attach(fragment)
+//            }
+//            transaction.commit()
+//        }
 
         if (title != null) {
             updateToolbar(title)
