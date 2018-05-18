@@ -164,6 +164,37 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 
 * Activity は destination に設定できるが「Set Start Destination」ができない
 
+## その他のサンプルの確認
+
+### [Android Architecture Components Navigation Basic Sample](https://github.com/googlesamples/android-architecture-components/tree/master/NavigationBasicSample)
+
+* MainActivity
+  * TitleScreen(Start Destination)
+    * register
+    * leaderboard
+  * Register
+    * match
+  * Leaderboard
+    * userProfile
+  * Match
+    * in_game
+  * UserProfile
+    * deep link
+    * arguments
+  * InGame
+    * resultsWinner
+    * gameOver
+  * Winner
+    * leaderboard
+    * match
+  * GameOver
+    * match
+
+上記の画面構成で 1 Activity、複数 Fragment
+起動直後は必ず TitleScreen から始まり、順番に遷移していく
+Winner, GameOver で popUpTo で match が指定されている他は特殊なことは行っておらず Codelab と同じで Fragment の遷移のための Navigation Graph
+Leaderboard から UserProfile の遷移でデータ受け渡しのために Bundle を生成している
+
 ## 疑問点
 
 * Navigation Editor の Create Destination で候補に上がるのは何？
