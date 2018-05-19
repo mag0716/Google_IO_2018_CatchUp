@@ -50,6 +50,12 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
     override fun onResume() {
         super.onResume()
 //        childFragmentManager.addOnBackStackChangedListener(this)
+        // FIXME:現状では MainActivity が保持している NavHostFragment で ParentFragment, ChildFragment を差し替えているので、onBackStackChanged が呼ばれないので、onResume で更新する
+        // ただし、本来は ChildFragment のスタックはタブを切り替えても残したいので、Navigation Graph の定義変更後に見直す必要がある
+        val activity = activity
+        if (activity is MainActivity) {
+            activity.updateToolbar(label)
+        }
     }
 
     override fun onPause() {
