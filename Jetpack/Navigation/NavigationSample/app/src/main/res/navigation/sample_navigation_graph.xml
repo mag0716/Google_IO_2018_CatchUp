@@ -2,13 +2,38 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/parentFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/parentFragment"
+        android:id="@+id/homeFragment"
         android:name="com.github.mag0716.navigationsample.ParentFragment"
-        android:label="ParentFragment"
-        tools:layout="@layout/fragment_parent" />
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_parent">
+        <argument
+            android:name="label"
+            android:defaultValue="home"
+            app:type="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.github.mag0716.navigationsample.ParentFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_parent">
+        <argument
+            android:name="label"
+            android:defaultValue="dashboard"
+            app:type="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.github.mag0716.navigationsample.ParentFragment"
+        android:label="NotificationsFragment"
+        tools:layout="@layout/fragment_parent">
+        <argument
+            android:name="label"
+            android:defaultValue="navigation"
+            app:type="string" />
+    </fragment>
     <fragment
         android:id="@+id/childFragment"
         android:name="com.github.mag0716.navigationsample.ChildFragment"

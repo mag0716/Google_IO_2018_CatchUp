@@ -3,6 +3,7 @@ package com.github.mag0716.navigationsample
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_parent.*
 class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
 
     companion object {
+        val TAG = ParentFragment::class.java.simpleName
         const val KEY = "label"
         fun newInstance(label: String): ParentFragment {
             return ParentFragment().apply {
@@ -24,7 +26,13 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
         arguments?.getString(KEY) ?: ""
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate : $label")
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.d(TAG, "onCreateView : $label")
         return inflater.inflate(R.layout.fragment_parent, container, false)
     }
 
@@ -33,6 +41,7 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
         button.setOnClickListener {
             pushFragment(0)
         }
+        text.text = label
     }
 
     override fun onResume() {
@@ -43,6 +52,16 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
     override fun onPause() {
         super.onPause()
 //        childFragmentManager.removeOnBackStackChangedListener(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView : $label")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy : $label")
     }
 
     override fun onBackStackChanged() {

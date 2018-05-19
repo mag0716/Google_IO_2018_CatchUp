@@ -163,6 +163,8 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 ## サンプル実装で気づいた点
 
 * Activity は destination に設定できるが「Set Start Destination」ができない
+* NavController.OnNavigatedListener を NavController に add, remove できる
+  * [疑問点]BottomNavigation では、タブ切り替えで HomeFragment の onNavigated が走る
 
 ## その他のサンプルの確認
 
@@ -198,7 +200,6 @@ Leaderboard から UserProfile の遷移でデータ受け渡しのために Bun
 ## 疑問点
 
 * Navigation Editor の Create Destination で候補に上がるのは何？
-  * NavHostsFragment が定義されているリソース
 * 遷移先での結果が必要な場合(startActivityForResult)ではどうする？
   * 1.0.0-alpha1 では対応していないので、今まで通り実装する必要がある
   * https://issuetracker.google.com/issues/79672220
@@ -209,4 +210,8 @@ Leaderboard から UserProfile の遷移でデータ受け渡しのために Bun
 * Activity 間の遷移
 * Fragment から ChildFragment への遷移
 * Navigation Editor の The Destinations list に Host というのがあるがこれは何？
+  * NavHostsFragment が定義されているリソース
 * <argment> の type には何が指定できる？
+  * string
+  * integer
+  * reference
