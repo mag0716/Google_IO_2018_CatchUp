@@ -35,9 +35,9 @@ class ChildFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button.setOnClickListener {
-            val parent = parentFragment
-            if (parent is ParentFragment) {
-                parent.pushFragment(count + 1)
+            val activity = activity
+            if (activity is MainActivity) {
+                activity.moveToChild(count + 1)
             }
         }
     }

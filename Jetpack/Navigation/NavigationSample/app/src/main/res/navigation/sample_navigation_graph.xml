@@ -52,6 +52,9 @@
             android:name="count"
             android:defaultValue="0"
             app:type="integer" />
+        <action
+            android:id="@+id/action_child"
+            app:destination="@id/homeChildFragment" />
     </fragment>
     <fragment
         android:id="@+id/dashboardChildFragment"
@@ -62,6 +65,9 @@
             android:name="count"
             android:defaultValue="0"
             app:type="integer" />
+        <action
+            android:id="@+id/action_child"
+            app:destination="@id/dashboardChildFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationsChildFragment"
@@ -72,5 +78,8 @@
             android:name="count"
             android:defaultValue="0"
             app:type="integer" />
+        <action
+            android:id="@+id/action_child"
+            app:destination="@id/notificationsChildFragment" />
     </fragment>
 </navigation>

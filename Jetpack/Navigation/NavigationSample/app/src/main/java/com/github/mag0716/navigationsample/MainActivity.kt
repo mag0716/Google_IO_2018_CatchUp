@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -92,8 +93,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(hasUpKey)
     }
 
-    fun moveToChild() {
-        container.navController.navigate(R.id.action_child)
+    fun moveToChild(count: Int = 0) {
+        val bundle = bundleOf(ChildFragment.KEY to count)
+        container.navController.navigate(R.id.action_child, bundle)
     }
 
     private fun moveToSettings() {
