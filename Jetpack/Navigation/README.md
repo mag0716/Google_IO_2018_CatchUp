@@ -172,6 +172,15 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * action がない場合は `java.lang.IllegalArgumentException: navigation destination com.github.mag0716.navigationsample:id/action_child is unknown to this NavController` になる
 * [疑問点] NavControl#navigate で別 Fragment へ遷移させると遷移元は onDestroy まで走る
   * defaultNavHost 未指定時の動作。true にすれば、onDestroyView までになり、バックキーでスタックされた画面へ戻れるようになる
+* `override fun onSupportNavigateUp() = container.navController.navigateUp()` で Up Key と Navigation Graph を連動できる
+  * popUpTo が指定されていなかったらバックキーと同じ
+  * バックキーも popUpTo で指定された destination に遷移する
+  * Navigation を利用すると、アプリ終了以外はバックキー = Up キー
+  * [疑問点] 会員登録などで前の画面に戻したくない場合には使えるが、Up Key をいままで通りの遷移にするにはどうすればいいのか？
+* [疑問点] Up キーと Navigation Drawer は共存できない？
+  * Up キーは表示されるがタップしても Navigation Drawer が表示されてしまう
+  * NavigationView を無効化すると、開かなくなるが Up キーも動作しない
+  * onSupportNavigationUp よりも onOptionsItemSelected が優先
 
 ## その他のサンプルの確認
 
