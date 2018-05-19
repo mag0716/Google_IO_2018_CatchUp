@@ -13,6 +13,9 @@
             android:name="label"
             android:defaultValue="home"
             app:type="string" />
+        <action
+            android:id="@+id/action_child"
+            app:destination="@id/homeChildFragment" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
@@ -23,6 +26,9 @@
             android:name="label"
             android:defaultValue="dashboard"
             app:type="string" />
+        <action
+            android:id="@+id/action_child"
+            app:destination="@id/dashboardChildFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationsFragment"
@@ -33,10 +39,38 @@
             android:name="label"
             android:defaultValue="navigation"
             app:type="string" />
+        <action
+            android:id="@+id/action_child"
+            app:destination="@id/notificationsChildFragment" />
     </fragment>
     <fragment
-        android:id="@+id/childFragment"
+        android:id="@+id/homeChildFragment"
         android:name="com.github.mag0716.navigationsample.ChildFragment"
-        android:label="ChildFragment"
-        tools:layout="@layout/fragment_child" />
+        android:label="HomeChildFragment"
+        tools:layout="@layout/fragment_child">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:type="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardChildFragment"
+        android:name="com.github.mag0716.navigationsample.ChildFragment"
+        android:label="DashboardChildFragment"
+        tools:layout="@layout/fragment_child">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:type="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationsChildFragment"
+        android:name="com.github.mag0716.navigationsample.ChildFragment"
+        android:label="NotificationsChildFragment"
+        tools:layout="@layout/fragment_child">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:type="integer" />
+    </fragment>
 </navigation>

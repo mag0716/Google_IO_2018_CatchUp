@@ -39,7 +39,10 @@ class ParentFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button.setOnClickListener {
-            pushFragment(0)
+            val activity = activity
+            if (activity is MainActivity) {
+                activity.moveToChild()
+            }
         }
         text.text = label
     }

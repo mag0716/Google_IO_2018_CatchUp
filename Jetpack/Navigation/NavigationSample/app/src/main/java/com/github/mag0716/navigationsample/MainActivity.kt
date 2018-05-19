@@ -92,6 +92,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(hasUpKey)
     }
 
+    fun moveToChild() {
+        container.navController.navigate(R.id.action_child)
+    }
+
     private fun moveToSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))
     }

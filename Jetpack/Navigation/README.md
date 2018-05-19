@@ -165,6 +165,12 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * Activity は destination に設定できるが「Set Start Destination」ができない
 * NavController.OnNavigatedListener を NavController に add, remove できる
   * [疑問点]BottomNavigation では、タブ切り替えで HomeFragment の onNavigated が走る
+* Action に Launch Options を設定できる
+  * Single Top
+  * [疑問点]Document
+  * Clear Task
+* action がない場合は `java.lang.IllegalArgumentException: navigation destination com.github.mag0716.navigationsample:id/action_child is unknown to this NavController` になる
+* [疑問点] NavControl#navigate で別 Fragment へ遷移させると遷移元は onDestroy まで走る
 
 ## その他のサンプルの確認
 
