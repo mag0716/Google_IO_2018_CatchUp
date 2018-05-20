@@ -190,6 +190,8 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * Destination は arguments か action を 1つ以上定義するか、他の Destination で利用されている必要がある
   * ` Destination with arguments or action mush have either name either id attributes`
     * [はまった] navigation タグに id を指定する必要がある(https://issuetracker.google.com/issues/79627172)
+* Menu と Navigation Graph との連動は NavigationUI.onNavDestinationSelected を使う
+  * 遷移時にフェードっぽいアニメーションがはいる
 
 ## その他のサンプルの確認
 
