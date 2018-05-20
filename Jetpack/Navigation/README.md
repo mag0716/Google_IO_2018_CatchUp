@@ -183,6 +183,10 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * onSupportNavigationUp よりも onOptionsItemSelected が優先
   * NavigationUI.setupActionBarWithNavController
     * stack に積まれると自動的に、Navigation Drawer が無効になり、Up キーに変わる
+* Activity 間の遷移に Action は使えない
+  * Destination が Activity だと、arguments と deep link しか定義できない
+  * Global Action は定義できるが、Activity から NavController を取得する方法がなさそうなので、Activity 間の遷移には利用できない
+  * deep link での遷移には利用できるが、Fragment のように Arguments から placeholder で指定した key で文字列を取得することはできない
 
 ## その他のサンプルの確認
 
