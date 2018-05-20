@@ -1,6 +1,5 @@
 package com.github.mag0716.navigationsample
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
@@ -46,6 +45,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // BottomNavigationView に渡す menu に指定する id は Navigation Graph の destination の id と同じにする必要がある
         NavigationUI.setupWithNavController(bottomNavigation, container.navController)
 
+        // TODO: menu と Navigation Graph を連動させる
+
         Log.d(TAG, "onCreate : ${container.navController.currentDestination.label}")
     }
 
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                }
 //                return true
 //            }
-            R.id.settings -> {
+            R.id.action_settings -> {
                 moveToSettings()
             }
         }
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> moveToSettings()
+            R.id.action_settings -> moveToSettings()
         }
 
 //        drawer_layout.closeDrawer(GravityCompat.START)
@@ -111,6 +112,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun moveToSettings() {
-        startActivity(Intent(this, SettingsActivity::class.java))
+        container.navController.navigate(R.id.action_settings)
     }
 }
