@@ -160,10 +160,76 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * NavController は自動的に ACTION_VIEW をハンドリングする
   * AndroidManifest.xml には <nav-graph> タグを指定する
 
+## サンプル実装で気づいた点
+
+* Activity は destination に設定できるが「Set Start Destination」ができない
+* NavController.OnNavigatedListener を NavController に add, remove できる
+  * [疑問点]BottomNavigation では、タブ切り替えで HomeFragment の onNavigated が走る
+* Action に Launch Options を設定できる
+  * Single Top
+  * [疑問点]Document
+  * Clear Task
+* action がない場合は `java.lang.IllegalArgumentException: navigation destination com.github.mag0716.navigationsample:id/action_child is unknown to this NavController` になる
+* [疑問点] NavControl#navigate で別 Fragment へ遷移させると遷移元は onDestroy まで走る
+  * defaultNavHost 未指定時の動作。true にすれば、onDestroyView までになり、バックキーでスタックされた画面へ戻れるようになる
+* `override fun onSupportNavigateUp() = container.navController.navigateUp()` で Up Key と Navigation Graph を連動できる
+  * popUpTo が指定されていなかったらバックキーと同じ
+  * バックキーも popUpTo で指定された destination に遷移する
+  * Navigation を利用すると、アプリ終了以外はバックキー = Up キー
+  * [疑問点] 会員登録などで前の画面に戻したくない場合には使えるが、Up Key をいままで通りの遷移にするにはどうすればいいのか？
+* [疑問点] Up キーと Navigation Drawer は共存できない？
+  * Up キーは表示されるがタップしても Navigation Drawer が表示されてしまう
+  * NavigationView を無効化すると、開かなくなるが Up キーも動作しない
+  * onSupportNavigationUp よりも onOptionsItemSelected が優先
+  * NavigationUI.setupActionBarWithNavController
+    * stack に積まれると自動的に、Navigation Drawer が無効になり、Up キーに変わる
+* Activity 間の遷移に Action は使えない
+  * Destination が Activity だと、arguments と deep link しか定義できない
+  * Global Action は定義できるが、Activity から NavController を取得する方法がなさそうなので、Activity 間の遷移には利用できない
+  * deep link での遷移には利用できるが、Fragment のように Arguments から placeholder で指定した key で文字列を取得することはできない
+* Destination は arguments か action を 1つ以上定義するか、他の Destination で利用されている必要がある
+  * ` Destination with arguments or action mush have either name either id attributes`
+    * [はまった] navigation タグに id を指定する必要がある(https://issuetracker.google.com/issues/79627172)
+* Menu と Navigation Graph との連動は NavigationUI.onNavDestinationSelected を使う
+  * 遷移時にフェードっぽいアニメーションがはいる
+
+## その他のサンプルの確認
+
+### [Android Architecture Components Navigation Basic Sample](https://github.com/googlesamples/android-architecture-components/tree/master/NavigationBasicSample)
+
+* MainActivity
+  * TitleScreen(Start Destination)
+    * register
+    * leaderboard
+  * Register
+    * match
+  * Leaderboard
+    * userProfile
+  * Match
+    * in_game
+  * UserProfile
+    * deep link
+    * arguments
+  * InGame
+    * resultsWinner
+    * gameOver
+  * Winner
+    * leaderboard
+    * match
+  * GameOver
+    * match
+
+上記の画面構成で 1 Activity、複数 Fragment
+起動直後は必ず TitleScreen から始まり、順番に遷移していく
+Winner, GameOver で popUpTo で match が指定されている他は特殊なことは行っておらず Codelab と同じで Fragment の遷移のための Navigation Graph
+Leaderboard から UserProfile の遷移でデータ受け渡しのために Bundle を生成している
+
 ## 疑問点
 
 * Navigation Editor の Create Destination で候補に上がるのは何？
 * 遷移先での結果が必要な場合(startActivityForResult)ではどうする？
+  * 1.0.0-alpha1 では対応していないので、今まで通り実装する必要がある
+  * https://issuetracker.google.com/issues/79672220
 * 遷移時にデータを渡す場合はどうする？
   * NavigationController#navigate に Bundle を渡せる
   * <arguments> タグでも渡せる
@@ -171,4 +237,8 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * Activity 間の遷移
 * Fragment から ChildFragment への遷移
 * Navigation Editor の The Destinations list に Host というのがあるがこれは何？
+  * NavHostsFragment が定義されているリソース
 * <argment> の type には何が指定できる？
+  * string
+  * integer
+  * reference
