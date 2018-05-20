@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         container = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
 
+        // TODO: ActionBar と Navigation Graph の連動(Codelab)
+        // これで共存させても動作するようになるが、stack に積まれると Navigation Drawer が Up キーとなる
+        // BottomNavigationView のタブ切り替えでも stack に積まれるので希望の動作ではない
+        //NavigationUI.setupActionBarWithNavController(this, container.navController, drawer_layout)
+
         // TODO: Up キーと Navigation Drawer を共存させると、Navigation Drawer が動作するみたいなので解決策が分かるまで無効化
 //        toggle = ActionBarDrawerToggle(
 //                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)

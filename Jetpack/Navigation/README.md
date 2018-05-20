@@ -181,6 +181,8 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * Up キーは表示されるがタップしても Navigation Drawer が表示されてしまう
   * NavigationView を無効化すると、開かなくなるが Up キーも動作しない
   * onSupportNavigationUp よりも onOptionsItemSelected が優先
+  * NavigationUI.setupActionBarWithNavController
+    * stack に積まれると自動的に、Navigation Drawer が無効になり、Up キーに変わる
 
 ## その他のサンプルの確認
 
