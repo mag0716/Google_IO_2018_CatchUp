@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/mainFragment">
 
     <activity
         android:id="@+id/mainActivity"
@@ -16,6 +16,15 @@
         tools:layout="@layout/activity_second">
         <deepLink app:uri="com.github.mag0716/data/{data}" />
     </activity>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.github.mag0716.activitytransition.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_secondActivity"
+            app:destination="@id/secondActivity" />
+    </fragment>
 
     <!--
     MainActivity -> SecondActivity の遷移に利用しようとしたが、Activity から NavController を取得する方法がないっぽい
