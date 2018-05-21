@@ -187,6 +187,8 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
   * Destination が Activity だと、arguments と deep link しか定義できない
   * Global Action は定義できるが、Activity から NavController を取得する方法がなさそうなので、Activity 間の遷移には利用できない
   * deep link での遷移には利用できるが、Fragment のように Arguments から placeholder で指定した key で文字列を取得することはできない
+  * Fragment -> Activity の遷移には Action を利用できる
+    * NavHostFragment から NavController を取得し、Action が定義されている Fragment を表示中であれば、該当の Action が Fragment からでも利用できる
 * Destination は arguments か action を 1つ以上定義するか、他の Destination で利用されている必要がある
   * ` Destination with arguments or action mush have either name either id attributes`
     * [はまった] navigation タグに id を指定する必要がある(https://issuetracker.google.com/issues/79627172)
