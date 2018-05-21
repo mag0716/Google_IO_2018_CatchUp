@@ -194,6 +194,9 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
     * [はまった] navigation タグに id を指定する必要がある(https://issuetracker.google.com/issues/79627172)
 * Menu と Navigation Graph との連動は NavigationUI.onNavDestinationSelected を使う
   * 遷移時にフェードっぽいアニメーションがはいる
+* destination に Nested Navigation Graph の id も指定できる
+  * [疑問点] onResume とかで未ログインだったらログイン画面へ遷移を試したが、`java.lang.IllegalArgumentException: navigation destination com.github.mag0716.nestednavigation:id/action_login is unknown to this NavController` になる
+    * ボタンタップ契機であれば遷移できる
 
 ## その他のサンプルの確認
 
