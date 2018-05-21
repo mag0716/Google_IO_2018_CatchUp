@@ -1,1 +1,1 @@
-include ':app', ':activitytransition'
+include ':app', ':activitytransition', ':nestednavigation'
