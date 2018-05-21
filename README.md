@@ -52,7 +52,7 @@ https://developer.android.com/preview/
 
 - [x] Android Jetpack: how to smartly use Fragments in your UI
 - [ ] Protips: a fresh look at advanced topics for Android experts
-- [ ] ★Android Jetpack: what's new in Architecture Components
+- [x] ★Android Jetpack: what's new in Architecture Components
 - [ ] Android Jetpack: what’s new in Android Support Library
 - [x] ★Android Jetpack: easy background processing with WorkManager
 
