@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/blankFragment">
+
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.github.mag0716.blankdestination.BlankFragment"
+        android:label="BlankFragment">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:type="integer" />
+        <action
+            android:id="@+id/action_count"
+            app:destination="@id/countFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countFragment"
+        android:name="com.github.mag0716.blankdestination.CountFragment"
+        android:label="fragment_count"
+        tools:layout="@layout/fragment_count">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:type="integer" />
+        <action
+            android:id="@+id/action_count"
+            app:destination="@id/countFragment" />
+    </fragment>
+</navigation>
