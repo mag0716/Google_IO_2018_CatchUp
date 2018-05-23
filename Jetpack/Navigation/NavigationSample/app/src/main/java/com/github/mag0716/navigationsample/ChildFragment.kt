@@ -2,10 +2,13 @@ package com.github.mag0716.navigationsample
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_child.*
 
 class ChildFragment : Fragment() {
@@ -35,10 +38,8 @@ class ChildFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button.setOnClickListener {
-            val activity = activity
-            if (activity is MainActivity) {
-                activity.moveToChild(count + 1)
-            }
+            Log.d(getTitle(), "${view.findNavController().graph.label}, ${Navigation.findNavController(view).graph.label}")
+            Navigation.findNavController(view).navigate(R.id.action_child)
         }
     }
 
