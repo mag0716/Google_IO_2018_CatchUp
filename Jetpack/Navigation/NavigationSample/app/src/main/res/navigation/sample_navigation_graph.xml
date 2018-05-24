@@ -10,56 +10,17 @@
         android:id="@+id/homeFragment"
         android:name="com.github.mag0716.navigationsample.ParentFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_parent">
-        <argument
-            android:name="label"
-            android:defaultValue="home"
-            app:type="string" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/homeChildTopFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_parent" />
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.github.mag0716.navigationsample.ParentFragment"
         android:label="DashboardFragment"
-        tools:layout="@layout/fragment_parent">
-        <argument
-            android:name="label"
-            android:defaultValue="dashboard"
-            app:type="string" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/dashboardChildTopFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_parent" />
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.github.mag0716.navigationsample.ParentFragment"
         android:label="NotificationsFragment"
-        tools:layout="@layout/fragment_parent">
-        <argument
-            android:name="label"
-            android:defaultValue="navigation"
-            app:type="string" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/notificationsChildTopFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/homeChildTopFragment"
-        android:name="com.github.mag0716.navigationsample.ChildFragment"
-        android:label="HomeChildTopFragment"
-        tools:layout="@layout/fragment_child_top" />
-    <fragment
-        android:id="@+id/dashboardChildTopFragment"
-        android:name="com.github.mag0716.navigationsample.ChildFragment"
-        android:label="DashboardChildTopFragment"
-        tools:layout="@layout/fragment_child_top" />
-    <fragment
-        android:id="@+id/notificationsChildTopFragment"
-        android:name="com.github.mag0716.navigationsample.ChildFragment"
-        android:label="NotificationsChildTopFragment"
-        tools:layout="@layout/fragment_child_top" />
+        tools:layout="@layout/fragment_parent" />
 
     <!-- おそらく想定されていない定義方法 -->
     <!-- Global Action の利用するには navigation タグに id を指定する必要がある(https://issuetracker.google.com/issues/79627172) -->

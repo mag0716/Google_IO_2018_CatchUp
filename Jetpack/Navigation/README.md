@@ -199,6 +199,7 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
     * ボタンタップ契機であれば遷移できる
 * Fragment に NaHostFragment を持たせて別の Navigation Graph を指定して、NavHostFragment#findNavController を実行すると、Activity 側の Navigation Graph が取得される
   * [疑問点] NavController 取得の内部実装(なぜ、Activity 側の NavController が取得されるのか？)
+    * `container.findNavController` を実行すると、ParentFragment に対して、findNavController を行い、親の Fragment を順番に調べていくので、ParentFragment が管理されている Activity 側の NavHostFragment が取得されるため
 
 ## その他のサンプルの確認
 

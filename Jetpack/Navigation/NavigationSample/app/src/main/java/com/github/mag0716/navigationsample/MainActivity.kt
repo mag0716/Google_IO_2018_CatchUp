@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        container = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
+        container = supportFragmentManager.findFragmentById(R.id.containerMain) as NavHostFragment
 
         // ActionBar と Navigation Graph の連動(Codelabを参考にした)
         // FIXME:これで共存させても動作するようになるが、stack に積まれると Navigation Drawer が Up キーとなる。BottomNavigationView のタブ切り替えでも stack に積まれるので希望の動作ではない
@@ -81,10 +80,5 @@ class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
         Log.d(TAG, "updateToolbar $title, $hasUpKey")
         supportActionBar?.title = title
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    fun moveToChild(count: Int = 0) {
-        val bundle = bundleOf(ChildFragment.KEY to count)
-        container.navController.navigate(R.id.action_child, bundle)
     }
 }
