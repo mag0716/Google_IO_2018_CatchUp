@@ -45,7 +45,7 @@ https://developer.android.com/preview/
 - [x] Customize Material Components for your product
 - [x] What's new in Android
 - [x] ★What's new in Android development tools
-- [ ] Build the new, modular Android App Bundle
+- [x] Build the new, modular Android App Bundle
 - [x] Modern Android development: Android Jetpack, Kotlin, and more
 
 ### 2日目
