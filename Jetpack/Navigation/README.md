@@ -197,6 +197,9 @@ https://developer.android.com/topic/libraries/architecture/navigation/navigation
 * destination に Nested Navigation Graph の id も指定できる
   * [疑問点] onResume とかで未ログインだったらログイン画面へ遷移を試したが、`java.lang.IllegalArgumentException: navigation destination com.github.mag0716.nestednavigation:id/action_login is unknown to this NavController` になる
     * ボタンタップ契機であれば遷移できる
+* Fragment に NaHostFragment を持たせて別の Navigation Graph を指定して、NavHostFragment#findNavController を実行すると、Activity 側の Navigation Graph が取得される
+  * [疑問点] NavController 取得の内部実装(なぜ、Activity 側の NavController が取得されるのか？)
+    * `container.findNavController` を実行すると、ParentFragment に対して、findNavController を行い、親の Fragment を順番に調べていくので、ParentFragment が管理されている Activity 側の NavHostFragment が取得されるため
 
 ## その他のサンプルの確認
 

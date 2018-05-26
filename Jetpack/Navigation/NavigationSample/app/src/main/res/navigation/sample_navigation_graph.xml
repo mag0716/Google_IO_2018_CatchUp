@@ -3,86 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sample_navigation_graph"
+    android:label="sample_navigation_graph"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.github.mag0716.navigationsample.ParentFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_parent">
-        <argument
-            android:name="label"
-            android:defaultValue="home"
-            app:type="string" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/homeChildFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_parent" />
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.github.mag0716.navigationsample.ParentFragment"
         android:label="DashboardFragment"
-        tools:layout="@layout/fragment_parent">
-        <argument
-            android:name="label"
-            android:defaultValue="dashboard"
-            app:type="string" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/dashboardChildFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_parent" />
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.github.mag0716.navigationsample.ParentFragment"
         android:label="NotificationsFragment"
-        tools:layout="@layout/fragment_parent">
-        <argument
-            android:name="label"
-            android:defaultValue="navigation"
-            app:type="string" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/notificationsChildFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/homeChildFragment"
-        android:name="com.github.mag0716.navigationsample.ChildFragment"
-        android:label="HomeChildFragment"
-        tools:layout="@layout/fragment_child">
-        <argument
-            android:name="count"
-            android:defaultValue="0"
-            app:type="integer" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/homeChildFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/dashboardChildFragment"
-        android:name="com.github.mag0716.navigationsample.ChildFragment"
-        android:label="DashboardChildFragment"
-        tools:layout="@layout/fragment_child">
-        <argument
-            android:name="count"
-            android:defaultValue="0"
-            app:type="integer" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/dashboardChildFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/notificationsChildFragment"
-        android:name="com.github.mag0716.navigationsample.ChildFragment"
-        android:label="NotificationsChildFragment"
-        tools:layout="@layout/fragment_child">
-        <argument
-            android:name="count"
-            android:defaultValue="0"
-            app:type="integer" />
-        <action
-            android:id="@+id/action_child"
-            app:destination="@id/notificationsChildFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_parent" />
 
     <!-- おそらく想定されていない定義方法 -->
     <!-- Global Action の利用するには navigation タグに id を指定する必要がある(https://issuetracker.google.com/issues/79627172) -->
