@@ -71,3 +71,13 @@ https://developer.android.com/reference/androidx/navigation/fragment/package-sum
 * findNavController
   * 親の Fragment を辿っていき NavHostFragment だったら返す
   * なければ、Navigation#findNavController で rootView にセットされた NavController を返却する
+
+## androidx.navigation.ui
+
+### NavigationUI
+
+* setupWithNavController で BottomNavigationView と連動させる
+  * NavigationUI#onNavDestinationSelected が利用される
+    * タブタップでは、popUpTo がセットされた状態で navigate される
+      * replace が利用され、Fragment のみで保持していたデータは復帰しないので注意
+    * アニメーションもデフォルトのものが利用される
