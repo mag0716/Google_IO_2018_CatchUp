@@ -46,6 +46,62 @@
 * APK との違いはデバイスにインストールできないこと
 * Android App Bundles は1つの生成物が生成され、アップロード後に、Google Play が APKs を生成し、Dynamic Delivery を通じてユーザーに提供される
 
+### Test your app bundle with bundletool
+
+* Google Play がどうやって APKs を生成するのかやデバイスにインストール後にどのように振る舞うのかをテストするべき
+* bundletool, Gradle のコマンドラインツール, Android Studio, Google Play を使ってローカルでテストできる
+* ローカルでテストした後は、Google Play を通して(internal test track)テストするべき
+
+### Download dynamic feature modules with the Play Core Library
+
+* dynamic features を含んでいる場合は、Play Core Library にダウンロードを要求する
+* [android-dynamic-features](https://github.com/googlesamples/android-dynamic-features)
+
+### A note about Instant Apps
+
+* Android App Bundle と Instant Apps は両方ともモジュール化を有効とすることを目的としている
+* 将来、Android App Bundle は Instant Apps をサポートする
+
+### Get Started
+
+1. Android Studio 3.2 をダウンロードする
+2. Dynamic Delivery 用にプロジェクトを構成する
+3. Android App Bundle をビルドする
+4. bundletool を使ってテスト
+5. Google Play に署名を登録する
+6. Play Console からアップロードする
+
+#### Considerations for dynamic features beta tester
+
+* dynamic features を含む場合は、まずは[Beta Program](https://support.google.com/googleplay/android-developer/answer/9006925#beta) に登録する必要がある
+* Android 5.0 以上がサポート
+  * それ以前で利用するためには、Fusing を有効にする
+* SplitCompat を使うと、dynamic features に動的にダウンロードすることができる
+* dynamic feature のサイズが大きい場合は、ユーザに確認する必要がある
+* dynamic feature は `android:exported` に true を指定すべきではない
+  * 別のアプリがその Activity を起動する際に存在するとは限らないから
+* コードやリソースにアクセスする前にダウンロード済みかどうかを確認する必要がある
+* リリース前には Google Play を通じてテストする
+
+### Known issues
+
+* APK expansion files をサポートしていない
+  * Google Play は 100MB以下を必須としている
+  * base feature, dynamic feature はそれぞれ 100MB 以下で、制限を超えていたら警告が出る
+* 動的にリソーステーブルを修正するツールの利用は非推奨
+* dynamic module の manifest で base module に存在しないリソースを使用してはいけない
+  * Google Play が生成時の manifest のマージでリンクが壊れる
+* Android Studio 3.2 Canary 14
+  * base module のビルドバリアントを変更しても、dynamic feature のビルドバリアントが自動的に変わらない
+* base module と dynamic feature module のプロパティで異なる設定値が可能になっている
+  * デフォルトでは、dynamic feature module は base module の設定値を受け継ぐ
+* インストールは1つ以上の apk  が必要となるので、デバイスに手動で送る場合は注意が必要
+  * 失敗すると、実行時に問題が発生する
+* 現在、Google Play では、1つの APK で提供されている
+  * 近々、5.0 以上の端末で最適化された APK が提供されるようになる
+* dynamic feature module のダウンロードには、Play Store app の最新版がインストールされている必要がある
+  * それ以前の、Play Store app では、4.4 以下のデバイスと同じ動きになる
+
 ## [Build, deploy, and upload Android App Bundles](https://developer.android.com/guide/app-bundle/build)
 
 ## [Download modules with the Play Core Library](https://developer.android.com/guide/app-bundle/playcore)
