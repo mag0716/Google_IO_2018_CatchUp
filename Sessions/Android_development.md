@@ -49,4 +49,29 @@
   * Avoid work when possible
   * Minimize memory consumption
 
-  ```
+## [Protips: a fresh look at advanced topics for Android experts (Google I/O '18)
+  ](https://www.youtube.com/watch?v=eHjHlujp3Tg)
+
+* prioritize efficiency
+* Avoid WakeLocks
+* Don't use undocumented APIs
+* Store strings and values as resources
+* Avoid transmitting / storing contacts & location
+
+* SyncAdapter
+  * -> JobScheduler
+  * -> WorkManager
+* Headless Fragments
+  * -> retained Fragment + Loader
+  * -> ViewModel
+* ContentProvider
+  * -> Room
+* Location Services
+  * LocationServices#getFusedLocationProviderClient
+  * -> Oreo : add restriction
+    * 1時間に数回しか更新されない
+      * Foreground Service
+      * Geofences
+        * Awareness
+* Controlling Media
+  * -> ExoPlayer
