@@ -104,6 +104,74 @@
 
 ## [Build, deploy, and upload Android App Bundles](https://developer.android.com/guide/app-bundle/build)
 
+* gradle.properties に `android.enableAapt2=true` を指定する必要がある
+  * 新規プロジェクトはデフォルトで有効になっている
+
+### The Android App Bundle format
+
+* .aab
+* Dynamic Delivery と呼ばれる Google Play がサポートする新しい提供モデル
+* 署名された ZIP ファイル形式で、Google Play が有効な APKs を生成する
+* 以下が Google Play によってモジュールごとに configuration APKs として利用される
+  * drawable
+  * values
+  * lib
+* App Bundle は以下の構成になっている
+  * base/, featuer1/, feature2/
+    * モジュールごとに配置される
+    * base module は常に配置される
+    * dynamic feature モジュールは split 属性によって命名される
+  * `*.pb`
+    * Protocol Buffer
+    * Google Play にコンテンツの概要を説明するメタ情報を提供する
+    * ex. BundleConfig.pb
+      * 地震の bundle についてのビルドバージョンなどの情報
+    * ex. resources.pb, native.pb
+      * デバイス設定ごとにどうやってコードやリソースを使うかの情報
+  * manifest/
+    * APKs のものとは異なる
+    * モジュールごとに存在する
+  * dex/
+    * APKs のものとは異なる
+    * モジュールごとに存在する
+  * root/
+    * あとでこのディレクトリがあるモジュールを含む apk のルートに再配置されるファイルが格納される
+      * ex. base/root/ : Class.getResource() でロードされるリソース
+    * このディレクトリも apk に再配置される
+    * コンテンツがモジュール間でコンフリクトしている場合は、Play Console のアップロードに失敗する
+  * res/, lib/, assets/
+    * 一般的な apk と同じ
+    * App Bundle をアップロードするとき、Google Play がデバイスの構成を満たすファイルのみを使ってパッケージ化する
+
+### Deploy your app from an app bundle
+
+* Android Studio の run/debug では、App Bundle の生成は行わない
+  * Instant Run は使えない
+  * Android Studio のビルドシステムは、App Bundle を生成してから、APKs を生成する必要がある
+* Android Studio を使ってデプロイする
+  * Run -> Edit Configurations
+  * Android App ノードを選択
+  * Deploy を「APK from app bundle」
+  * [表示されなかった] Dynamic features to deploy の下のチェックボックスを必要なモジュールを有効にする
+  * OK
+  * この設定後に実行すると、まずは、App Bundle を生成して、デバイスに必要な APKs が生成される
+  * dynamic feature module のダウンロード、インストールをテストしたい場合は、Play Console の internal test track を使う
+
+### Build an app bundle using Android Studio
+
+* Android Studio を使って生成する
+  * Build -> Build Bundle(s)/APK(s) -> Build Bundle(s)
+  * project-name/module-name/build/outputs/bundle/ に生成される
+
+* debug の場合は自動的にデバッグ署名で署名される
+* bundletool を使うことでデプロイすることが可能
+* App Bundle でも APK Analyzer のように解析可能
+* Android Studio も bundletool を使っている
+
+#### Build a signed app bundle for upload
+
+### Build an app bundle using Android Studio
+
 ## [Download modules with the Play Core Library](https://developer.android.com/guide/app-bundle/playcore)
 
 ## [Configure your project for Dynamic Delivery](https://developer.android.com/guide/app-bundle/configure)
