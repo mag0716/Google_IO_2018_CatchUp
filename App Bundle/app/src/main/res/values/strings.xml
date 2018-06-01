@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">AppBundlesSample</string>
+    <string name="app_name" translatable="false">AppBundlesSample</string>
+
+    <string name="test_text">Text</string>
 </resources>
