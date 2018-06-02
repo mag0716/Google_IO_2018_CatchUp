@@ -170,7 +170,52 @@
 
 #### Build a signed app bundle for upload
 
-### Build an app bundle using Android Studio
+* Play Console にアップロード前に署名済みの App Bundle を生成する必要がある
+  * Build -> Generate Signed Bundle/APK
+  * Generate Signed Bundle or APK
+    * Android App Bundle
+  * Module ドロップダウンメニュー
+    * base モジュールを選択
+  * keystore の情報を指定
+  * 出力先を指定
+* ポップアップメニューの locate リンクで出力先を表示できる
+
+### Build an app bundle from the command line
+
+* コマンドラインから生成する
+  * `build${Variant}`
+    * ex. `./gradlew :base:bundleDebug`
+  * 署名付きで生成したい場合は、build.gradle に署名情報を定義しておく
+  * ビルド後に署名する場合は、jarsigner を使う
+    * apksigner は App Bundle には使えない
+
+### Upload your app bundle to the Play Console
+
+* Play Console で解析、テスト、公開ができる
+* 以下のことを知っておくこと
+  * App Bundle をアップロード前に、App Signing を登録しておく必要がある
+  * dynamic feature modules を含んでいる場合は Play Console にアップロード、internal test は可能だが、公開は [Beta Program](https://support.google.com/googleplay/android-developer/answer/9006925#beta) に登録する必要がある
+  * 100 MB 以下のダウンロードをサポートしている
+    * base module, dynamic features ごとに 100MB 以下になっている必要がある
+    * アップロード後に制限に引っかかっているかはチェックしてくれる
+
+#### Inspect APKs using bundle explorer
+
+* Play Console にアップロードすると、全てのデバイス構成用に APKs を分割する
+* Play Console で App Bundle Explorer を利用できる
+  * 生成される APK
+  * どれだけサイズがセーブできたか
+  * ローカルテスト用に APKs のダウンロード
+
+#### Test Dynamic Delivery using the internal test track
+
+* 簡単にテストするためには、internal test track が利用できる
+* 登録されたテスターに素早く共有できる
+* Google Play から Dynamic Delivery としてダウンロードできる
+
+#### Update your app
+
+* internal test track へアップロードするには、versionCode をインクリメントする必要がある
 
 ## [Download modules with the Play Core Library](https://developer.android.com/guide/app-bundle/playcore)
 
