@@ -276,6 +276,7 @@
   * --device-spec:デバイス構成が記載された JSON ファイルのパス
 * `bundletool get-device-spec`
   * 接続されたデバイスの構成情報を取得する
+  * --output:(必須)出力先
 
 #### Manually create a device specification JSON
 

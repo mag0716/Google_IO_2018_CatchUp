@@ -43,6 +43,21 @@ Run with --stacktrace option to get the stack trace. Run with --info or --debug 
 * Get more help at https://help.gradle.org
 ```
 
+#### `bundletool get-device-spec`
+
+* --output オプションが必須
+* --output で指定したファイルがすでに存在している場合は失敗する
+```
+[BT:0.4.1] Error: File 'emulator.json' already exists.
+java.lang.IllegalArgumentException: File 'emulator.json' already exists.
+	at com.google.common.base.Preconditions.checkArgument(Preconditions.java:204)
+	at com.android.tools.build.bundletool.utils.files.FilePreconditions.checkFileDoesNotExist(FilePreconditions.java:32)
+	at com.android.tools.build.bundletool.commands.GetDeviceSpecCommand.execute(GetDeviceSpecCommand.java:137)
+	at com.android.tools.build.bundletool.BundleToolMain.main(BundleToolMain.java:80)
+	at com.android.tools.build.bundletool.BundleToolMain.main(BundleToolMain.java:44)
+
+```
+
 ## 疑問に思ったこと
 
 * .aab が署名されているかどうかはどうやって確認する？

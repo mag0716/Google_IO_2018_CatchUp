@@ -1,0 +1,6 @@
+{
+  "supportedAbis": ["x86"],
+  "supportedLocales": ["ja-JP"],
+  "screenDensity": 420,
+  "sdkVersion": 26
+}
