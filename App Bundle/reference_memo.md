@@ -222,3 +222,61 @@
 ## [Configure your project for Dynamic Delivery](https://developer.android.com/guide/app-bundle/configure)
 
 ## [Test Android App Bundles with bundletool](https://developer.android.com/guide/app-bundle/test)
+
+* App Bundle のテストには2種類ある
+  * bundletool を使って、ローカルでテストする
+  * Google Play の internal test track を利用する
+* bundletool
+  * Gradle, Android Studio, Google Play が利用するツール
+  * デプロイする端末の構成用の APKs へ変換するツール
+  * 通常は Android Studio を使うべきだが、CI などを利用する場合に利用する
+  * デフォルトでは、Android Studio では、bundletool を利用しないが、run/debug configuration の変更すると利用されるようになる
+
+### Download bundletool
+
+* https://github.com/google/bundletool/releases
+
+#### Generate a set of APKs from your app bundle
+
+* `*.apks` の、APK をまとめて管理するファイルが生成される
+  * 全てのデバイス構成用の APK が含まれる
+  * `bundletool bunild-apks`
+    * 未署名の APKs が生成される
+  * 署名する場合
+    * --ks:keystoreのパス
+    * --ks-pass:keystore のパスワード
+    * --ks-key-alias:エイリアス
+    * --key-pass:key エイリアスのパスワード
+* オプション
+  * --bundle:(必須) App Bundle のパス
+  * --output:(必須) APKs の出力先
+  * --aapt2:AAPT2 をカスタムする場合のパス
+    * デフォルトでは bundletool に AAPT2 のバージョンが含まれている
+  * --ks:keystoreのパス
+  * --ks-pass:keystore のパスワード、もしくは、パスワードが記載されたフィアルのパス
+  * --ks-key-alias:エイリアス
+  * --key-pass:エイリアスのパスワード、もしくは、パスワードが記載されたファイルのパス
+  * --universal:全てのデバイス構成で使える APKs を生成する場合に指定
+    * `<dist:fusing dist:include="true"/>` が含まれるモジュールのみ利用する
+    * あくまで、簡易テスト用で、最適化はされていない
+
+#### Deploy APKs to a connected device
+
+* Android 5.0 以上であれば、必要な構成のみインストールされる
+* Android 4.4 以下であれば、全ての APK がインストールされる
+* `bundle install-apks`
+  * --apks:APKs のパス
+  * 複数のデバイスが接続されている場合は、`--device-id` でインストールするデバイスを指定する必要がある
+
+#### Extract APKs for a specific device configuration
+
+* `bundletool extract apks`
+  * APKs から特定のデバイス構成用の APKs を抜き出す
+  * --output-dir:出力先
+  * --device-spec:デバイス構成が記載された JSON ファイルのパス
+* `bundletool get-device-spec`
+  * 接続されたデバイスの構成情報を取得する
+
+#### Manually create a device specification JSON
+
+* 自前で JSON ファイルを作成してもいい

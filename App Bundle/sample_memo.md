@@ -50,3 +50,4 @@ Run with --stacktrace option to get the stack trace. Run with --info or --debug 
 * internal test track を実案件でどう運用するのがよいか？
   * 署名ファイルは何をもらっておけばよいか？
   * クライアント側では何をしてもらう必要があるのか？
+* 端末が日本語設定でアプリをインストール後、英語に設定変更した場合、英語用のリソースはどうやってダウンロードされる？
