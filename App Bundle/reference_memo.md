@@ -217,9 +217,93 @@
 
 * internal test track へアップロードするには、versionCode をインクリメントする必要がある
 
-## [Download modules with the Play Core Library](https://developer.android.com/guide/app-bundle/playcore)
-
 ## [Configure your project for Dynamic Delivery](https://developer.android.com/guide/app-bundle/configure)
+
+* Dynamic Delivery をサポートするためにはビルド構成を変更する必要がある
+  * 大部分のプロジェクトでは、少しの作業で対応できる
+* dynamic feature modules
+  * Dynamic Delivery を通じて、ユーザーが必要な時に dynamic features をダウンロード、インストールすることができる
+  * こちらを対応するにはリファクタリングが必要になる
+  * まずは、アプリで対応する利点があるのかを検討する必要がある
+
+### Dynamic Delivery with split APKs
+
+* APKs の構成
+  * Base APK
+    * 他の APKs がアクセス可能なコード、リソースを含み、基本的な機能を提供する
+    * アプリのダウンロード時に最初にダウンロード、インストールされる
+    * manifest に全ての宣言を記述
+      * Services
+      * ContentProvider
+      * Permissions
+      * バージョン
+      * 他のモジュールへの依存
+    * base モジュールから生成される
+  * Configuration APKs
+    * 解像度、CPU アーキテクチャ、言語ごとのライブラリ、リソースを含む
+    * インストールするデバイスに合致する APKs のみインストールされる
+    * base, dynamic feature とは異なり、作成することはできない
+  * Dynamic feature APKs
+    * 特定機能のコード、リソースを含み、初回のインストール時には必須ではない
+    * Play Core Library を使って、 Base APK インストール後に提供される
+    * ex.チャットアプリ
+      * 写真の撮影、送信機能
+    * dynamic feature モジュール から生成される
+
+#### Devices running Android 4.4(API level 20) and lower
+
+* 4.4 以下では、APKs のダウンロード、インストールにサポートしていないので、1つの APK で提供される
+  * 全ての機能は含まれているが、不要なコード、リソースは含まれない
+* ダウンロードなしに言語設定を切り替えるようにしたいのであれば、全ての言語を APKs に含めることができる
+* dynamic feature モジュールを含めるためには、On-demand を無効化するか、Fusing を有効化する
+* 4.4 以下を対応するかに関わらず、Dynamic Delivery は利用できる
+
+### The base module
+
+* 初回のダウンロードサイズを減らすことを考えている場合は、base モジュールのコードはサイズに必ず含まれることを覚えておく必要がある
+* アプリのコア機能だけでなく、アプリ全体に影響を及ぼす、ビルド設定、マニフェストの定義を含む
+  * ex.App Bundle の署名は、base モジュール用に指定した情報で決定する
+  * ex.アプリのバージョンは、base モジュールの versionCode で決定する
+
+#### The base module manifest
+
+* マニフェストの定義は他のモジュールと類似している
+* dynamic feature modules を検討している場合は、以下に気をつける必要がある
+  * アプリの開始 Activity を定義する必要がある
+  * Android 6.0 以下では、モジュールのインストール完了前にアプリの再起動が必要
+    * 即座にアクセスする場合は、[SplitCompat](https://developer.android.com/guide/app-bundle/playcore#access_downloaded_modules) を含める必要がある
+  * Android 6.0 以下では、プラットフォームが manifest を適用する前に、アプリの再起動が必要
+    * dynamic feature 用の permissions や services の定義を base モジュールに持たせることを検討する
+
+#### The base module build configuration
+
+* dynamic feature modules の追加を検討している場合は、以下に気をつける必要がある
+  * App signing
+    * 署名情報を含める必要はないが、含める場合は、base module のみに含める
+  * Code shrinking
+    * code shrinking を有効化したい場合は、base module の build.gradle で定義する必要がある
+    * Proguard のカスタムルールは、dynamic feature modules に含めることができるが、`minifyEnabled` の設定は無視される
+  * The splits block is ignore
+    * App Bundle を生成する時、`android.splits` は無視される
+    * これらの設定を操作したい場合は、`android.bundle` を代わりに利用する
+  * App versioning
+    * versionCode, versionName は base module の定義で決定する
+
+#### Disable types of configuration APKs
+
+* デフォルトでは、App Bundle をビルドする時、configuration APKs は言語、解像度、ABI libraries ごとに生成される
+* `android.bundle` の設定で無効化することができる
+  * language, density, abi
+    * enableSplit に false 指定で、生成されなくなる
+
+#### Manage app updates
+
+* バージョンは base module の定義のみで管理可能
+* base module のバージョンが、全ての生成される APKs に利用される
+* アップデート時も今まで通り、base module のバージョンを上げるだけでよい
+  * Multiple APK の場合は、それぞれ管理する必要があった
+
+### Dynamic feature modules
 
 ## [Test Android App Bundles with bundletool](https://developer.android.com/guide/app-bundle/test)
 
@@ -281,3 +365,5 @@
 #### Manually create a device specification JSON
 
 * 自前で JSON ファイルを作成してもいい
+
+## [Download modules with the Play Core Library](https://developer.android.com/guide/app-bundle/playcore)
