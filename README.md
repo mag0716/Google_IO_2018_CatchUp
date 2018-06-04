@@ -63,4 +63,4 @@ https://developer.android.com/preview/
 - [x] Building feature-rich media apps with ExoPlayer
 - [ ] Effective ProGuard keep rules for smaller applications
 - [x] ★What's new with ConstraintLayout and Android Studio design tools
-- [ ] Android Jetpack: manage infinite lists with RecyclerView and Paging
+- [x] Android Jetpack: manage infinite lists with RecyclerView and Paging
