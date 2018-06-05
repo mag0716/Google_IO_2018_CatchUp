@@ -305,6 +305,91 @@
 
 ### Dynamic feature modules
 
+* リファクタリングが必要になるので、どの機能をモジュールに分割すれば効果があるのかを慎重に検討する必要がある
+* dynamic feature modules を含む場合は、internal test track へアップロードしてテストすることができる
+  * 現時点では、Beta Program に登録する必要がある
+* 一般的には、dynamic feature modules は通常の app modules として構成される
+  * ただし、dynamic feature 用の attribute が存在する
+
+#### Create a dynamic feature module
+
+* dynamic feature modules の作成の一番簡単な方法は Android Studio を利用すること
+  * dynamic feature modules は base app module との依存関係を持っているので、単一の module のプロジェクトに追加することができる
+* Android Studio の追加方法
+  * File -> New -> New Module
+  * Dynamic Feature Module を選択
+  * 以下を指定
+    * Base application
+    * Module name
+    * Package name
+    * Minimum API level
+      * base module と同じにするべき
+  * 以下を指定
+    * Enable on-demand
+      * `dist:onDemand`
+      * あとでのダウンロードを可能にする場合に有効にする
+      * 無効の場合は、初回のインストールに含まれる
+    * Module title
+      * `dist:title`
+      * 50文字以内
+      * ユーザがダウンロード時に利用される
+      * base module のリソースファイルに含めておく必要があり、Android Studio で生成すると、base module のリソースファイルに追加される
+    * Fusing
+      * `dist:fusing`
+      * 4.4 以下の端末でこのモジュールが必要な場合に有効にする
+      * Enable on-demand が有効な場合のみに、有効にできる
+  * Finish をクリック
+
+#### Dynamic feature module build configuration
+
+* build.gralde に `apply plugin: 'com.android.dynamic-feature'` が定義される
+
+##### What not to include in the dynamic feature module build configuration
+
+* dynamic feature modules は、base module に依存しているので、以下は省略する
+  * 署名情報
+  * `minifyEnabled`
+    * 難読化するかどうかは base module のみで定義する
+    * Proguard の設定ファイル自体はモジュールごとに指定することができる
+  * `versionCode`, `versionName`
+
+##### Establish a relationship to the base module
+
+* base module の build.gradle に `android.dynamicFeatures` を指定する
+* さらに、dynamic feature modules の build.gradle の dependencies に base module への依存を定義する
+
+##### Specify additional Proguard rules
+
+* dynamic feature modules ごとに Proguard の設定を定義する場合は、`consumerProguardFiles` に指定する
+  * これらの設定は他のモジュールの設定とマージされる
+
+##### Dynamic feature module manifest
+
+* split
+  * Play Core Library を使用してリクエストされた時に利用されるモジュールの名前を定義する
+  * Android Studio で生成する場合は含まれるので、手動で指定、編集するべきではない
+  * デフォルトでは、Android Studio で作成時に指定した、Module name が利用される
+* android:isFeatureSplit
+  * dynamic feature module かどうかを指定する
+    * base module と configuration module は false か省略する
+  * Android Studio で生成する場合は含まれるので、手動で指定、編集するべきではない
+* dist:module
+  * dynamic feature modules の attributes を指定するタグ
+* dist:onDemand
+  * あとからダウンロード可能にするかどうか
+* dist:title
+  * ダウンロード確認時などに表示されるモジュールのタイトル
+* dist:fusing
+  * 4.4 以下の端末に含めるかどうか
+* `android:exported` が true な Activity を Manifest に定義してはいけない
+  * dynamic feature modules はインストールされているかどうか分からないので、他のアプリからの起動可能とする Activity を用意してはいけない
+* dynamic feature modules の機能を使う場合は、ダウンロード済みかどうかを確認する
+
+### Deploy your app
+
+* Android Studio からアプリにインストールできる
+  * run/debug configuration で Dynamic feature to deploy で含めるかどうかを指定する
+
 ## [Test Android App Bundles with bundletool](https://developer.android.com/guide/app-bundle/test)
 
 * App Bundle のテストには2種類ある
