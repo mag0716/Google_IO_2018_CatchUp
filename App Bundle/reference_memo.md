@@ -452,3 +452,127 @@
 * 自前で JSON ファイルを作成してもいい
 
 ## [Download modules with the Play Core Library](https://developer.android.com/guide/app-bundle/playcore)
+
+* Play Core Library の API を使って必要な時にモジュールをダウンロード、インストールする
+  * Instant Apps のために利用することもできる
+  * [サンプル](https://github.com/googlesamples/android-dynamic-features)
+
+### Include the Play Core Library in your project
+
+* `implementation 'com.google.android.play:core:1.2.0'`
+
+### Request an on demand module
+
+* `SplitInstallManager` を通じて、dynamic feature module をリクエストする
+  * `split` で指定したモジュール名を指定する必要がある
+  * `SplitInstallManagerFactory.create` で `SplitInstallManager` を生成する
+  * `SplitInstallRequest`
+    * モジュールを複数同時にリクエストできる
+  * `SplitInstallManager#startInstall` で非同期でインストールを開始する
+* fire-and-forget
+  * リクエストは送るが、成功したかどうかは監視しない
+  * インストールの完了や失敗を知るためには、リクエストの状態を監視する
+* すでにインストール済みの場合にリクエストしても OK
+  * リクエスト時にすぐに成功が帰ってくる
+  * インストール後は自動的に Google Play がアップデートしてくれる
+* モジュールのコードやリソースにアクセスするためには、`SplitCompat` を有効にする必要がある
+* Instant Apps には必須ではない
+
+#### Defer installation of on demand modules
+
+* すぐにダウンロードが必要でなければ、インストールをバックグラウンドで実行することができる
+  * `startInstall` の代わりに `deferredInstall` を使う
+  * 進捗をトラッキングすることはできない
+    * リクエスト前に、インストール済みかどうかをチェックすべき
+
+### Monitor the request state
+
+* `SplitInstallStateUpdatedListener` を `SlipatInstallManager` に登録する
+
+### Handle request errors
+
+* `addOnFailureListener`
+* `SplitInstallErrorCode`
+  * ACTIVE_SESSIONS_LIMIT_EXCEEDED : 他のダウンロードが実行中
+  * MODULE_UNAVAILABLE : 指定したモジュールが見つからない
+  * INVALID_REQUEST : リクエストが無効
+  * SESSION_NOT_FOUND : session ID が見つからない
+  * API_NOT_AVAILABLE : Play Core Library がサポートされていない(OSのバージョンが不足など)
+  * ACCESS_DENIED : パーミッション不足でリクエストを登録できない(一般的にはバックグラウンドで実行された)
+  * NETWORK_ERROR : ネットワークの問題で失敗
+  * INCOMPATIBLE_WITH_EXISTING_SESSION : すでにインストール済みのモジュールがリクエストに混ざっている
+  * SERVICE_DIED : リクエストをハンドリングするサービスが死んだ
+* 失敗した場合は、再試行とキャンセルを選べるダイアログを提供すべき
+* [Google Play Helper center](https://support.google.com/googleplay/answer/7513003) へのリンクを提供できる
+
+#### Handle state updates
+
+* `StateUpdatedListener.onStateUpdate`
+  * `SplitInstallSessionState#sessionId` で判断する
+  * インストール状態は、`SplitInstallSessionStatus`
+    * PENDING : ダウンロード開始待ち
+    * REQUIRES_USER_CONFIRMATION : ユーザの確認が必要(大体はダウンロードサイズの確認)
+    * DOWNLOADING : ダウンロード中(どこまで進んだかも取得可能)
+    * DOWNLOADED : ダウンロード完了、インストール開始前
+    * INSTALLING : インストール中
+    * INSTALLED : インストール済み(コードやリソースにアクセス可能)
+    * FAILED : インストール前に失敗
+    * CANCELING : キャンセル中
+    * CANCELED : キャンセル済み
+
+#### Obtain user confirmation
+
+* ダウンロード前にユーザの確認が必要になる
+  * ex.サイズが大きいダウンロードや通信量を使う場合のダウンロード
+  * `REQUIRES_USER_CONFIRMATION` が渡されるので、`startIntentSender` で確認のためのダイアログを表示する
+    * ダウンロードを選択 -> PENDING に移行
+    * キャンセルを選択 -> CANCELED に移行
+    * 選択前にダイアログが破棄 -> ステータスは覚えているので、再表示することができる
+
+#### Cancel an install request
+
+* `cancelInstall`
+  * session ID を指定する必要がある
+
+### Immediately access modules
+
+* すぐにコードやリソースにアクセスするためには、SplitCompat Library を有効にする必要がある
+* アプリの再起動するまでは、以下の制限はあるので注意
+  * 新しい Manifest に定義されたエントリーポイントは有効にならない
+  * Notifications などのシステム UI にはアクセスできない。アクセスしたい場合は、base module に持っておくこと
+
+#### Declare SplitCompatApplication in the manifest
+
+* Application クラスとして `com.google.android.play.core.splitcompat.SplitCompatApplication` を利用する
+  * Manifest ファイルに定義する
+
+#### Invoke SplitCompat at runtime
+
+* 継承して、カスタム Application を利用することもできる
+  * `attachBaseContext` で `SplitCompat.install` を呼び出す必要がある
+  * Instant Apps が有効な場合は、`InstantApps#isInstantApp` が　false の時のみ呼ばれるようにする
+
+### Access code and resources from installed modules
+
+* 大体のケースでは、INSTALLED になれば、アクセスできるようになる
+  * ただ、インストール後のアプリの Context が必要な場合は、`Context#createPackageContext` で Context を取得する必要がある
+
+#### Android Instant Apps on Android 8.0 and higher
+
+* Instant Apps のためにリクエストする際は再起動は必要ではない
+  * ただ、8.0 以上の場合、`SplitInstallHelper.updateAppInfo` を呼び出し、新しい Handler を起動し、リソースにアクセスする必要がある
+
+#### Load C/C++ libraries
+
+`SplitInstallHelper.loadLibrary`
+
+### Manage installed modules
+
+* `SplitInstallManager#getInstalledModules` でインストール済みのモジュールをチェックできる
+  * Instant Apps には適用不要
+
+#### Uninstall modules
+
+* `SplitInstallManager#deferredUninstall`
+  * 保存用の空き領域が必要になるので、即時にはアニンストールされず、バックグラウンドで実行される
+  * アンインストールされたかどうかは、`SplitInstallManager#getInstalledModules`
