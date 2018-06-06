@@ -61,6 +61,6 @@ https://developer.android.com/preview/
 - [x] ★Android Jetpack: manage UI navigation with Navigation Controller
 - [x] How to Kotlin - from the Lead Kotlin Language Designer
 - [x] Building feature-rich media apps with ExoPlayer
-- [ ] Effective ProGuard keep rules for smaller applications
+- [x] Effective ProGuard keep rules for smaller applications
 - [x] ★What's new with ConstraintLayout and Android Studio design tools
 - [x] Android Jetpack: manage infinite lists with RecyclerView and Paging
