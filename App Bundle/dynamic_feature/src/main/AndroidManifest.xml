@@ -1,11 +1,10 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
+<manifest xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.github.mag0716.dynamic_feature">
 
     <dist:module
         dist:onDemand="true"
         dist:title="@string/title_dynamic_feature">
-        <dist:fusing include="true" />
+        <dist:fusing dist:include="true" />
     </dist:module>
 </manifest>
 
