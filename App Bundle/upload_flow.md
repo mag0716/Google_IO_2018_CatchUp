@@ -4,7 +4,7 @@
   * アプリの生成は開発者が行う
   * アップロード用の署名ファイルは、開発者が管理しない可能性もある
 
-## (署名用の鍵を管理している場合)署名ファイルを Play Console に登録する
+## 署名ファイルを Play Console に登録する
 
 * https://support.google.com/googleplay/android-developer/answer/7384423
 
@@ -16,16 +16,25 @@
   * https://developer.android.com/studio/publish/app-signing
 1. Play Console を開く
 1. 「アプリの作成」を選択し、必要な情報を入力し、作成する
-1. 「アプリのリリース」を選択し、`*.aab`　をアップロードする
-  * テスト用の内部テスト版トラックで問題ない
-1. 「Google Play アプリ署名」で「次へ」を選択する
+1. 「アプリのリリース」を選択し、`*.aab`　のアップロード先を選択する
+![](./screenshot/new_application/flow4.png)
+  * 製品版でなくても、オープン、クローズなどでテスト用としてのリリースでも問題ない
+1. 「リリースを作成」を選択する
+![](./screenshot/new_application/flow5.png)
+1. 「Google Play アプリ署名」で「次へ」を選択し、Google App Signing を有効にする
+![](./screenshot/new_application/flow6.png)
 1. 「追加する Android App Bundle と APK」で、**アップロード用の署名ファイルで** 生成した、`*.aab`　を選択する
 1. 「リリース名」、「このリリースの新機能」などに適切な内容を設定し、「保存」を選択
+![](./screenshot/new_application/flow8.png)
 1. 「アプリの署名」を選択すると、「アプリへの署名証明書」「アップロード証明書」が登録されていることが確認できます
+![](./screenshot/new_application/flow9.png)
+
+アプリを公開するには、「ストアの掲載情報」「コンテンツのレーティング」「価格と販売/配布地域」で適切な情報を入力後に公開可能となります。
 
 ### 既存アプリ
 
 既存アプリの場合は、`*.aab` のリリース前に、Google Play App Signing を有効にする必要があります
+すでに Google Play App Signing が有効の場合は、実施不要です。
 
 1. アップロード用の署名ファイルを生成する
   * https://developer.android.com/studio/publish/app-signing
@@ -46,7 +55,12 @@
 
 ## アップロード用の鍵で `*.aab` を署名する
 
-開発者から未署名の `*.aab` が提供された場合、以下の作業が必要です
+開発者から未署名の `*.aab` が提供された場合、以下のコマンドで署名する必要があります
+
+`jarsigner -verbose -keystore my-release-key.keystore
+my_application.aab alias_name`
+
+参考：https://developer.android.com/guide/publishing/app-signing
 
 ## Play Console にアップロードする
 
