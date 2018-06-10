@@ -28,14 +28,12 @@ class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
 
     override fun onNavigated(controller: NavController, destination: NavDestination) {
         Log.d("MainActivity", "onNavigated : ${destination.label}")
-        // java.lang.IllegalStateException: FragmentManager is already executing transactions
-        // https://issuetracker.google.com/issues/79632233
-        // TODO: 未ログインの場合に LoginFragment へ遷移させたい
-//        when (destination.id) {
-//            R.id.profileFragment -> if (!isLoggedIn) {
-//                findNavController(R.id.container).navigate(R.id.action_login)
-//            }
-//            R.id.loginFragment -> isLoggedIn = true
-//        }
+        // 未ログインの場合に LoginFragment へ遷移させる
+        when (destination.id) {
+            R.id.profileFragment -> if (!isLoggedIn) {
+                findNavController(R.id.container).navigate(R.id.action_login)
+            }
+            R.id.loginFragment -> isLoggedIn = true
+        }
     }
 }
