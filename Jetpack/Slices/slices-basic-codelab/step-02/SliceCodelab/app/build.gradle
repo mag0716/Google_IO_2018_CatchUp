@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 'android-P'
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.android.example.slicecodelab"
         minSdkVersion 19
@@ -19,8 +19,8 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'androidx.slice:slice-core:1.0.0-alpha1'
-    implementation 'androidx.slice:slice-builders:1.0.0-alpha1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha3'
+    implementation 'androidx.slice:slice-core:1.0.0-alpha3'
+    implementation 'androidx.slice:slice-builders:1.0.0-alpha3'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
 }
