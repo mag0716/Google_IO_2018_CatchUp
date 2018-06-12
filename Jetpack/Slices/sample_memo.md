@@ -17,9 +17,18 @@
     * Slice を表示する時に Uri をバインディングする
     * SliceProvider は AndroidManifest.xml に定義
       * 全てのパーミッションを内部でチェックしているので export されていても安全
-  * step-02
-    * 現状では Slice を試すには Slice Viewer を使う
-      * Android Studio で Slice を試すには、Configurations を変更し、Launch Options に Uri を指定する
-      * コマンドラインから試すには、`adb shell am start -a android.intent.action.VIEW -d slice-<your slice URI>`
-    * タップ時にパーミッションの許可が必要
-    * アプリで値を変えて、Slice Viewer に戻ってくると値が反映される
+* step-02
+  * 現状では Slice を試すには Slice Viewer を使う
+    * Android Studio で Slice を試すには、Configurations を変更し、Launch Options に Uri を指定する
+    * コマンドラインから試すには、`adb shell am start -a android.intent.action.VIEW -d slice-<your slice URI>`
+  * タップ時にパーミッションの許可が必要
+  * アプリで値を変えて、Slice Viewer に戻ってくると値が反映される
+* step-03
+  * SliceAction
+    * PendingIntent が必要
+      * BroadcastReceiver は exported=false でよい  
+    * SliceAction に Icon を渡せる
+    * ボタンタップでのアクション
+    * View タップ時のアクションは、`setPrimaryAction`
+  * コンテンツの更新を Slice に通知するためには、`notifyChange` を利用する
+    * `SliceProvider#onBindSlice` が呼ばれる
