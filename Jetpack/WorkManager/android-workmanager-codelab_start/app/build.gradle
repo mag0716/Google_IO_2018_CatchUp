@@ -18,7 +18,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def work_version = "1.0.0-alpha01"
+def work_version = "1.0.0-alpha02"
+def stetho_version = "1.5.0"
 
 android {
     compileSdkVersion 27
@@ -61,4 +62,6 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espresso"
 
     implementation "android.arch.work:work-runtime:$work_version"
+
+    implementation "com.facebook.stetho:stetho:$stetho_version"
 }
