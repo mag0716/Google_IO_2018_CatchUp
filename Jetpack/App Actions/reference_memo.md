@@ -23,3 +23,14 @@
   * テキスト、画像、動画など操作可能な View を提供することができる
 
 ### Extend Actions with the Google Assistant
+
+* Google Assistant によって会話形式の新しい方法をユーザに提供し、500M 以上のデバイスに提供する
+  * ボイス、スマートディスプレイ、Cars、TVs、ヘッドホンなど
+
+## [Built in Intents](https://developers.google.com/actions/reference/built-in-intents/)
+
+* 生年月日を使った星占い
+* ジョーク
+* 引用
+* ゲーム
+* ウォータースポーツができるかどうか
