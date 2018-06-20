@@ -20,7 +20,7 @@ public class BlurWorker extends Worker {
 
     @NonNull
     @Override
-    public WorkerResult doWork() {
+    public Result doWork() {
         final Context applicationContext = getApplicationContext();
 
         WorkerUtils.makeStatusNotification("Doing " + TAG, applicationContext);
@@ -52,14 +52,14 @@ public class BlurWorker extends Worker {
                     .build());
 
             // If there were no errors, return SUCCESS
-            return WorkerResult.SUCCESS;
+            return Result.SUCCESS;
         } catch (Throwable throwable) {
 
             // Technically WorkManager will return WorkerResult.FAILURE
             // but it's best to be explicit about it.
             // Thus if there were errors, we're return FAILURE
             Log.e(TAG, "Error applying blur", throwable);
-            return WorkerResult.FAILURE;
+            return Result.FAILURE;
         }
     }
 }
