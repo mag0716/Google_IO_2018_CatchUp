@@ -16,7 +16,7 @@ public class CleanupWorker extends Worker {
 
     @NonNull
     @Override
-    public WorkerResult doWork() {
+    public Result doWork() {
         Context applicationContext = getApplicationContext();
 
         WorkerUtils.makeStatusNotification("Doing " + TAG, applicationContext);
@@ -39,10 +39,10 @@ public class CleanupWorker extends Worker {
                 }
             }
 
-            return WorkerResult.SUCCESS;
+            return Result.SUCCESS;
         } catch (Exception exception) {
             Log.e(TAG, "Error cleaning up", exception);
-            return WorkerResult.FAILURE;
+            return Result.FAILURE;
         }
     }
 }
