@@ -69,3 +69,54 @@
 
 * ConstraintLayout で2つの ConstraintSets を作成する
   * 1つ目は初期位置を表すレイアウトで、2つ目は最後の位置を表すレイアウト
+* ConstraintLayout だと、2つの レイアウトで ConstraintSets を初期化し、それらを適用できる
+  * このアプローチだと、アニメーション途中で中断できない。また、ユーザの入力で遷移をハンドリングすることはできない
+* MotionLayout だと、これらの問題を解決できる
+  * レイアウトは再利用することができる
+* MotionLayout
+  * `app:layoutDescription` に `MotionScene` を定義したファイルを指定する
+  * どの View を配置するかは定義するが、どこに配置するかなどは定義しない
+* MotionScene
+  * `<Transition>` タグを追加する
+  * `motion:constraintSetStart`：初期位置のレイアウト
+  * `motion:constraintSetEnd`：最終位置のレイアウト
+  * `motion:duration`：アニメーション時間
+
+#### OnSwipe handler
+
+* `<Transition>` タグ以下に定義できる
+* 指での動きとマッチさせた遷移を可能にする
+* `touchAnchorId`：追跡すべき View の ID
+* `touchAnchorSide`：View のどの端から指の動きを追跡するのか
+* `dragDirection`：指の動きの方向
+
+### Example 02 : self-contained MotionScene
+
+* MotionLayout は直接 ConstraintSets を定義することができる
+  * 1つのファイルで様々な ConstraintSets を維持することができる
+  * 他の属性やカスタム属性をハンドリングして、機能を追加することができる
+  * Android Studio の MotionEditor は、MotionScene ファイルのみをサポートする
+
+#### Interpolated Attributes
+
+* MotionScene ファイルの ConstraintSets で指定された属性は通常のレイアウト属性よりも多くをカバーしている
+  * alpha
+  * visibility
+  * elevation
+  * rotation, rotation[X / Y]
+  * translation[X / Y / Z]
+  * scaleX / Y
+* `motion:constraintSetStart`, `motion:constraintSetEnd` に、MotionScene ファイル内で定義した `ConstraintSet` の ID を指定できる
+  * `<ConstraintSet>` タグ内に定義する `<Constraint>` には、View のサイズや位置を定義する
+
+### MotionLayout attributes for development
+
+* `app:layoutDescription`：MotionScene のファイルを指定する
+* `app:applyMotionScene`：MotionScene を適用するかどうか
+* `app:showPaths`：モーションのパスを表示するかどうか。デバッグ用
+* `app:progress`：遷移の進捗値を0から1で指定する
+* `app:currentState`：現状の ConstraintSet を強制的に指定する
+
+### The End?
+
+* コードは https://github.com/googlesamples/android-ConstraintLayoutExamples
