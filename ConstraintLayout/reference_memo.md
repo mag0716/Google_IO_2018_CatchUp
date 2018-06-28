@@ -225,3 +225,10 @@
   * `progress = (position + positionOffset) / (numPages-1)`
 
 ### Using Lottie with MotionLayout
+
+* Lottie のアニメーションを `MotionLayout` と使うことができる
+* `LottieAnimationView` は `setProgress` を持っているので、`MotionScene` で指定する
+
+### Conclusion
+
+* 既存のレイアウトで `MotionLayout` を扱う方法を説明した
