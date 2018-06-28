@@ -120,3 +120,65 @@
 ### The End?
 
 * コードは https://github.com/googlesamples/android-ConstraintLayoutExamples
+
+## [Introduction to MotionLayout (part II)](https://medium.com/google-developers/introduction-to-motionlayout-part-ii-a31acc084f59)
+
+### Example 03 : Custom attribute
+
+* 位置に関係しない attribute を指定することができる
+* ConstraintSet にカスタム attribute 保持することができる
+  * `<CustomAttribute>`
+    * `attributeName`：指定した attribute 名の setter, getter を利用される(例：setBackgroundColor)
+    * 値には、`customColorValue`, `customIntegerValue`, `customFloatValue`, `customStringValue`, `customDimension`, `customBoolean`
+    * 初期状態と最終状態の ConstraintSet 両方に定義する必要がある
+
+### Example 04 : ImageFilterView (1/2)
+
+* `ImageFilterView` と呼ばれるユーティリティクラスが提供されている
+* 2つの画像を cross-fade して表示を切り替えるサンプル
+* `ImageFilterView` の使い方
+  * `<MotionLayout>` 以下に定義
+  * `app:altSrc` に別の画像を指定する
+* `<MotionScene>` で、`<CustomAttribute>` を定義し、`attributeName` に `crossfade` を指定する
+* `ImageFilterView` 内部実装
+  * AppCompatImageView のサブクラス
+  * 2枚の画像を LayerDrawable で管理
+  * cross-fade するための、setCrossfade, getCrossfade が定義されている
+  * 色を変更するための、setWarmth, getWarmth, setSaturation, getSaturation, setContrast, getContrast が定義されている
+
+### Example 05 : ImageFilterView (2/2)
+
+* `ImageFilterView` では以下の Custom Attribute で色を変更することができる
+  * `saturation`：0 = grayscale, 1 = original, 2 = hyper saturated
+  * `contrast`：1 = unchanged, 0 = gray, 2 = high contrast
+  * `warmth`：1 = neutral, 2 = warm(red tint), 0.5 = cold(blue tint)
+
+### Keyframes
+
+* MotionLayout では、途中の状態(resting states) は ConstraintSets で実装される
+  * 異なる画面サイズに正しく適用することができる
+  * 本質的には MotionLayout は ConstraintLayout のように振る舞う
+* 止まらずに通り過ぎるが、中間の状態を持ちたいケース
+  * 2つ以上の ConstraintSets を定義することもできるが、Keyframes を使うやり方が簡単
+  * 例えば、25% の移動量で赤色に変わって、50%の移動量で移動が開始されるなど
+
+### Example 06 : Keyframe (1/2), position
+
+* `KeyPosition` を指定することができる
+  * `pathRelative`
+  * `deltaRelative`
+  * `screenRelative`
+  * `<Transition>` 以下に `<KeyFrameSet>` を定義し、その中に定義する
+* 移動量が 50% の位置で、画面サイズの 25% 分だけ y 座標の位置を変更している
+
+### Example 07 : Keyframe (2/2), attribute
+
+* `KeyAttribute` を使うことで、attribute の値を指定することもできる
+  * サンプルでは、移動量が 50% の位置で、拡大率と回転を操作している
+    * 拡大率を 2倍
+    * 45度回転
+  * `<KeyFrameSet>` 以下に定義する
+
+### Conclusion
+
+* カスタム attribute と keyframe の利点を示すサンプル
