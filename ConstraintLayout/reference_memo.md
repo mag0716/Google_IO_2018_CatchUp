@@ -182,3 +182,46 @@
 ### Conclusion
 
 * カスタム attribute と keyframe の利点を示すサンプル
+
+## [Introduction to MotionLayout (part III)](https://medium.com/google-developers/introduction-to-motionlayout-part-iii-47cd64d51a5)
+
+* Part I & II では、MotionLayout の基本的な概念を説明
+* Part III では既存のアプリでどのように MotionLayout を使うことができるのか、CoordinatorLayout, DrawerLayout, ViewPager と統合するのかについて説明
+
+### Using MotionLayout with CoordinatorLayout
+
+* (CoordinatorLayoutでサンプルの動作を実現できるが、サンプルのために MotionLayout で実装している)
+* 既存のレイアウト、画面にモーションの追加をスクラッチから開発することなく可能
+* サンプルでは、スクロールで Toolbar の高さが変わり、タイトルの位置が変わる
+  * 一般的には、MotionLayout を使って、AppBarLayout 無いのToolbar の要素を置き換える
+  * さらに、CoordinatorLayout にアニメーションさせる
+  * setProgress を呼び出すことで MotionLayout の移動量をコントロールすることが可能
+    * AppBarLayout のオフセットの変更を検知し、setProgress に通知する `MotionLayout` のサブクラスを作成する(CollapsibleToolbar)
+* 実装方法
+  * `CoordinatorLayout` は通常通りで、`AppBarLayout` 内に定義するコンテンツに `Toolbar` の代わりに `CollapsibleToolbar` を使ったレイアウトを指定する
+  * `CollapsibleToolbar` では通常通りに View を配置する
+  * `MotionScene` でどのようにアニメーションするのかを定義する
+    * テキストの位置、背景色のアルファ値
+    * `<Transition>` の `dragDirection` には `dragUp` を指定
+  * どこを起点に回転するかは、レイアウト側に `transformPivotX`, `transformPivotY` で指定している
+
+### Using MotionLayout with DrawableLayout
+
+* `CoordinatorLayout` の時と同じように、`DrawableLayout` の移動量を `MotionLayout` に通知するために、`MotionLayout` のサブクラスを作成する必要がある(DrawerContent)
+  * onDrawerSlide の slideOffset の値を setProgress で渡すだけ
+* サンプルでは `DrawerLayout` 表示でコンテンツ側のサイズが変わり、`DrawerLayout` 内の View がアニメーションする
+* 実装方法
+  * `DrawerLayout` を定義するレイアウトファイルに、`DrawerContent` を定義する
+  * `DrawerContent` にはドロワーに表示する View を定義する
+  * `MotionScene` でどのようにアニメーションするのかを定義する
+    * ドロワーメニューのテキストの回転、移動
+    * コンテンツ側の拡大率、左側のマージン(メニューの幅)
+  * コンテンツ側が暗くなるのは、`DrawerLayout` の動作で、`MotionScene` では何も指定していない
+
+### Using MotionLayout with ViewPager
+
+* `CoordinatorLayout`, `DrawerLayout` と同様に ViewPager の位置を `MotionLayout` に渡すために、`MotionLayout` のサブクラスを作成する(ViewpagerHeader)
+  * `onPageScrolled` で移動量を setProgress で渡している
+  * `progress = (position + positionOffset) / (numPages-1)`
+
+### Using Lottie with MotionLayout
