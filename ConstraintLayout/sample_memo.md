@@ -98,6 +98,74 @@
     * `framePosition` に 0, 50, 100
     * `wavePeriod` に 0, 1, 0
 
+## CoordinatorLayout Example (1/3)
+
+* `CoordinatorLayout` と連携して、`TextView` を回転
+* motion_09_coordinatorlayout.xml
+  * `AppBarLayout` 以下に motion_09_coordinatorlayout_header.xml を include
+* motion_09_coorinatorlayout_header.xml
+  * `MotionLayout` のサブクラスである `CollapsibleToolbar` を利用
+* scene_09.xml
+  * `TextView` を `CoordinatorLayout` の移動量を元に回転、背景色のアルファ値を変更
+* `CollapsibleToolbar`
+  * `MotionLayout` を継承
+  * `AppBarLayout.OnOffsetChangedListener` を実装し、`onOffsetChanged` で、オフセット値を `setProgress` で渡す
+
+## CoordinatorLayout Example (2/3)
+
+* CoordinatorLayout Example (1/3) の動作 + 画面内に移動する `TextView` を追加
+* motion_10_coordinatorlayout.xml
+  * `AppBarLayout` 以下に motion_10_coordinatorlayout_header.xml を include
+* motion_10_coordinatorlayout_header.xml
+  * `MotionLayout` のサブクラスである `CollapsibleToolbar` を利用
+* scene_10_header.xml
+  * scene_09.xml の `Constraint` に加えて
+    * `TextView` を画面外から画面内に移動させる
+    * 背景画像の拡大率、表示位置を変更
+
+## CoordinatorLayout Example (3/3)
+
+* `CoordinatorLayout` と連携して、アイコンとテキストを画面中央から画面端に移動する
+* motion_11_coordinatorlayout.xml
+  * `AppBarLayout` 以下に motion_11_coordinatorlayout_header.xml を include
+* motion_11_coordinatorlayout_header.xml
+  * `MotionLayout` のサブクラスである `CollapsibleToolbar` を利用
+  * レイアウト調整用のダミーの `TextView` が配置されている
+* scene_11_header.xml
+
+## DrawerLayout Example (1/2)
+
+* `DrawerLayout` と連携して、コンテンツ部分を `DrawerLayout` と重ならない様に移動
+* motion_12_drawerlayout.xml
+  * `DrawerLayout` 以下に、motion_12_drawer_content, motion_12_drawerlayout_menu を include
+* motion_12_drawerlayout_content.xml
+  * `MotionLayout` のサブクラスである `DrawerContent` を利用
+* motion_12_drawerlayout_menu.xml
+  * `DrawerLayout` 内に表示する View を定義
+* scene_12_content.xml
+  * `DrawerLayout` にコンテンツが重ならない様に、拡大率、マージンを変更
+* `DrawerContent`
+  * `MotionLayout` のサブクラス
+  * `DrawerLayout.DrawerListener` を実装
+  * `onDrawerSlide` でオフセット値を `setProgress` で渡す
+
+## DrawerLayout Example (2/2)
+
+* DrawerLayout Example (1/2) の動作 + メニューもモーションを追加
+* motion_13_drawerlayout.xml
+  * `DrawerLayout` 以下に、motion_12_drawer_content, motion_13_drawerlayout_menu を include
+* motion_13_drawerlayout_menu.xml
+  * メニューの View を回転、移動
+
+## Side Panel Example
+
+* `DrawerLayout` のようなメニュー表示を、`MotionLayout` のみで実装
+* motion_14_side_panel.xml
+  * `MockView` を利用
+* scene_14.xml
+  * `MockView` のサイズを変更
+  * コンテンツ部分の拡大率を変更
+
 ## 疑問点
 
 * `ImageFilterView` の saturation, contrast, warmth の変化でどう変わるか
@@ -105,3 +173,6 @@
 * `<ConstraintSet>` の定義位置が、`<MotionScene>` 直下、`<Transition>` 直下の定義
 * `<KeyCycle>`
   * sin, square, triangle, sawtooth, reverseSawtooth, cos, bounce
+* CoordinatorLayout Example (3/3) はダミーの `TextView` は本当にいるの？
+* どういう時に `MockView` を使うのか？
+  * ラベルと対角線を表示できる View で、レイアウト構築中に一時的な View として利用する
