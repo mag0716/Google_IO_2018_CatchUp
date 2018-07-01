@@ -166,6 +166,122 @@
   * `MockView` のサイズを変更
   * コンテンツ部分の拡大率を変更
 
+## Parallax Example
+
+* 4枚の画像をパララックスに移動
+* motion_15_parallax.xml
+  * `MotionLayout` のサブクラスである `ViewpagerHeader` を利用
+* scene_15.xml
+  * 各画像の位置を変更。マージンを変更することでパララックスを実現している
+* ViewpagerHeader
+  * `MotionLayout` を継承
+  * `ViewPager.OnPageChangeListener` を実装
+  * `onPageScrolled` で現在のページ数とオフセット値を `setProgress` で渡す
+
+## ViewPager Example
+
+* `ViewPager` と連携して、Parallax Example の動作を実現
+* motion_16_viewpager.xml
+  * motion_15_parallax.xml を include
+  * `TabLayout`, `ViewPager` を指定
+
+## ViewPager Lottie Example
+
+* `ViewPager` と連携して、Lottie のアニメーションを動作させる
+* motion_23_viewpager.xml
+  * `motion_23_parallax.xml` を include
+  * `TabLayout`, `ViewPager` の指定は、ViewPager Example と同じ
+* motion_23_parallax.xml
+  * `ViewpagerHeader` を利用
+  * `LottieAnimationView` を定義
+* scene_23.xml
+  * `progress` を 0 から 1 へ変更
+    * `LottieAnimationView` は `setProgress` が定義されている
+
+## Complex Motion Example (1/4)
+
+* CoordinatorLayout Example (2/3) を `CoordinatorLayout` を利用せずに実現
+* motion_17_coordination.xml
+  * `motion_17_coordinator_header`, `content_scrolling` を include
+* motion_17_coordination_header.xml
+  * scene_17_header.xml を指定
+  * `BoundsImageView` を背景画像の表示に利用
+* scene_17.xml
+  * ヘッダー部分の領域の高さを変更
+* scene_17_header.xml
+  * ヘッダー内の View の位置やサイズを変更
+* `BoundsImageView`
+  * `MockView` の様に対角線を描画
+
+## Complex Motion Example (2/4)
+
+* Complex Motion Example (1/4) の動作 + FAB の表示状態変更
+* motion_18_coordination.xml
+  * `motion_17_coordinator_header`, `content_scrolling` を include
+* scene_18.xml
+  * ヘッダー部分に加えて、FAB の位置とアルファ値を変更
+
+## Complex Motion Example (3/4)
+
+* Complex Motion Example (2/4) と同じ動作
+* motion_19_coordination.xml
+  * `motion_19_coordinator_header`, `content_scrolling` を include
+* motion_19_coordination_header.xml
+  * motion_17_coordination_header.xml から `Guideline` を削除
+* scene_19.xml
+  * scene_18.xml と同じ
+* scene_19_header.xml
+  * scene_17_header.xml とほぼ同じ。`Guideline` への制約がないだけ
+
+## Complex Motion Example (4/4)
+
+* 画面遷移直後にアニメーションを開始 + スワイプで View の位置を変更
+* motion_20_reveal.xml
+  * `ExampleFlyingBounceHelper` を利用
+* scene_20.xml
+* `ExampleFlyingBounceHelper`
+  * `ConstraintHelper` を継承
+  * `updatePreLayout` をオーバライドし、translationX を -2000 から 0 へアニメーションする、`ObjectAnimator` を開始する
+  * `KeyAttribute`, `KeyPosition` を指定し、矢印の画像を target に
+
+## Fragment Transition Example (1/2)
+
+* Fragment 表示領域のスワイプで Fragment の切り替え
+* main_activity.xml
+  * `MotionLayout` を利用
+    * `TouchFrameLayout` を指定
+* motion_21_second_fragment.xml
+  * `FadeIn`, `FadeOut` を利用
+* main_scene.xml
+  * 背景色を変更
+* `TouchFrameLayout`
+  * `FrameLayout` を継承
+  * `NestedScrollingParent2` を実装
+    * オーバーライドしたメソッドでは、親の `NestedScrollingParent2` を呼び出すだけ
+* `FragmentExampleActivity`
+  * `MotionLayout.TransitionListener` を実装
+    * 現在の progress によって、表示する Fragment を切り替える
+    * Fragment の切り替えには、replace を利用
+    * Fragment 切り替え時に `setCustomAnimations` でアニメーションを指定
+  * 画面遷移時に `MainFragment` を表示
+* `FadeIn`
+  * `MotionLayout` を継承
+  * `setProgress` をオーバーライドし、アルファ値を設定する
+* `FadeOut`
+  * `MotionLayout` を継承
+  * `setProgress` をオーバーライドし、アルファ値を設定する
+
+## Fragment Transition Example (2/2)
+
+* main_activity.xml
+* `FragmentExample2Activity`
+  * `FragmentExampleActivity` とほぼ同じ
+    * 遷移する Fragment が SecondFragment か ListFragment の違い
+* `ListFragment`
+  * `TouchFrameLayout` を利用し、セルが一番上にあるときに下にスワイプしたら閉じれる様にしている
+* list_scene.xml
+  * `ConstraintSet` は空
+
 ## 疑問点
 
 * `ImageFilterView` の saturation, contrast, warmth の変化でどう変わるか
@@ -176,3 +292,7 @@
 * CoordinatorLayout Example (3/3) はダミーの `TextView` は本当にいるの？
 * どういう時に `MockView` を使うのか？
   * ラベルと対角線を表示できる View で、レイアウト構築中に一時的な View として利用する
+* `Constrain` に指定する属性値は start, end で同じでも、`MotionScene` 以下に指定する必要があるのか？
+* Fragment Transition Example (1/2) の `FadeIn`, `FadeOut` はどこから `setProgress` が呼ばれているのか？
+  * `MotionHelper#setProgress` は子供の `MotionHelper` に対しても、`setProgress` を呼び出している
+* `MotionHelper` の使い道
