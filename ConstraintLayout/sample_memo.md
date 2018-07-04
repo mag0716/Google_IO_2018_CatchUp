@@ -293,6 +293,8 @@
 * どういう時に `MockView` を使うのか？
   * ラベルと対角線を表示できる View で、レイアウト構築中に一時的な View として利用する
 * `Constrain` に指定する属性値は start, end で同じでも、`MotionScene` 以下に指定する必要があるのか？
+  * 定義しないとだめ
+  * 特に、layout_width, layout_height は指定しないと表示もされないので注意
 * Fragment Transition Example (1/2) の `FadeIn`, `FadeOut` はどこから `setProgress` が呼ばれているのか？
   * `MotionHelper#setProgress` は子供の `MotionHelper` に対しても、`setProgress` を呼び出している
 * `MotionHelper` の使い道
