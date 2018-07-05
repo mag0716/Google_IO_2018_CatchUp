@@ -282,6 +282,22 @@
 * list_scene.xml
   * `ConstraintSet` は空
 
+## 追加調査結果
+
+### KeyCycle
+
+* アニメーション中にレイアウトのプロパティの波形をコントロールする
+* target：対象の View の ID
+* framePosition：フレームの位置(0:開始、100:終了)
+* waveShape：生成のための波形の形
+  * sin, square, triangle, sawtooth, reverseSawtooth, cos, bounce
+* wavePeriod：framePosition 周辺でのループ回数
+* waveOffset：属性値に追加するオフセット値
+  * [疑問]単位が不明
+* trantisionPathRotate：View のパスを基準にして回転に適用される cycle
+  * [疑問]何に利用するのかが不明
+* progress：この View 上で setProgress を呼び出す(ネストされている ConstraintLayout を呼び出すのに利用される)
+
 ## 疑問点
 
 * `ImageFilterView` の saturation, contrast, warmth の変化でどう変わるか
