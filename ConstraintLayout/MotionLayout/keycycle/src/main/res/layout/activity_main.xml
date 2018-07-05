@@ -15,4 +15,12 @@
         android:layout_height="wrap_content"
         android:background="@color/colorAccent" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/items"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.motion.MotionLayout>
