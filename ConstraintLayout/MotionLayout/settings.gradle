@@ -1,1 +1,1 @@
-include ':app', ':keycycle'
+include ':app', ':keycycle', ':imagefilterview'
