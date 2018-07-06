@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="items">
-        <item>motion_saturation</item>
-        <item>motion_contrast</item>
-        <item>motion_warmth</item>
+        <item>motion_saturation_1_0</item>
+        <item>motion_saturation_1_2</item>
+        <item>motion_contrast_1_0</item>
+        <item>motion_contrast_1_2</item>
+        <item>motion_warmth_1_05</item>
+        <item>motion_warmth_1_2</item>
     </string-array>
 </resources>
