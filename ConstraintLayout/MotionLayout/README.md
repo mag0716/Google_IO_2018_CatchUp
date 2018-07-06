@@ -37,3 +37,15 @@
 * app と同じ動作
 * `ConstraintSet` の定義位置を app とは異なり、`Transition` 以下に定義
 * https://developer.android.com/reference/android/support/constraint/motion/MotionLayout#transition には、`ConstraintSet` は記載がないが、定義できるらしい
+
+## keyframe
+
+* `KeyPosition` の `type` の違いを確認するサンプル
+* `parentRelative`
+  * 親のレイアウトからの相対位置を指定する
+    * ex. `percentX` を指定する場合
+      * 0:親レイアウトの上部
+      * 0.5:親レイアウトの中央
+      * 1:親レイアウトの下部
+* `pathRelative`
+* `deltaRelative`
