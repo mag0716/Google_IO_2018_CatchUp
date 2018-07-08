@@ -270,6 +270,7 @@
 * `FadeOut`
   * `MotionLayout` を継承
   * `setProgress` をオーバーライドし、アルファ値を設定する
+* `Fragment` の遷移時に、アニメーションを指定している。そのアニメーション内で `onShow` を変更していた
 
 ## Fragment Transition Example (2/2)
 
