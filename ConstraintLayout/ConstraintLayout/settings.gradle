@@ -1,1 +1,1 @@
-include ':virtual_layout', ':layer'
+include ':virtual_layout', ':layer', ':decorators'
