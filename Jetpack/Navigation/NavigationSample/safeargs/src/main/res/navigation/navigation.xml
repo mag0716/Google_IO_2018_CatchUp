@@ -23,8 +23,8 @@
         <argument
             android:name="data"
             android:defaultValue="@null"
-            app:argType="com.github.mag0716.safeargs.Data"
-            app:nullable="true" />
+            app:nullable="true"
+            app:type="com.github.mag0716.safeargs.Data" />
     </fragment>
 
 </navigation>
