@@ -4,7 +4,7 @@
 
 ## 対象バージョン
 
-1.0.0-alpha02
+1.0.0-alpha03
 
 ## サンプル
 
@@ -16,6 +16,15 @@
 | nestednavigation | conditional navigation の動作\nProfile 画面で未ログインだったら Login 画面へ遷移する。(#5) | 1.0.0-alpha02 |
 | toolbar | Toolbar 単体で利用する Activity のサンプル | 1.0.0-alpha03 |
 | safeargs | Safe Args Plugin のサンプル | 1.0.0-alpha03 |
+
+### app
+
+* Home, Dashboard, Notifications に切り替えで、ParentFragment へ遷移
+  * タブ切り替えで、各タブのバックスタックは復帰せず、必ず ParentFragment へ遷移できる
+* ParentFragment は ChildFragment へ遷移できる
+  * ChildFragment のバックキーでアプリが終了する
+* ChildFragment はさらに ChildFragment へ遷移できる
+  * ChildFragment のボタンをタップしても遷移しない
 
 ## 更新履歴
 
