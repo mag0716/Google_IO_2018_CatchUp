@@ -34,7 +34,7 @@
         tools:layout="@layout/activity_settings">
         <argument
             android:name="dummy"
-            app:type="string" />
+            app:argType="string" />
     </activity>
 
 </navigation>
