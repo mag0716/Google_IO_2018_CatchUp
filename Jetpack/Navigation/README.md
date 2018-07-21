@@ -4,7 +4,7 @@
 
 ## 対象バージョン
 
-1.0.0-alpha03
+1.0.0-alpha04
 
 ## サンプル
 
@@ -22,11 +22,29 @@
 * Home, Dashboard, Notifications に切り替えで、ParentFragment へ遷移
   * タブ切り替えで、各タブのバックスタックは復帰せず、必ず ParentFragment へ遷移できる
 * ParentFragment は ChildFragment へ遷移できる
-  * ChildFragment のバックキーでアプリが終了する
+  * ChildFragment のバックキーで前画面に遷移する
 * ChildFragment はさらに ChildFragment へ遷移できる
-  * ChildFragment のボタンをタップしても遷移しない
+  * ChildFragment のボタンをタップで、ChildFragment へ遷移するが、タイトル、ボタン名が正しく反映されていない
 
 ## 更新履歴
+
+### 1.0.0-alpha04
+
+#### API / Behavior Changes
+
+* `NavHostFragment` が現在の Fragment を primary Fragment として扱う様になった(https://issuetracker.google.com/issues/111345778)
+  * これで Fragment がネストされていても、バックキーが ChildFragmentManager に伝搬するようになった
+
+#### Safe Args
+
+* [Breaking Change] `app:type` は他のライブラリとコンフリクトしやすいので `app:argType` に変更された(https://issuetracker.google.com/issues/111110548)
+* Android Studio に表示される Safe Args Plugin のエラーメッセージがクリック可能になった(https://issuetracker.google.com/issues/111534438)
+* NonNull な引数に null を代入可能だった(https://issuetracker.google.com/issues/111451769)
+* Safe Args Plugin で生成されるメソッドに `@NonNull` が指定されるようになった(https://issuetracker.google.com/issues/111455456)
+
+#### Bug Fixes
+
+* Deep Link からの起動で、バックキーで Toolbar が更新されない不具合(https://issuetracker.google.com/issues/111515685)
 
 ### 1.0.0-alpha03
 
