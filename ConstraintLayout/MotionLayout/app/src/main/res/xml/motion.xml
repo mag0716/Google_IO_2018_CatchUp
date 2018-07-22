@@ -10,6 +10,9 @@
             motion:dragDirection="dragRight"
             motion:touchAnchorId="@id/view"
             motion:touchAnchorSide="right" />
+        <OnClick
+            motion:mode="toggle"
+            motion:target="@id/button" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -31,6 +34,6 @@
             android:layout_marginEnd="8dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"/>
+            motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 </MotionScene>

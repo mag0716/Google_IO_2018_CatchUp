@@ -12,25 +12,15 @@ class MainActivity : AppCompatActivity(), MotionLayout.TransitionListener {
         const val TAG = "motionhelper"
     }
 
-    var currentId = R.id.start
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         motion_layout.setTransitionListener(this)
-        button.setOnClickListener {
-            if (currentId == R.id.start) {
-                motion_layout.transitionToEnd()
-            } else {
-                motion_layout.transitionToStart()
-            }
-        }
     }
 
     override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
         Log.d(TAG, "onTransitionCompleted : currentId = $currentId")
-        this.currentId = currentId
     }
 
     override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
