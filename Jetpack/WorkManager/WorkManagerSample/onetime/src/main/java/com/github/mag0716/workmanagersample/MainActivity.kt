@@ -23,9 +23,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startOneTimeWork() {
-        val inputData = LoggingWorker.createInputData(TAG)
         val work = OneTimeWorkRequestBuilder<LoggingWorker>()
-                .setInputData(inputData)
+                .setInputData(LoggingWorker.createInputData(TAG))
                 .build()
         // ENQUEUED -> RUNNING -> SUCCEEDED の順だが、ENQUEUED が出力されない場合もある
         WorkManager.getInstance()!!.getStatusById(work.id)

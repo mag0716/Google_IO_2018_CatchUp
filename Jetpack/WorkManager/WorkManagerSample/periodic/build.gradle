@@ -38,4 +38,6 @@ dependencies {
 
     implementation "android.arch.work:work-runtime:$workmanager_version"
     implementation "android.arch.work:work-runtime-ktx:$workmanager_version"
+
+    implementation project(path: ':common')
 }
