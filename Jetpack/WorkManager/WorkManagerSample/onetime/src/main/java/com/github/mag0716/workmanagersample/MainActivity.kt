@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
         val work = OneTimeWorkRequestBuilder<LoggingWorker>()
                 .build()
         // ENQUEUED -> RUNNING -> SUCCEEDED の順だが、ENQUEUED が出力されない場合もある
-        WorkManager.getInstance().getStatusById(work.id)
+        WorkManager.getInstance()!!.getStatusById(work.id)
                 .observe(this, Observer { status ->
                     Log.d(TAG, "observe : status = $status")
                 })
-        WorkManager.getInstance().enqueue(work)
+        WorkManager.getInstance()!!.enqueue(work)
     }
 }
