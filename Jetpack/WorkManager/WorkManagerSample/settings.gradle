@@ -1,1 +1,1 @@
-include ':onetime'
+include ':common', ':onetime', ':periodic'

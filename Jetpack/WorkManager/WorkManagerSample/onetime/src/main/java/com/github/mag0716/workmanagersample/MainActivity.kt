@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.github.mag0716.common.LoggingWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startOneTimeWork() {
+        val inputData = LoggingWorker.createInputData(TAG)
         val work = OneTimeWorkRequestBuilder<LoggingWorker>()
+                .setInputData(inputData)
                 .build()
         // ENQUEUED -> RUNNING -> SUCCEEDED の順だが、ENQUEUED が出力されない場合もある
         WorkManager.getInstance()!!.getStatusById(work.id)
