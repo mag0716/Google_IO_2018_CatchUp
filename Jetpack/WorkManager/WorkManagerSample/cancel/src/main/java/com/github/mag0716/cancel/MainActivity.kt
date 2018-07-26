@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.github.mag0716.common.LoggingWorker
@@ -15,9 +16,8 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "Cancel"
     }
 
-    private val work = OneTimeWorkRequestBuilder<LoggingWorker>()
-            .setInputData(LoggingWorker.createInputData(TAG))
-            .build()
+
+    var work: OneTimeWorkRequest? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,18 +29,27 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun enqueue() {
-        val work = OneTimeWorkRequestBuilder<LoggingWorker>()
+        work = OneTimeWorkRequestBuilder<LoggingWorker>()
                 .setInputData(LoggingWorker.createInputData(TAG))
                 .build()
-        // ENQUEUED -> RUNNING -> SUCCEEDED の順だが、ENQUEUED が出力されない場合もある
-        WorkManager.getInstance().getStatusById(work.id)
-                .observe(this, Observer { status ->
-                    Log.d(TAG, "observe : status = $status")
-                })
-        WorkManager.getInstance().enqueue(work)
+        val work = work
+        if (work != null) {
+            // ENQUEUED -> RUNNING -> SUCCEEDED の順だが、ENQUEUED が出力されない場合もある
+            WorkManager.getInstance().getStatusById(work.id)
+                    .observe(this, Observer { status ->
+                        Log.d(TAG, "observe : status = $status")
+                    })
+            WorkManager.getInstance().enqueue(work)
+        }
     }
 
     private fun cancel() {
-        WorkManager.getInstance().cancelWorkById(work.id)
+        val work = work
+        if (work != null) {
+            // CANCELLED が呼ばれる
+            // LoggingWorker#doWork 内の処理が止まるわけではない(doWork finish!! が出力される)
+            // SUCCEEDED 後にキャンセルしても何も出力されない
+            WorkManager.getInstance().cancelWorkById(work.id)
+        }
     }
 }
