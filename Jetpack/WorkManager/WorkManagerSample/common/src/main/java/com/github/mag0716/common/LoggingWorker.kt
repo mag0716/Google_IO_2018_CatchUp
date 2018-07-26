@@ -15,6 +15,11 @@ class LoggingWorker : Worker() {
         val tag = inputData.getString(KEY)
         Log.d(tag, "doWork start...")
         Thread.sleep(3000)
+
+        if (isCancelled) {
+            return Result.FAILURE
+        }
+
         Log.d(tag, "doWork finish!!")
         return Result.SUCCESS
     }
