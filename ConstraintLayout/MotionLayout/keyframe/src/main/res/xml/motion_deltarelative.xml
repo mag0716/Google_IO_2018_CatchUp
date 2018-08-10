@@ -9,9 +9,9 @@
         <KeyFrameSet>
             <KeyPosition
                 motion:framePosition="50"
+                motion:keyPositionType="deltaRelative"
                 motion:percentX="0.25"
-                motion:target="@id/view"
-                motion:type="deltaRelative" />
+                motion:target="@id/view" />
         </KeyFrameSet>
         <OnSwipe
             motion:dragDirection="dragRight"
