@@ -232,3 +232,155 @@
 ### Conclusion
 
 * 既存のレイアウトで `MotionLayout` を扱う方法を説明した
+
+## [Defining motion paths in MotionLayout](https://medium.com/@camaelon/defining-motion-paths-in-motionlayout-6095b874d37)
+
+### Introduction
+
+* この記事では KeyFrames について詳細を説明する
+* KeyFrames は特殊で一般的に利用されるものではない
+* アニメーションの定義に以下のような定義が可能
+  * Keyframes
+  * Position Keyframes
+  * Arc Motion
+  * Easing
+  * Attributes Keyframes
+  * Cycle Keyframes & TimeCycle Keyframes
+    * part V の記事で詳細が紹介される予定
+
+### Keyframes : a Rendez-vous in Time
+
+* Keyframes はある時間における状態を指定することができる
+* いくつかの種類をサポートしている
+  * KeyPosition
+  * KeyAttribute
+  * KeyCycle
+  * KeyTimeCycle
+* それぞれが独立した指定なのでいずれかのみを指定すればよい
+
+#### Common Attributes
+
+* Keyframes では共通の属性が提供される
+  * motion:framePosition
+    * 0 - 100
+    * Keyframe をいつ適用するのか？
+  * motion:target
+    * Keyframe が影響を与える View
+  * motion:transitionEasing
+    * default : linear
+    * 指定された時間での状態を計算するための easing curve
+  * motion:curveFit
+    * default : spline
+    * 指定された時間での状態を計算するための interpolation curve
+    * デフォルトの spline ではスムーズなアニメーションが実現される
+
+### Position Keyframes
+
+* もっとも利用することの多い属性でアニメーションのパスを変更することができる
+  * 直線的なアニメーションを Keyframe を指定することで曲線的なアニメーションに変更できる
+  * 複数の Keyframe を指定することで複雑なアニメーションを作成することも可能
+
+#### Why Position Keyframes?
+
+* ConstraintSets でフレキシブルな方法が提供されているにも関わらず、Keyframes が提供されているのにはいくつかの理由がある
+  * Keyframes は一時的な状態を表し、ConstraintSet は休止状態を表す
+  * Keyframes は ConstraintSet よりも軽量
+  * Keyframes はアニメーションのパスの操作を可能とする
+    * ？ConstraintSets は他の View に対する相対的な View の位置を指定する
+* Note
+  * MotionScene に複数の ConstraintSets を定義することが可能
+  * 休止状態が複数存在する場合は、Keyframes の代わりに利用することができる
+  * ただし、状態の変更はリスナ上で行うためコードから行う必要がある
+
+#### XML Representation
+
+* `<KeyFrameSet>`
+  * `<Transition>` 内に定義される
+* `<KeyPosition>`
+  * `target`
+  * `framePosition`
+  * `keyPositionType`
+  * `percentX`, `percentY`
+    * 座標
+    * `keyPositionType` によって意味合いが変わる
+
+#### Different coordinate systems
+
+* システムは解像度、画面の向き、言語などの変換を正しくハンドリングする
+* このようなシステムで役立つ Keyframe の位置を指定するために固定の位置のみでなく指定された座標系(keyPositionType)で表現することができる
+* `keyPositionType`
+  * `parentRelative`
+  * `deltaRelative`
+  * `pathRelative`
+* Note
+  * keyPositionType は独立しているので、個別に位置を定義することが可能
+
+##### parentRelative
+
+* 親のコンテナからの相対位置で表現する
+  * 左下が (0,0)
+  * 右上が (1,1)
+* 一般的には大きなモーションが必要な時に利用する
+* 移動する View の開始位置と終了位置ではなく、親のサイズだけを元にしているので、最適ではない位置で終わる場合がある
+
+##### deltaRelative
+
+* 開始と終了位置を元に定義され、開始位置と終了位置の距離
+  * 開始位置が (0,0)
+  * 終了位置が (1,1)
+* `parentRelative` と同じように直感的な座標系
+  * ウィジェットを水平または垂直の動きで開始または終了させたい場合に便利
+* 開始位置と終了位置の距離で定義されるので、距離が小さい場合は、Keyframe が影響しない場合がある
+  * 例えば開始と終了が同じ高さの場合に `percentY` をしても効果はない
+
+##### pathRelative
+
+* 開始と終了との直線経路に対する相対的な位置として表現する
+  * 開始位置が (0,0)
+  * 終了位置が (1,0)
+* マイナス値もサポートされている
+* `deltaRelative` で表現できない場合に利用する
+* 特殊な座標系だが、時には役立つ
+  * S のような曲線の表現など
+
+### Arc Motion
+
+* マテリアルデザインでは一般的に利用される
+* Keyframes を指定して実現するのは1つのやり方
+* ConstraintLayout 2.0.0-alpha2 では、もっと簡単に実現する方法がある
+  * `motion:pathMotionArc`
+    * 開始位置の ConstraintSet に指定すると、Arc Motion になる
+  * `startHorizontal`
+    * 最初に水平方向に動いて Arc Motion を実現する
+  * `startVertical`
+    * 最初に垂直方向に動いて Arc Motion を実現する
+  * 合わせて KeyPosition を利用して複雑なアニメーションを作成することもできる
+    * `flip`
+      * KeyPosition で指定した位置から Arc Motion の方向を変更する(S 字のような曲線)
+    * `none`
+      * KeyPosition で指定した位置から Arc Motion を無効化する
+
+### Easing
+
+* アニメーションはパスだけではなくタイミングも重要
+* KeyPosition では移動速度などを変更することはできるが、開始、終了位置については変更できない
+  * これを変更するのが、`motion:transitionEasing`
+    * ConstraintSets か KeyFrame に適用する
+      * cubic : (x1,y1,x2,y2)
+      * standard, accelerate, decelerate
+        * マテリアルデザインの定義に類似している
+
+#### Standard easing
+
+* 一般的に非タッチ駆動のアニメーションで利用される
+* 開始、終了位置を停止させるのに有効
+
+#### Accelerate Easing
+
+* View を画面外に移動するときに利用する
+
+#### Decelerate Easing
+
+* View を画面外から移動するときに利用する
+
+### KeyAttribute
