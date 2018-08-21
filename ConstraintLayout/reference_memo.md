@@ -384,3 +384,44 @@
 * View を画面外から移動するときに利用する
 
 ### KeyAttribute
+
+* 指定した時間での View の属性の変更を指定することができる
+  * `<KeyPosition>` と似ているが、位置ではなく属性で動作する
+* `<KeyAttribute>`
+  * `framePosition` : 属性が変化する位置
+  * `target` : 属性を変化させる View
+
+#### Supported Attribute
+
+* `visibility`
+* `alpha`
+* `rotation`
+* `rotationX`
+* `rotationY`
+* `scaleX`
+* `scaleY`
+* `translationX`
+* `translationY`
+
+* 以下は API 21 以上で動作する
+  * `elevation`
+  * `translationZ`
+
+#### Custom Attributes
+
+* ConstraintSets と KeyAttribute で `<CustomAttribute>` を定義することができる
+  * `attributeName` に変化させる属性の名前を指定
+    * get/set プレフィックスを除く名前を指定する
+  * 属性値は以下を利用することができる
+    * `customColorValue`
+    * `customColorDrawableValue`
+    * `customIntegerValue`
+    * `customFloatValue`
+    * `customStringValue`
+    * `customDimension`
+    * `customBoolean`
+
+### Conclusion
+
+* keyframes と path についてカバーされていた
+* 次回の記事では `KeyCycle`, `KeyTimeCycle` についての予定
