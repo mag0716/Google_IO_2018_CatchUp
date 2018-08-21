@@ -1,1 +1,1 @@
-include ':app', ':keycycle', ':imagefilterview', ':constraintsetintransition', ':keyframe', ':motionhelper'
+include ':app', ':keycycle', ':imagefilterview', ':constraintsetintransition', ':keyframe', ':motionhelper', ':arcmotion', ':easing'
