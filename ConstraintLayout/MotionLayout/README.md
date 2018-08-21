@@ -65,6 +65,15 @@
   * `app:constraint_referenced_ids` を指定しているが、全ての `View` に対して alpha 値が変更されてしまう
 * アニメーションの最後に他の `Constraint` に引きづられて、alpha 値が 1 に戻ってしまう
 
+## arcmotion
+
+* `pathMotionArc` を指定した場合の動作を試すサンプル
+
+## easing
+
+* `transitionEasing` を指定した場合の動作を試すサンプル
+* `cubic` での指定でどう変わるのかが理解できていない
+
 ### 概要
 
 * `Animatable` を実装
