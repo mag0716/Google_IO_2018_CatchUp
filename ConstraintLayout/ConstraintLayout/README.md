@@ -1,6 +1,7 @@
 # ConstraintLayout Sample
 
 * ConstraintLayout の機能を試すサンプルプロジェクト
+* 2.0.0-alpha2
 
 ## [WIP] virtual_layout
 
@@ -25,6 +26,10 @@
 * `ConstraintHelper` を利用して、カスタム Decorator を試すサンプル
   * `updatePostLayout` で指定された View に対して背景色を指定する Decorator
   * 最終目標は https://www.youtube.com/watch?v=ytZteMo4ETk&t=24m55s のアニメーション
+
+## properties
+
+* [ConstraintProperties](https://developer.android.com/reference/android/support/constraint/ConstraintProperties)
 
 ### 疑問点
 
