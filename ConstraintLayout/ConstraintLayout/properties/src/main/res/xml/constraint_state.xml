@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ConstraintLayoutStates xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <State
+        android:id="@+id/state_default"
+        app:constraints="@layout/activity_main" />
+
+    <State
+        android:id="@+id/state_another"
+        app:constraints="@layout/activity_main_another" />
+
+</ConstraintLayoutStates>
