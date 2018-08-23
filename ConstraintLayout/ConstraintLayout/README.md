@@ -37,6 +37,7 @@
 
 * [ConstraintProperties](https://developer.android.com/reference/android/support/constraint/ConstraintProperties)
 * `onCreate` などで、レイアウトが確定する前に `ConstraintProperties#apply` を呼び出せば、ConstraintLayout 内の一部の View のレイアウトを変更することができる
+* `ConstraintSet` を変更時に受け取れる `postLayoutChange` でも変更可能
 
 ### 疑問点
 
