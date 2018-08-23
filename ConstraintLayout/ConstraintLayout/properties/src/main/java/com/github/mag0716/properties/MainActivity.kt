@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         applyTextProperties()
 
         // こっちは適用されない
+        // View のサイズ、レイアウトが確定した後に変更はできないぽい
         button.setOnClickListener {
             applyTextProperties()
         }
