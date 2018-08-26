@@ -42,3 +42,13 @@
 ### 疑問点
 
 * `ConstraintProperties` はどういった場合に利用するのか？
+
+## optimizer
+
+* optimizer による違いを確認するサンプル
+* どのように最低化されるのかを調べるのかが不明
+
+### 疑問点
+
+* measure, layout の回数を調べる方法
+  * Systrace は googlesamples/android-constraint-layout-performance を試したが記載通りの結果にならなかった
