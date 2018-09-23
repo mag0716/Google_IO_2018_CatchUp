@@ -4,26 +4,28 @@
 
 ## 対象バージョン
 
-1.0.0-alpha04
+1.0.0-alpha06
 
 ## サンプル
 
 | モジュール名 | 概要 | 作成バージョン |
 | --- | --- | --- |
 | app | デフォルト動作でない使い方のサンプルで不正な挙動となっている(#6) | 1.0.0-alpha02 |
-| blankdestination | startDestination にレイアウトのない Fragment を利用した(#8) | 1.0.0-alpha02 |
-| bottomnavigation | 通常の BottomNavigationView の動作(#12) | 1.0.0-alpha02 |
-| nestednavigation | conditional navigation の動作\nProfile 画面で未ログインだったら Login 画面へ遷移する。(#5) | 1.0.0-alpha02 |
+| blankdestination | startDestination にレイアウトのない Fragment を利用した(#8)<br/>スプラッシュを想定 | 1.0.0-alpha02 |
+| bottomnavigation | 通常の BottomNavigationView の動作(#12)<br/>replaceし直されるので、EditText の内容は復帰しない | 1.0.0-alpha02 |
+| nestednavigation | conditional navigation の動作<br/>Profile 画面で未ログインだったら Login 画面へ遷移する。(#5) | 1.0.0-alpha02 |
 | toolbar | Toolbar 単体で利用する Activity のサンプル | 1.0.0-alpha03 |
 | safeargs | Safe Args Plugin のサンプル | 1.0.0-alpha03 |
 
 ### app
 
 * Home, Dashboard, Notifications に切り替えで、ParentFragment へ遷移
-  * タブ切り替えで、各タブのバックスタックは復帰せず、必ず ParentFragment へ遷移できる
-* ParentFragment は ChildFragment へ遷移できる
+  * タブ切り替えで、各タブのバックスタックは復帰せず、必ず ParentFragment へ遷移する
+  * ただし、バックキーを使う場合は、バックスタックも保持した状態でタブの切り替えが行われる
+    * TODO: 1.0.0-alpha06で動作が変わったのかを確認する
+* ParentFragment は ChildFragment へ遷移する
   * ChildFragment のバックキーで前画面に遷移する
-* ChildFragment はさらに ChildFragment へ遷移できる
+* ChildFragment はさらに ChildFragment へ遷移する
   * ChildFragment のボタンをタップで、ChildFragment へ遷移するが、タイトル、ボタン名が正しく反映されていない
 
 ## 更新履歴

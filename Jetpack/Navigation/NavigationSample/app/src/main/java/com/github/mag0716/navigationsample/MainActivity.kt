@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
         // BottomNavigationView に渡す menu に指定する id は Navigation Graph の destination の id と同じにする必要がある
         NavigationUI.setupWithNavController(bottomNavigation, container.navController)
 
-        Log.d(TAG, "onCreate : ${container.navController.currentDestination.label}")
+        Log.d(TAG, "onCreate : ${container.navController.currentDestination?.label}")
     }
 
     override fun onResume() {
