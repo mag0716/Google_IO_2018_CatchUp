@@ -30,6 +30,45 @@
 
 ## 更新履歴
 
+### 1.0.0-alpha06
+
+* https://developer.android.com/jetpack/docs/release-notes#september_20_2018
+
+#### New Features
+
+* Shared Element Transitions に対応(https://developer.android.com/topic/libraries/architecture/navigation/navigation-implementing#shared-element)
+  * `FragmentNavigator.Extras`
+  * `ActivityNavigator.Extras`
+* BottomSheetDialogFragment に対応(https://issuetracker.google.com/issues/112158843)
+
+#### API Changes
+
+* [Breaking Change] navigate にパラメータが追加
+* `getGraph` が `NonNull` になった
+
+#### Bug Fixes
+
+* `NavigationUI.setupWithNavController` のリーク(https://issuetracker.google.com/issues/111961977)
+* `onSaveState` が複数回呼ばれていた不具合が修正(https://issuetracker.google.com/issues/112627079)
+
+#### Safe Args
+
+* Navigation が親の Navigation を継承するようになった(https://issuetracker.google.com/issues/79871405)
+* `toString` が実装された(https://issuetracker.google.com/issues/111843389)
+
+### 1.0.0-alpha05
+
+* https://developer.android.com/jetpack/docs/release-notes#august_10_2018
+
+#### Bug Fixes
+
+* バックキー遷移でバックスタックが不正になる(https://issuetracker.google.com/issues/111907708)
+* Args の equals が不正(https://issuetracker.google.com/issues/111450897)
+* git でブランチの切り替えをするとSafe Args でのビルドに失敗する(https://issuetracker.google.com/issues/109409713)
+* ドットが含まれた ID だと Safe Args のビルドに失敗する(https://issuetracker.google.com/issues/111602491)
+* Safe Args の nullability に関するエラーメッセージが変更
+* `@Nullable` が正しく追加されるようになる
+
 ### 1.0.0-alpha04
 
 #### API / Behavior Changes
