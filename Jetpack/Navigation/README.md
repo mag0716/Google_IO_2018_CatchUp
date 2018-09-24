@@ -16,6 +16,7 @@
 | nestednavigation | conditional navigation の動作<br/>Profile 画面で未ログインだったら Login 画面へ遷移する。(#5) | 1.0.0-alpha02 |
 | toolbar | Toolbar 単体で利用する Activity のサンプル | 1.0.0-alpha03 |
 | safeargs | Safe Args Plugin のサンプル | 1.0.0-alpha03 |
+| sharedelementtransition | [WIP] Fragment 間の遷移時に Shared Element Transition を利用するサンプル<br/>RecyclerView のセルからの遷移は上手くいかない | 1.0.0-alpha06 |
 
 ### app
 
