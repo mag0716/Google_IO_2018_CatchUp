@@ -3,6 +3,7 @@ package com.github.mag0716.sharedelementtransition
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : Fragment() {
@@ -59,10 +61,15 @@ class ListFragment : Fragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.view.setBackgroundColor(items[position].color)
             holder.textView.text = items[position].name
+            val transitionName = items[position].name
+            ViewCompat.setTransitionName(holder.view, transitionName)
             holder.root.setOnClickListener {
                 val action = ListFragmentDirections.actionMoveToDetail()
                 action.setItem(items[position])
-                it.findNavController().navigate(action)
+                val extras = FragmentNavigatorExtras(
+                        holder.view to transitionName
+                )
+                it.findNavController().navigate(action, extras)
             }
         }
 
@@ -70,14 +77,9 @@ class ListFragment : Fragment() {
 
     private class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val root: View
-        val view: View
-        val textView: TextView
+        val root: View = itemView.rootView
+        val view: View = itemView.findViewById(R.id.view)
+        val textView: TextView = itemView.findViewById(R.id.text)
 
-        init {
-            root = itemView.rootView
-            view = itemView.findViewById(R.id.view)
-            textView = itemView.findViewById(R.id.text)
-        }
     }
 }
