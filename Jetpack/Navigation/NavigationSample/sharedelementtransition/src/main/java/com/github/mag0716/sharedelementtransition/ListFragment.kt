@@ -1,6 +1,7 @@
 package com.github.mag0716.sharedelementtransition
 
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
@@ -10,9 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import kotlinx.android.synthetic.main.fragment_list.*
+import android.support.v4.util.Pair as UtilPair
 
 class ListFragment : Fragment() {
 
@@ -64,11 +66,22 @@ class ListFragment : Fragment() {
             val transitionName = items[position].name
             ViewCompat.setTransitionName(holder.view, transitionName)
             holder.root.setOnClickListener {
-                val action = ListFragmentDirections.actionMoveToDetail()
+                // to Fragment
+//                val action = ListFragmentDirections.actionMoveToDetailFragment()
+//                action.setItem(items[position])
+//                val extras = FragmentNavigatorExtras(
+//                        holder.view to transitionName
+//                )
+//                it.findNavController().navigate(action, extras)
+
+                // to Activity
+                val action = ListFragmentDirections.actionMoveToDetailActivity()
                 action.setItem(items[position])
-                val extras = FragmentNavigatorExtras(
-                        holder.view to transitionName
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        checkNotNull(activity),
+                        UtilPair.create(holder.view, transitionName)
                 )
+                val extras = ActivityNavigator.Extras(options)
                 it.findNavController().navigate(action, extras)
             }
         }
