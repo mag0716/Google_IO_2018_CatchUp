@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.fragment_top.*
 
 class TopFragment : Fragment() {
@@ -25,7 +27,8 @@ class TopFragment : Fragment() {
     class BottomSheetNavigationView : BottomSheetDialogFragment() {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             val navigationView = inflater.inflate(R.layout.view_bottom_sheet, container, false) as NavigationView
-
+            val mainActivity = requireActivity() as MainActivity
+            navigationView.setupWithNavController(mainActivity.findNavController(R.id.containerMain))
             return navigationView
         }
     }
