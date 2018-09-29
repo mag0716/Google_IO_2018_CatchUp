@@ -1,7 +1,7 @@
 package com.github.mag0716.sharedelementtransition
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailActivity : AppCompatActivity() {

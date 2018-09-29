@@ -1,7 +1,7 @@
 package com.github.mag0716.sharedelementtransition
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.transition.ChangeBounds
 import android.view.LayoutInflater
 import android.view.View

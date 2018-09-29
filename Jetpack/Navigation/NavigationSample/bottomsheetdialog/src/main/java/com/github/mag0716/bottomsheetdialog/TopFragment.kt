@@ -1,9 +1,9 @@
 package com.github.mag0716.bottomsheetdialog
 
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialogFragment
-import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.navigation.NavigationView
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +24,9 @@ class TopFragment : Fragment() {
         }
     }
 
-    class BottomSheetNavigationView : BottomSheetDialogFragment() {
+    class BottomSheetNavigationView : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            val navigationView = inflater.inflate(R.layout.view_bottom_sheet, container, false) as NavigationView
+            val navigationView = inflater.inflate(R.layout.view_bottom_sheet, container, false) as com.google.android.material.navigation.NavigationView
             val mainActivity = requireActivity() as MainActivity
             navigationView.setupWithNavController(mainActivity.findNavController(R.id.containerMain))
             return navigationView

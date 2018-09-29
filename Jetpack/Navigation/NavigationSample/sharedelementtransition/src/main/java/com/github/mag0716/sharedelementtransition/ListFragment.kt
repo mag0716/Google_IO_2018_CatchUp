@@ -1,12 +1,12 @@
 package com.github.mag0716.sharedelementtransition
 
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_list.*
-import android.support.v4.util.Pair as UtilPair
+import androidx.core.util.Pair as UtilPair
 
 class ListFragment : Fragment() {
 
@@ -46,12 +46,12 @@ class ListFragment : Fragment() {
                     Item("Gray", ContextCompat.getColor(context, R.color.gray500)),
                     Item("Blue Gray", ContextCompat.getColor(context, R.color.blueGray500))
             )
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = Adapter(items)
         }
     }
 
-    private inner class Adapter(val items: List<Item>) : RecyclerView.Adapter<ViewHolder>() {
+    private inner class Adapter(val items: List<Item>) : androidx.recyclerview.widget.RecyclerView.Adapter<ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false))
         }
@@ -88,7 +88,7 @@ class ListFragment : Fragment() {
 
     }
 
-    private class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         val root: View = itemView.rootView
         val view: View = itemView.findViewById(R.id.view)
