@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    android:label="navigation_graph"
+    app:startDestination="@id/topFragment">
+
+    <fragment
+        android:id="@+id/topFragment"
+        android:name="com.github.mag0716.bottomsheetdialog.TopFragment"
+        android:label="TopFragment"
+        tools:layout="@layout/fragment_top" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.github.mag0716.bottomsheetdialog.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.github.mag0716.bottomsheetdialog.HelpFragment"
+        android:label="HelpFragment"
+        tools:layout="@layout/fragment_help" />
+
+    <action
+        android:id="@+id/action_settings"
+        app:destination="@id/settingsFragment" />
+    <action
+        android:id="@+id/action_help"
+        app:destination="@id/helpFragment" />
+</navigation>
