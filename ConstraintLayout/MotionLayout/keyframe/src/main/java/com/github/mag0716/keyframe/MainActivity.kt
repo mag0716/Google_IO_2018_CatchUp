@@ -1,8 +1,8 @@
 package com.github.mag0716.keyframe
 
 import android.os.Bundle
-import android.support.constraint.motion.MotionLayout
-import android.support.v7.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
