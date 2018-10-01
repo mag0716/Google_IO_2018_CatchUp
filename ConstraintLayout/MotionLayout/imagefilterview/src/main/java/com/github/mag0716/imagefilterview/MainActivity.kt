@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
+import kotlinx.android.synthetic.main.activity_main.*
 
 // TODO: Spinner が一度でアニメーションすると表示されなくなる
 // MotionLayout 内にある View は全て MotionScene 内で Constraint を指定する必要がある？

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MotionLayout.TransitionListener {
 
