@@ -1,7 +1,7 @@
 package com.github.mag0716.motionhelper
 
 import android.content.Context
-import android.support.constraint.motion.MotionHelper
+import androidx.constraintlayout.motion.widget.MotionHelper
 import android.util.AttributeSet
 import android.view.View
 
