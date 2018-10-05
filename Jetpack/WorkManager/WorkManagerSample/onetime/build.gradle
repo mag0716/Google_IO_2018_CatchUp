@@ -20,6 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // FIXME:1.0.0-alpha09 の Issue に対する temporary workaround
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
 }
 
 dependencies {
