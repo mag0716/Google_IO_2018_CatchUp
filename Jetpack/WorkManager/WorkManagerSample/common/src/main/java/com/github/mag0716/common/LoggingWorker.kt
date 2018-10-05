@@ -1,14 +1,16 @@
 package com.github.mag0716.common
 
+import android.content.Context
 import android.util.Log
 import androidx.work.Worker
-import androidx.work.toWorkData
+import androidx.work.WorkerParameters
+import androidx.work.workDataOf
 
-class LoggingWorker : Worker() {
+class LoggingWorker(context: Context, workerParameters: WorkerParameters) : Worker(context, workerParameters) {
 
     companion object {
         private const val KEY = "Tag"
-        fun createInputData(tag: String) = mapOf(KEY to tag).toWorkData()
+        fun createInputData(tag: String) = workDataOf(KEY to tag)
     }
 
     override fun doWork(): Result {
