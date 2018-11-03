@@ -4,7 +4,7 @@
 
 ## 対象バージョン
 
-1.0.0-alpha06
+1.0.0-alpha07
 
 ## サンプル
 
@@ -31,6 +31,43 @@
   * ChildFragment のボタンをタップで、ChildFragment へ遷移するが、タイトル、ボタン名が正しく反映されていない
 
 ## 更新履歴
+
+### 1.0.0-alpha07
+
+* https://developer.android.com/jetpack/docs/release-notes#october_29_2018
+
+#### New Features
+
+* AppBarConfiguration が追加
+  * https://developer.android.com/topic/libraries/architecture/navigation/navigation-ui の AppBarConfiguration の章を参照
+  * アップボタンの表示・非表示処理が固定されていたので、カスタマイズが可能となるように追加された(https://issuetracker.google.com/issues/117333663)
+* Navigation Graph を引数で渡せるようになった
+  * 最初の Fragment にデータを渡すために修正された(https://issuetracker.google.com/issues/110300470)
+* カスタムスキーム用に Deep Link で `.`, `-`, `+` がサポートされた
+  * https://issuetracker.google.com/112806402
+
+#### Breaking Changes
+
+* navigation-testing-ktx は navigation-testing に含まれ公開されなくなる
+* navigation-testing は Kotlin standard library に依存するようになった
+* `NavController.setMetadataGraph`, `NavInflater.inflateMetadataGraph` が削除
+  * 複雑な Graph を設定することが可能なので悪い状況を引き起こす可能性があるのが理由(https://issuetracker.google.com/issues/118355937)
+* `<activity>` desitinations に `<action>` を設定できなくなった
+  * Issue Tracker の参照権限がなかったので理由は不明
+
+#### Bug Fixes
+
+* Deep Link のクエリを正しくパースするようになった(https://issuetracker.google.com/issues/110057514)
+* Activity の遷移アニメーションが正しく適用されるようになった(https://issuetracker.google.com/issues/117145284)
+* カスタム Navigation 利用時の画面回転での強制終了の修正(https://issuetracker.google.com/issues/110763345)
+
+#### Safe Args
+
+* Android Gradle Plugin 3.2.1 に依存するようになった
+  * Android Studio 3.3 だと Sync に失敗する(https://issuetracker.google.com/issues/113167627)
+* Directions が inner クラスで生成できるようになった(https://issuetracker.google.com/issues/117407555)
+  * 例：`android:name="com.example.OnboardingActivity$OnboardingStartFragment`
+* `<include>` での Directions の生成が修正(https://issuetracker.google.com/issues/116542123)
 
 ### 1.0.0-alpha06
 
