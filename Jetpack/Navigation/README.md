@@ -18,6 +18,7 @@
 | safeargs | Safe Args Plugin のサンプル | 1.0.0-alpha03 |
 | sharedelementtransition | [WIP] Fragment 間の遷移時に Shared Element Transition を利用するサンプル<br/>RecyclerView のセルからの遷移は上手くいかない | 1.0.0-alpha06 |
 | bottomsheetdialog | BottomSheetDialogFragment 内の NavigationView と Navigation Graph を連動させる | 1.0.0-alpha06 |
+| appbarconfiguration | Toolbar と AppBarConfiguration を紐づけて Up Button が表示される画面をカスタマイズする | 1.0.0-alpha07 |
 
 ### app
 

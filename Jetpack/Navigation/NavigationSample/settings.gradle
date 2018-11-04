@@ -1,1 +1,1 @@
-include ':app', ':activitytransition', ':nestednavigation', ':blankdestination', ':bottomnavigation', ':toolbar', ':safeargs', ':sharedelementtransition', ':bottomsheetdialog'
+include ':app', ':activitytransition', ':nestednavigation', ':blankdestination', ':bottomnavigation', ':toolbar', ':safeargs', ':sharedelementtransition', ':bottomsheetdialog', ':appbarconfiguration'
