@@ -1,11 +1,11 @@
 package com.github.mag0716.sharedelementtransition
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.transition.ChangeBounds
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
@@ -22,8 +22,10 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val argument = DetailFragmentArgs.fromBundle(arguments)
-        val item = argument.item
+        val argument = arguments?.let {
+            DetailFragmentArgs.fromBundle(it)
+        }
+        val item = argument?.item
 
         if (item != null) {
             detailImage.setBackgroundColor(item.color)
