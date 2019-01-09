@@ -33,6 +33,75 @@
 
 ## 更新履歴
 
+### 1.0.0-alpha09
+
+* https://developer.android.com/jetpack/docs/release-notes#december_18_2018
+* `android.arch.navigation:navigation-testing` の開発が終了
+* テストに関するドキュメントが増えた
+* https://www.youtube.com/watch?v=2k8x8V77CrU
+
+#### New Features
+
+* `menuCategory="secondary"` が `NavigationUI` のメソッド経由でポップされなくなった
+* `AppBarConfiguration` に `OnNavigateUpListener` にセットできるようになった
+
+#### Breaking Changes
+
+* `argType="reference"` を指定した `<argument>` の利用時に reference をパースせずに、ID が提供されるようになった
+* `onNavDestinationSelected`  がデフォルトで start destination がポップされるようになった
+    * MenuItem のポップを避けるために、`menuCategory="secondary"` が追加された
+* `fromBundle` が生成する `Args` が `@NonNull` になった
+
+#### Bug Fixes
+
+* deep link から 正しい `argType` でパースされるようになった(https://issuetracker.google.com/issues/110273284)
+* `Navigation` が public になった(https://issuetracker.google.com/issues/121059552)
+* Safe Args が Android Gradle Plugin 3.4 Canary 4 以上が必須になった(https://issuetracker.google.com/issues/119662045)
+
+### 1.0.0-alpha08
+
+* https://developer.android.com/jetpack/docs/release-notes#december_6_2018
+
+#### New Features
+
+* `NavigationUI` のメソッド利用時に自動的に `{argName}` が `android:label` のアクァリに使われるようになった
+    * Toolbar のタイトルを動的に変更できる
+* Support Library 28.0.0 に依存するように変更
+
+#### Breaking Changes
+
+* `OnNavigatedListener` -> `OnDestinationChangedListener`(https://issuetracker.google.com/issues/118670572)
+* `OnDestinationChangedListener` に `Bundle` が渡ってくるようになった(https://android-review.googlesource.com/c/platform/frameworks/support/+/837142/)
+* `clearTask`, `launchDocument` は削除される(https://issuetracker.google.com/issues/119628354)
+    * `popUpTo` を使う
+* `ActivityNavigator.Extras` がビルダーパターンを利用するようになり、`Intent.FLAG_ACTIVITY_*` をセットできるようになった(https://android-review.googlesource.com/c/platform/frameworks/support/+/828140/)
+* `NavController.onHandleDeepLink` が `handleDeepLink` にリネーム
+* サブクラス化する必要のないクラスやメソッドに `final` がついた(https://android-review.googlesource.com/c/platform/frameworks/support/+/835681/)
+* deprecated だった `NavHostFragment.setGraph()` が削除
+* deprecated だった `NavigationUI.navigateUp()` が削除
+* Fragment の生成が `FragmntNavigator` に移動
+* `NavGraphNavigator` のコンストラクが `Context` が不要になった
+* `NavigatorProvider` が interface から class になって、`SimpleNavigatorProvider` がデフォルト実装になった
+* `NavDestination.navigate` が削除され、`Navigator.navigate` に変更された
+* `Navigator` がリファクタリングされた
+    * ? `OnNavigatorNavigatedListener` が不要になった
+    * `navigate` が `NavDestination` が返却されるようになった
+* `Navigator` が `NavController` に pop イベントを送信しなくなった
+    * バックキーをハンドリングしたければ、`OnBackPressedCallback` を利用する
+
+#### Bug Fixes
+
+* `<navigation>` 要素が destination の時に `popUpTo` が動作するようになった(https://issuetracker.google.com/issues/116831650)
+* `IllegalArgumentException` が発生する不具合の修正
+* `<activity>` の `dataPattern` に渡す String 以外のデータが `toString` から生成されるようになった(https://issuetracker.google.com/issues/120161365)
+
+#### Safe Args
+
+* Serializable objects、Enum をサポート
+* 配列をサポート
+* リソースディレクトリのサブフォルダーを無視するようになった
+* `@Override` が追加された
+
 ### 1.0.0-alpha07
 
 * https://developer.android.com/jetpack/docs/release-notes#october_29_2018
