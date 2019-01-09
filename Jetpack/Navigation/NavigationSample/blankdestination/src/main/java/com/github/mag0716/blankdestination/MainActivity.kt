@@ -1,14 +1,14 @@
 package com.github.mag0716.blankdestination
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,15 +21,15 @@ class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
 
     override fun onResume() {
         super.onResume()
-        findNavController(R.id.container).addOnNavigatedListener(this)
+        findNavController(R.id.container).addOnDestinationChangedListener(this)
     }
 
     override fun onPause() {
         super.onPause()
-        findNavController(R.id.container).removeOnNavigatedListener(this)
+        findNavController(R.id.container).removeOnDestinationChangedListener(this)
     }
 
-    override fun onNavigated(controller: NavController, destination: NavDestination) {
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         button.visibility = if (destination.id == R.id.blankFragment) View.VISIBLE else View.INVISIBLE
     }
 }

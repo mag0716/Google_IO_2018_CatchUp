@@ -1,10 +1,10 @@
 package com.github.mag0716.navigationsample
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
@@ -13,7 +13,7 @@ import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
     companion object {
         val TAG = MainActivity::class.java.simpleName
@@ -44,19 +44,19 @@ class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
 
     override fun onResume() {
         super.onResume()
-        container.navController.addOnNavigatedListener(this)
+        container.navController.addOnDestinationChangedListener(this)
     }
 
     override fun onPause() {
         super.onPause()
-        container.navController.removeOnNavigatedListener(this)
+        container.navController.removeOnDestinationChangedListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         Log.d(TAG, "onSupportNavigationUp")
         // NavigationView と Navigation Graph の連動に必要(Codelabを参考にした)
-        return NavigationUI.navigateUp(drawer_layout,
-                Navigation.findNavController(this, R.id.container))
+        return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.container),
+                drawer_layout)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavController.OnNavigatedListener {
                 || super.onOptionsItemSelected(item)
     }
 
-    override fun onNavigated(controller: NavController, destination: NavDestination) {
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         Log.d(TAG, "onNavigated : ${destination.label}")
     }
 
