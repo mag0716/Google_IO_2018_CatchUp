@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | app | デフォルト動作でない使い方のサンプルで不正な挙動となっている(#6) | 1.0.0-alpha02 |
 | blankdestination | startDestination にレイアウトのない Fragment を利用した(#8)<br/>スプラッシュを想定 | 1.0.0-alpha02 |
-| bottomnavigation | 通常の BottomNavigationView の動作(#12)<br/>replaceし直されるので、EditText の内容は復帰しない | 1.0.0-alpha02 |
+| bottomnavigation | 通常の BottomNavigationView の動作(#12)<br/>タブタップではreplaceし直されるので、EditText の内容は復帰しない<br/>バックキーでの遷移では、EditText の内容が復帰する | 1.0.0-alpha02 |
 | nestednavigation | conditional navigation の動作<br/>Profile 画面で未ログインだったら Login 画面へ遷移する。(#5) | 1.0.0-alpha02 |
 | toolbar | Toolbar 単体で利用する Activity のサンプル | 1.0.0-alpha03 |
 | safeargs | Safe Args Plugin のサンプル | 1.0.0-alpha03 |
