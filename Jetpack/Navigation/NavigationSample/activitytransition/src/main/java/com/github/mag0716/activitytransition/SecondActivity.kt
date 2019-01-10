@@ -3,8 +3,8 @@ package com.github.mag0716.activitytransition
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_second.*
 
 /**
@@ -33,7 +33,7 @@ class SecondActivity : AppCompatActivity() {
         Log.d("SecondActivity", "onCreate : $intent, ${intent.getStringExtra(DATA)}")
         when (intent.action) {
             Intent.ACTION_VIEW -> {
-                text.text = intent.data.toString()
+                text.text = intent.data?.toString()
             }
             else -> {
                 text.text = data

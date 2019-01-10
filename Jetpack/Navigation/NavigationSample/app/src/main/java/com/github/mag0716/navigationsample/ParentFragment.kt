@@ -1,19 +1,19 @@
 package com.github.mag0716.navigationsample
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_parent.*
 
-class ParentFragment : Fragment(), NavController.OnNavigatedListener {
+class ParentFragment : Fragment(), NavController.OnDestinationChangedListener {
 
     companion object {
         val TAG = ParentFragment::class.java.simpleName
@@ -47,7 +47,7 @@ class ParentFragment : Fragment(), NavController.OnNavigatedListener {
 
     override fun onResume() {
         super.onResume()
-        container.findNavController().addOnNavigatedListener(this)
+        container.findNavController().addOnDestinationChangedListener(this)
         val activity = activity
         if (activity is MainActivity) {
             activity.updateToolbar(label)
@@ -56,7 +56,7 @@ class ParentFragment : Fragment(), NavController.OnNavigatedListener {
 
     override fun onPause() {
         super.onPause()
-        container.findNavController().removeOnNavigatedListener(this)
+        container.findNavController().removeOnDestinationChangedListener(this)
     }
 
     override fun onDestroyView() {
@@ -69,7 +69,7 @@ class ParentFragment : Fragment(), NavController.OnNavigatedListener {
         Log.d(TAG, "onDestroy : $label")
     }
 
-    override fun onNavigated(controller: NavController, destination: NavDestination) {
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         parentViews.visibility = if (destination.id == R.id.blankFragment) View.VISIBLE else View.GONE
     }
 

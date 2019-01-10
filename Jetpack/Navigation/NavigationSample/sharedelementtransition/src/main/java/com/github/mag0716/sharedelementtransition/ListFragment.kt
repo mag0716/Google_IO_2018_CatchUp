@@ -1,16 +1,14 @@
 package com.github.mag0716.sharedelementtransition
 
 import android.os.Bundle
-import androidx.core.app.ActivityOptionsCompat
-import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -81,7 +79,7 @@ class ListFragment : Fragment() {
                         checkNotNull(activity),
                         UtilPair.create(holder.view, transitionName)
                 )
-                val extras = ActivityNavigator.Extras(options)
+                val extras = ActivityNavigator.Extras.Builder().setActivityOptions(options).build()
                 it.findNavController().navigate(action, extras)
             }
         }
