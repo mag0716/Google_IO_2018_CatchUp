@@ -1,7 +1,6 @@
 package com.github.mag0716.onnavigateuplistener
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -11,6 +10,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val TAG = "OnNavigateUpListener"
+    }
+
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -19,11 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navController = findNavController(R.id.container)
-        appBarConfiguration = AppBarConfiguration.Builder(setOf(R.id.first, R.id.second))
-                .setFallbackOnNavigateUpListener {
-                    Log.d("xxx", "OnNavigateUpListener");
-                    true
-                }
+        appBarConfiguration = AppBarConfiguration.Builder(setOf(R.id.first))
                 .build()
         toolbar.setupWithNavController(navController, appBarConfiguration)
     }

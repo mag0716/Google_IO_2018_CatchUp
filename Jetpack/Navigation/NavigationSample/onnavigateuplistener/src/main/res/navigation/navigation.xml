@@ -9,16 +9,6 @@
         android:id="@+id/first"
         android:name="com.github.mag0716.onnavigateuplistener.FirstFragment"
         android:label="fragment_first"
-        tools:layout="@layout/fragment_first">
-        <action
-            android:id="@+id/action_move_to_second"
-            app:destination="@id/second" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/second"
-        android:name="com.github.mag0716.onnavigateuplistener.SecondFragment"
-        android:label="fragment_second"
-        tools:layout="@layout/fragment_second"></fragment>
+        tools:layout="@layout/fragment_first" />
 
 </navigation>
