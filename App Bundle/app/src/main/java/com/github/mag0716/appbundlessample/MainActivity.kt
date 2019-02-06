@@ -8,6 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.*
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 
+/**
+ * Android Studio から通常通りにインストールすると、Dynamic Feature Module は全て含まれた状態で起動する
+ *
+ * Edit Configurations から Dynamic Feature Module を含まない状態で起動し動作確認することは可能
+ * この状態でインストールをリクエストしても onStateUpdate は何も通知されない
+ *
+ * Internal Test Track で動作確認するしかない
+ */
 class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
     companion object {
@@ -42,6 +50,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
     override fun onStateUpdate(state: SplitInstallSessionState?) {
         Log.d(TAG, "onStateUpdate : $state")
+        // 複数モジュールをリクエストして1つだけ失敗した場合も FAILED になる？
         if (state?.status() == SplitInstallSessionStatus.INSTALLED) {
             launchFeatureModule()
         }
@@ -53,6 +62,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         if (manager.installedModules.contains(moduleName)) {
             launchFeatureModule()
         } else {
+            // モジュールを複数リクエストすることができる
             val request = SplitInstallRequest.newBuilder()
                     .addModule(moduleName)
                     .build()
