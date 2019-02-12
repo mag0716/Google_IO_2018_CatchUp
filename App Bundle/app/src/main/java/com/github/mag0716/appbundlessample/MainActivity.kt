@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.*
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     }
 
     override fun onStateUpdate(state: SplitInstallSessionState?) {
-        Log.d(TAG, "onStateUpdate : $state")
+        logWithToast("onStateUpdate : $state")
         // 複数モジュールをリクエストして1つだけ失敗した場合も FAILED になる？
         if (state?.status() == SplitInstallSessionStatus.INSTALLED) {
             launchFeatureModule()
@@ -57,8 +58,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     }
 
     private fun loadModuleIfNeeded() {
-        Log.d(TAG, "loadModuleIfNeeded : ${manager.installedModules}")
-        val moduleName = "dynamic_feature"
+        logWithToast("loadModuleIfNeeded : ${manager.installedModules}")
+        val moduleName = getString(R.string.dynamic_feature_name)
         if (manager.installedModules.contains(moduleName)) {
             launchFeatureModule()
         } else {
@@ -76,5 +77,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
                 "com.github.mag0716.dynamic_feature.FeatureActivity"
         )
         startActivity(intent)
+    }
+
+    private fun MainActivity.logWithToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Log.d(TAG, message)
     }
 }
