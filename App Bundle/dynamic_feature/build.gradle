@@ -14,4 +14,6 @@ android {
 
 dependencies {
     implementation project(":app")
+    // FIXME:module が java-library だと実行時に Unresolved になる
+    implementation project(":module")
 }
