@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     }
 
     override fun onStateUpdate(state: SplitInstallSessionState?) {
+        // dynamic_feature が module に依存していると、status が 3(DOWNLOADED)になるが起動できない状態になる
+        // module は app で依存している or module も dynamic_feature にする必要がある？
         logWithToast("onStateUpdate : $state")
         // 複数モジュールをリクエストして1つだけ失敗した場合も FAILED になる？
         if (state?.status() == SplitInstallSessionStatus.INSTALLED) {
