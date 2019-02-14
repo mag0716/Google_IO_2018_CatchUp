@@ -71,6 +71,9 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
                     .addModule(moduleName)
                     .build()
             manager.startInstall(request)
+                    .addOnSuccessListener { logWithText("success : $it") }
+                    .addOnFailureListener { logWithText("failure : $it") }
+                    .addOnCompleteListener { logWithText("complete : ${it.result}") }
         }
     }
 
