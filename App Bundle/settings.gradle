@@ -1,1 +1,1 @@
-include ':app', ':invalid_dynamic_feature', ':invalid_module'
+include ':app', ':invalid_dynamic_feature', ':invalid_module', 'valid_dynamic_feature', ':valid_module'
