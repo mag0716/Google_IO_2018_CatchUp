@@ -1,15 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.github.mag0716.dynamic_feature">
+    package="com.github.mag0716.invalid_dynamic_feature">
 
     <dist:module
         dist:onDemand="true"
-        dist:title="@string/dynamic_feature_name">
+        dist:title="@string/invalid_dynamic_feature_name">
         <dist:fusing dist:include="true" />
     </dist:module>
 
     <application>
-        <activity android:name=".FeatureActivity">
+        <activity android:name="com.github.mag0716.invalid_dynamic_feature.FeatureActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
     private fun loadModuleIfNeeded() {
         logWithToast("loadModuleIfNeeded : ${manager.installedModules}")
-        val moduleName = getString(R.string.dynamic_feature_name)
+        val moduleName = getString(R.string.invalid_dynamic_feature_name)
         if (manager.installedModules.contains(moduleName)) {
             launchFeatureModule()
         } else {
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     private fun launchFeatureModule() {
         val intent = Intent(Intent.ACTION_VIEW).setClassName(
                 packageName,
-                "com.github.mag0716.dynamic_feature.FeatureActivity"
+                "com.github.mag0716.invalid_dynamic_feature.FeatureActivity"
         )
         startActivity(intent)
     }
