@@ -76,8 +76,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
     private fun launchFeatureModule(moduleName: String) {
         val className = when (moduleName) {
-            getString(R.string.invalid_dynamic_feature_name) -> "com.github.mag0716.invalid_dynamic_feature.FeatureActivity"
-            getString(R.string.valid_dynamic_feature_name) -> "com.github.mag0716.valid_dynamic_feature.FeatureActivity"
+            getString(R.string.invalid_dynamic_feature_name) -> "com.github.mag0716.invalid_dynamic_feature.InvalidFeatureActivity"
+            getString(R.string.valid_dynamic_feature_name) -> "com.github.mag0716.valid_dynamic_feature.ValidFeatureActivity"
             else -> throw IllegalArgumentException("invalid parameter : $moduleName")
         }
         val intent = Intent(Intent.ACTION_VIEW).setClassName(packageName, className)
