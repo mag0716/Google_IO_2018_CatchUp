@@ -4,12 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.github.mag0716.valid_module.TextProvider
 import com.google.android.play.core.splitcompat.SplitCompat
 
 class ValidFeatureActivity : AppCompatActivity() {
-
-    private val textProvider = TextProvider()
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase)
@@ -21,6 +18,9 @@ class ValidFeatureActivity : AppCompatActivity() {
         setContentView(R.layout.activity_valid_feature)
 
         val textView = findViewById<TextView>(R.id.text)
-        textView.text = textProvider.provide()
+        // 別モジュールに依存しているとインストールが成功しない？
+        // case1:valid_dynamic_feature で valid_module を implementation する
+        // case2:app モジュールで valid_module を api する
+        textView.text = "valid_dynamic_feature"
     }
 }
