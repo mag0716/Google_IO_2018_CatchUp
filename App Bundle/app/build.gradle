@@ -7,8 +7,8 @@ android {
         applicationId "com.github.mag0716.appbundlessample"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.0.5"
+        versionCode 9
+        versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
