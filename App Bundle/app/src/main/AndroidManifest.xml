@@ -3,6 +3,7 @@
     package="com.github.mag0716.appbundlessample">
 
     <application
+        android:name="com.google.android.play.core.splitcompat.SplitCompatApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
