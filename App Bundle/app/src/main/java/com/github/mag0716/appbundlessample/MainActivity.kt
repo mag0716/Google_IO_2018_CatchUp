@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.*
-import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 
 /**
  * Android Studio から通常通りにインストールすると、Dynamic Feature Module は全て含まれた状態で起動する
@@ -23,7 +22,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         const val TAG = "DynamicFeature"
     }
 
-    private lateinit var button: Button
+    private lateinit var invalidModuleButton: Button
+    private lateinit var validModuleButton: Button
 
     private lateinit var manager: SplitInstallManager
 
@@ -33,9 +33,13 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
         manager = SplitInstallManagerFactory.create(this)
 
-        button = findViewById(R.id.button)
-        button.setOnClickListener {
-            loadModuleIfNeeded()
+        invalidModuleButton = findViewById(R.id.invalid_dynamic_feature_button)
+        invalidModuleButton.setOnClickListener {
+            loadModuleIfNeeded(getString(R.string.invalid_dynamic_feature_name))
+        }
+        validModuleButton = findViewById(R.id.valid_dynamic_feature_button)
+        validModuleButton.setOnClickListener {
+            loadModuleIfNeeded(getString(R.string.valid_dynamic_feature_name))
         }
     }
 
@@ -53,17 +57,12 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         // dynamic_feature が module に依存していると、status が 3(DOWNLOADED)になるが起動できない状態になる
         // module は app で依存している or module も dynamic_feature にする必要がある？
         logWithToast("onStateUpdate : $state")
-        // 複数モジュールをリクエストして1つだけ失敗した場合も FAILED になる？
-        if (state?.status() == SplitInstallSessionStatus.INSTALLED) {
-            launchFeatureModule()
-        }
     }
 
-    private fun loadModuleIfNeeded() {
-        logWithToast("loadModuleIfNeeded : ${manager.installedModules}")
-        val moduleName = getString(R.string.invalid_dynamic_feature_name)
+    private fun loadModuleIfNeeded(moduleName: String) {
+        logWithToast("loadModuleIfNeeded : $moduleName, ${manager.installedModules}")
         if (manager.installedModules.contains(moduleName)) {
-            launchFeatureModule()
+            launchFeatureModule(moduleName)
         } else {
             // モジュールを複数リクエストすることができる
             val request = SplitInstallRequest.newBuilder()
@@ -73,11 +72,13 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         }
     }
 
-    private fun launchFeatureModule() {
-        val intent = Intent(Intent.ACTION_VIEW).setClassName(
-                packageName,
-                "com.github.mag0716.invalid_dynamic_feature.FeatureActivity"
-        )
+    private fun launchFeatureModule(moduleName: String) {
+        val className = when (moduleName) {
+            getString(R.string.invalid_dynamic_feature_name) -> "com.github.mag0716.invalid_dynamic_feature.FeatureActivity"
+            getString(R.string.valid_dynamic_feature_name) -> "com.github.mag0716.valid_dynamic_feature.FeatureActivity"
+            else -> throw IllegalArgumentException("invalid parameter : $moduleName")
+        }
+        val intent = Intent(Intent.ACTION_VIEW).setClassName(packageName, className)
         startActivity(intent)
     }
 

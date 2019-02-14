@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">AppBundlesSample</string>
     <string name="invalid_dynamic_feature_name" translatable="false">invalid_dynamic_feature</string>
+    <string name="valid_dynamic_feature_name" translatable="false">valid_dynamic_feature</string>
 
     <string name="test_text">Text</string>
 </resources>
