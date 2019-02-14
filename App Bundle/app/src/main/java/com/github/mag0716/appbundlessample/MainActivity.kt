@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.*
 
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
     private lateinit var invalidModuleButton: Button
     private lateinit var validModuleButton: Button
+    private lateinit var textView: TextView
 
     private lateinit var manager: SplitInstallManager
 
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         validModuleButton.setOnClickListener {
             loadModuleIfNeeded(getString(R.string.valid_dynamic_feature_name))
         }
+        textView = findViewById(R.id.text)
     }
 
     override fun onResume() {
@@ -56,11 +58,11 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     override fun onStateUpdate(state: SplitInstallSessionState?) {
         // dynamic_feature が module に依存していると、status が 3(DOWNLOADED)になるが起動できない状態になる
         // module は app で依存している or module も dynamic_feature にする必要がある？
-        logWithToast("onStateUpdate : $state")
+        logWithText("onStateUpdate : $state")
     }
 
     private fun loadModuleIfNeeded(moduleName: String) {
-        logWithToast("loadModuleIfNeeded : $moduleName, ${manager.installedModules}")
+        logWithText("loadModuleIfNeeded : $moduleName, ${manager.installedModules}")
         if (manager.installedModules.contains(moduleName)) {
             launchFeatureModule(moduleName)
         } else {
@@ -82,8 +84,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         startActivity(intent)
     }
 
-    private fun MainActivity.logWithToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    private fun logWithText(message: String) {
+        val sb = StringBuilder(textView.text)
+        sb.append("$message\n")
+        textView.text = sb.toString()
         Log.d(TAG, message)
     }
 }
