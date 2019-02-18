@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         const val TAG = "DynamicFeature"
     }
 
-    private lateinit var invalidModuleButton: Button
+    private lateinit var independentModuleButton: Button
     private lateinit var validModuleButton: Button
     private lateinit var textView: TextView
 
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
         manager = SplitInstallManagerFactory.create(this)
 
-        invalidModuleButton = findViewById(R.id.invalid_dynamic_feature_button)
-        invalidModuleButton.setOnClickListener {
-            loadModuleIfNeeded(getString(R.string.invalid_dynamic_feature_name))
+        independentModuleButton = findViewById(R.id.independent_dynamic_feature_button)
+        independentModuleButton.setOnClickListener {
+            loadModuleIfNeeded(getString(R.string.independent_dynamic_feature_name))
         }
         validModuleButton = findViewById(R.id.valid_dynamic_feature_button)
         validModuleButton.setOnClickListener {
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
     private fun launchFeatureModule(moduleName: String) {
         val className = when (moduleName) {
-            getString(R.string.invalid_dynamic_feature_name) -> "com.github.mag0716.invalid_dynamic_feature.InvalidFeatureActivity"
+            getString(R.string.independent_dynamic_feature_name) -> "com.github.mag0716.independent_dynamic_feature.IndependentFeatureActivity"
             getString(R.string.valid_dynamic_feature_name) -> "com.github.mag0716.valid_dynamic_feature.ValidFeatureActivity"
             else -> throw IllegalArgumentException("invalid parameter : $moduleName")
         }
