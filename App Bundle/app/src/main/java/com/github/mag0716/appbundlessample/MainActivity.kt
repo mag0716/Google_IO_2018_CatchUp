@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     }
 
     private lateinit var independentModuleButton: Button
-    private lateinit var validModuleButton: Button
+    private lateinit var dependencyModuleButton: Button
     private lateinit var textView: TextView
 
     private lateinit var manager: SplitInstallManager
@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         independentModuleButton.setOnClickListener {
             loadModuleIfNeeded(getString(R.string.independent_dynamic_feature_name))
         }
-        validModuleButton = findViewById(R.id.valid_dynamic_feature_button)
-        validModuleButton.setOnClickListener {
-            loadModuleIfNeeded(getString(R.string.valid_dynamic_feature_name))
+        dependencyModuleButton = findViewById(R.id.dependency_dynamic_feature_button)
+        dependencyModuleButton.setOnClickListener {
+            loadModuleIfNeeded(getString(R.string.dependency_dynamic_feature_name))
         }
         textView = findViewById(R.id.text)
     }
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     private fun launchFeatureModule(moduleName: String) {
         val className = when (moduleName) {
             getString(R.string.independent_dynamic_feature_name) -> "com.github.mag0716.independent_dynamic_feature.IndependentFeatureActivity"
-            getString(R.string.valid_dynamic_feature_name) -> "com.github.mag0716.valid_dynamic_feature.ValidFeatureActivity"
+            getString(R.string.dependency_dynamic_feature_name) -> "com.github.mag0716.dependency_dynamic_feature.DependencyFeatureActivity"
             else -> throw IllegalArgumentException("invalid parameter : $moduleName")
         }
         val intent = Intent(Intent.ACTION_VIEW).setClassName(packageName, className)

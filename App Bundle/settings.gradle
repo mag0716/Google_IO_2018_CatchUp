@@ -1,1 +1,1 @@
-include ':app', ':independent_dynamic_feature', 'valid_dynamic_feature', ':valid_module'
+include ':app', ':independent_dynamic_feature', 'dependency_dynamic_feature', ':module'

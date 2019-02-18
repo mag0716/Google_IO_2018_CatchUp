@@ -25,17 +25,17 @@
         android:id="@+id/independent_dynamic_feature_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Launch Independent Module"
+        android:text="Independent Module"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/valid_dynamic_feature_button"
+        app:layout_constraintRight_toLeftOf="@id/dependency_dynamic_feature_button"
         app:layout_constraintTop_toBottomOf="@id/scroll_view" />
 
     <Button
-        android:id="@+id/valid_dynamic_feature_button"
+        android:id="@+id/dependency_dynamic_feature_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Launch Valid Module"
+        android:text="Dependency Module"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/independent_dynamic_feature_button"
         app:layout_constraintRight_toRightOf="parent"

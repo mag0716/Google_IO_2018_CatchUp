@@ -18,7 +18,7 @@ android {
         }
     }
 
-    dynamicFeatures = [":independent_dynamic_feature", ":valid_dynamic_feature"]
+    dynamicFeatures = [":independent_dynamic_feature", ":dependency_dynamic_feature"]
 }
 
 dependencies {
