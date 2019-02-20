@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.*
-import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 
 /**
  * Android Studio から通常通りにインストールすると、Dynamic Feature Module は全て含まれた状態で起動する
@@ -23,7 +22,9 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         const val TAG = "DynamicFeature"
     }
 
-    private lateinit var button: Button
+    private lateinit var independentModuleButton: Button
+    private lateinit var dependencyModuleButton: Button
+    private lateinit var textView: TextView
 
     private lateinit var manager: SplitInstallManager
 
@@ -33,10 +34,15 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
 
         manager = SplitInstallManagerFactory.create(this)
 
-        button = findViewById(R.id.button)
-        button.setOnClickListener {
-            loadModuleIfNeeded()
+        independentModuleButton = findViewById(R.id.independent_dynamic_feature_button)
+        independentModuleButton.setOnClickListener {
+            loadModuleIfNeeded(getString(R.string.independent_dynamic_feature_name))
         }
+        dependencyModuleButton = findViewById(R.id.dependency_dynamic_feature_button)
+        dependencyModuleButton.setOnClickListener {
+            loadModuleIfNeeded(getString(R.string.dependency_dynamic_feature_name))
+        }
+        textView = findViewById(R.id.text)
     }
 
     override fun onResume() {
@@ -52,37 +58,39 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     override fun onStateUpdate(state: SplitInstallSessionState?) {
         // dynamic_feature が module に依存していると、status が 3(DOWNLOADED)になるが起動できない状態になる
         // module は app で依存している or module も dynamic_feature にする必要がある？
-        logWithToast("onStateUpdate : $state")
-        // 複数モジュールをリクエストして1つだけ失敗した場合も FAILED になる？
-        if (state?.status() == SplitInstallSessionStatus.INSTALLED) {
-            launchFeatureModule()
-        }
+        logWithText("onStateUpdate : $state")
     }
 
-    private fun loadModuleIfNeeded() {
-        logWithToast("loadModuleIfNeeded : ${manager.installedModules}")
-        val moduleName = getString(R.string.dynamic_feature_name)
+    private fun loadModuleIfNeeded(moduleName: String) {
+        logWithText("loadModuleIfNeeded : $moduleName, ${manager.installedModules}")
         if (manager.installedModules.contains(moduleName)) {
-            launchFeatureModule()
+            launchFeatureModule(moduleName)
         } else {
             // モジュールを複数リクエストすることができる
             val request = SplitInstallRequest.newBuilder()
                     .addModule(moduleName)
                     .build()
             manager.startInstall(request)
+                    .addOnSuccessListener { logWithText("success : $it") }
+                    .addOnFailureListener { logWithText("failure : $it") }
+                    .addOnCompleteListener { logWithText("complete : $it") }
         }
     }
 
-    private fun launchFeatureModule() {
-        val intent = Intent(Intent.ACTION_VIEW).setClassName(
-                packageName,
-                "com.github.mag0716.dynamic_feature.FeatureActivity"
-        )
+    private fun launchFeatureModule(moduleName: String) {
+        val className = when (moduleName) {
+            getString(R.string.independent_dynamic_feature_name) -> "com.github.mag0716.independent_dynamic_feature.IndependentFeatureActivity"
+            getString(R.string.dependency_dynamic_feature_name) -> "com.github.mag0716.dependency_dynamic_feature.DependencyFeatureActivity"
+            else -> throw IllegalArgumentException("invalid parameter : $moduleName")
+        }
+        val intent = Intent(Intent.ACTION_VIEW).setClassName(packageName, className)
         startActivity(intent)
     }
 
-    private fun MainActivity.logWithToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    private fun logWithText(message: String) {
+        val sb = StringBuilder(textView.text)
+        sb.append("$message\n")
+        textView.text = sb.toString()
         Log.d(TAG, message)
     }
 }
