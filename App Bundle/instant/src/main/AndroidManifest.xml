@@ -22,10 +22,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <!-- https, http の両方が必要 -->
                 <data
                     android:host="github.com"
                     android:path="/mag0716/Google_IO_2018_CatchUp"
                     android:scheme="https" />
+                <data
+                    android:host="github.com"
+                    android:path="/mag0716/Google_IO_2018_CatchUp"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
     </application>
