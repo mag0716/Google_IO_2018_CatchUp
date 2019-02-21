@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.github.mag0716.instant">
@@ -5,8 +6,28 @@
     <dist:module
         dist:instant="true"
         dist:onDemand="false"
-        dist:title="@string/title_instant">
+        dist:title="@string/instant_dynamic_feature_name">
         <dist:fusing dist:include="false" />
     </dist:module>
-</manifest>
 
+    <application>
+        <activity
+            android:name=".InstantActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter
+                android:autoVerify="true"
+                android:order="1">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="github.com"
+                    android:path="/mag0716/Google_IO_2018_CatchUp"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

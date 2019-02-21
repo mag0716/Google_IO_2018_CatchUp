@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">AppBundlesSample</string>
     <string name="independent_dynamic_feature_name" translatable="false">independent_dynamic_feature</string>
     <string name="dependency_dynamic_feature_name" translatable="false">dependency_dynamic_feature</string>
+    <string name="instant_dynamic_feature_name" translatable="false">Instant Module</string>
 
     <string name="test_text">Text</string>
-    <string name="title_instant">Instant Module</string>
 </resources>
