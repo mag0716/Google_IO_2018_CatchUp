@@ -14,9 +14,8 @@
         <activity
             android:name=".InstantActivity"
             android:theme="@style/AppTheme">
-            <intent-filter
-                android:autoVerify="true"
-                android:order="1">
+            <intent-filter android:order="1"
+                android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -24,13 +23,9 @@
 
                 <!-- https, http の両方が必要 -->
                 <data
-                    android:host="github.com"
-                    android:path="/mag0716/Google_IO_2018_CatchUp"
+                    android:host="mag0716.github.io"
                     android:scheme="https" />
-                <data
-                    android:host="github.com"
-                    android:path="/mag0716/Google_IO_2018_CatchUp"
-                    android:scheme="http" />
+                <data android:scheme="http" />
             </intent-filter>
         </activity>
     </application>
