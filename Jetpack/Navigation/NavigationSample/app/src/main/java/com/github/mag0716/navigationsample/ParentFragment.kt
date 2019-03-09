@@ -7,20 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_parent.*
 
-class ParentFragment : Fragment(), NavController.OnDestinationChangedListener {
+class ParentFragment : Fragment() {
 
     companion object {
         val TAG = ParentFragment::class.java.simpleName
         const val KEY = "label"
     }
-
-    private lateinit var container: NavHostFragment
 
     val label: String by lazy {
         arguments?.getString(KEY) ?: ""
@@ -38,7 +33,6 @@ class ParentFragment : Fragment(), NavController.OnDestinationChangedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        container = childFragmentManager.findFragmentById(R.id.containerParent) as NavHostFragment
         button.setOnClickListener {
             pushFragment()
         }
@@ -47,16 +41,10 @@ class ParentFragment : Fragment(), NavController.OnDestinationChangedListener {
 
     override fun onResume() {
         super.onResume()
-        container.findNavController().addOnDestinationChangedListener(this)
         val activity = activity
         if (activity is MainActivity) {
             activity.updateToolbar(label)
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        container.findNavController().removeOnDestinationChangedListener(this)
     }
 
     override fun onDestroyView() {
@@ -69,12 +57,8 @@ class ParentFragment : Fragment(), NavController.OnDestinationChangedListener {
         Log.d(TAG, "onDestroy : $label")
     }
 
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
-        parentViews.visibility = if (destination.id == R.id.blankFragment) View.VISIBLE else View.GONE
-    }
-
     fun pushFragment(count: Int = 0) {
         Log.d(TAG, "pushFragment : $count")
-        container.findNavController().navigate(R.id.action_child, bundleOf(KEY to count))
+        findNavController().navigate(R.id.actionChild, bundleOf(KEY to count))
     }
 }

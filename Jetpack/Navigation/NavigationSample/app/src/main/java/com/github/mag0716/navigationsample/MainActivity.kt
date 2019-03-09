@@ -5,58 +5,56 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.android.navigationadvancedsample.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         val TAG = MainActivity::class.java.simpleName
     }
 
-    private lateinit var container: NavHostFragment
+    private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        container = supportFragmentManager.findFragmentById(R.id.containerMain) as NavHostFragment
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        } // Else, need to wait for onRestoreInstanceState
 
-        // ActionBar と Navigation Graph の連動(Codelabを参考にした)
-        // FIXME:これで共存させても動作するようになるが、stack に積まれると Navigation Drawer が Up キーとなる。BottomNavigationView のタブ切り替えでも stack に積まれるので希望の動作ではない
-        NavigationUI.setupActionBarWithNavController(this, container.navController, drawer_layout)
-
-        // NavigationView と Navigation Graph の連動
-        NavigationUI.setupWithNavController(navigation_view, container.navController)
-
-        // BottomNavigationView と Navigation Graph を連動させる
-        // BottomNavigationView に渡す menu に指定する id は Navigation Graph の destination の id と同じにする必要がある
-        NavigationUI.setupWithNavController(bottomNavigation, container.navController)
-
-        Log.d(TAG, "onCreate : ${container.navController.currentDestination?.label}")
+//        // ActionBar と Navigation Graph の連動(Codelabを参考にした)
+//        // FIXME:これで共存させても動作するようになるが、stack に積まれると Navigation Drawer が Up キーとなる。BottomNavigationView のタブ切り替えでも stack に積まれるので希望の動作ではない
+//        NavigationUI.setupActionBarWithNavController(this, container.navController, drawer_layout)
+//
+//        // NavigationView と Navigation Graph の連動
+//        NavigationUI.setupWithNavController(navigation_view, container.navController)
     }
 
-    override fun onResume() {
-        super.onResume()
-        container.navController.addOnDestinationChangedListener(this)
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Now that BottomNavigationBar has restored its instance state
+        // and its selectedItemId, we can proceed with setting up the
+        // BottomNavigationBar with Navigation
+        setupBottomNavigationBar()
     }
 
-    override fun onPause() {
-        super.onPause()
-        container.navController.removeOnDestinationChangedListener(this)
+    override fun onBackPressed() {
+        if (currentNavController?.value?.popBackStack() != true) {
+            super.onBackPressed()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        Log.d(TAG, "onSupportNavigationUp")
-        // NavigationView と Navigation Graph の連動に必要(Codelabを参考にした)
-        return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.container),
-                drawer_layout)
+        return currentNavController?.value?.navigateUp() ?: false
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,19 +64,39 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Log.d(TAG, "onOptionsItemSelected : $item")
-        // Menu と Navigation Graph を連動させる(Codelabを参考にした)
-        return NavigationUI.onNavDestinationSelected(item,
-                Navigation.findNavController(this, R.id.container))
-                || super.onOptionsItemSelected(item)
-    }
-
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
-        Log.d(TAG, "onNavigated : ${destination.label}")
+        val currentNavController = currentNavController?.value
+        if (currentNavController != null) {
+            return NavigationUI.onNavDestinationSelected(item, currentNavController)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun updateToolbar(title: String, hasUpKey: Boolean = false) {
         Log.d(TAG, "updateToolbar $title, $hasUpKey")
-        supportActionBar?.title = title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.title = title
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setupBottomNavigationBar() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+        val navGraphIds = listOf(
+                R.navigation.home_navigation_graph,
+                R.navigation.dashboard_navigation_graph,
+                R.navigation.dashboard_navigation_graph)
+
+        // Setup the bottom navigation view with a list of navigation graphs
+        val controller = bottomNavigationView.setupWithNavController(
+                navGraphIds = navGraphIds,
+                fragmentManager = supportFragmentManager,
+                containerId = R.id.containerMain,
+                intent = intent
+        )
+
+        // Whenever the selected controller changes, setup the action bar.
+        controller.observe(this, Observer { navController ->
+            setupActionBarWithNavController(navController)
+        })
+        currentNavController = controller
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notifications_navigation_graph"
+    android:label="notifications_navigation_graph"
+    app:startDestination="@id/notificationsFragment">
+
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.github.mag0716.navigationsample.ParentFragment"
+        android:label="notificationsFragment"
+        tools:layout="@layout/fragment_parent">
+        <action
+            android:id="@+id/actionChild"
+            app:destination="@id/notificationsChildFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationsChildFragment"
+        android:name="com.github.mag0716.navigationsample.ChildFragment"
+        android:label="notificationsChildFragment"
+        tools:layout="@layout/fragment_child">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/actionChild"
+            app:destination="@id/notificationsChildFragment" />
+    </fragment>
+
+    <!--
+    <include app:graph="@navigation/global_navigation_graph" />
+    -->
+</navigation>
