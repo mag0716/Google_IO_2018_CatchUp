@@ -71,12 +71,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun updateToolbar(title: String, hasUpKey: Boolean = false) {
-        Log.d(TAG, "updateToolbar $title, $hasUpKey")
-//        supportActionBar?.title = title
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
 

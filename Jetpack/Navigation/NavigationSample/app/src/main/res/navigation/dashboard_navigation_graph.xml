@@ -24,7 +24,8 @@
         <argument
             android:name="count"
             android:defaultValue="0"
-            app:argType="integer" />
+            app:argType="integer"
+            app:nullable="false" />
         <action
             android:id="@+id/actionChild"
             app:destination="@id/dashboardChildFragment" />

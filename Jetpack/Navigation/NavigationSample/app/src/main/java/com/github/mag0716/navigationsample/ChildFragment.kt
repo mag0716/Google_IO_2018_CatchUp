@@ -1,57 +1,52 @@
 package com.github.mag0716.navigationsample
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_child.*
 
 class ChildFragment : Fragment() {
 
     companion object {
-        const val KEY = "count"
-    }
-
-    val count: Int by lazy {
-        val bundle = arguments
-        if (bundle != null) {
-            bundle.getInt(KEY)
-        } else {
-            0
-        }
+        val TAG = ChildFragment::class.java.simpleName
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d(getTitle(), "onCreateView")
+        Log.d(TAG, "onCreateView")
         return inflater.inflate(R.layout.fragment_child, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button.text = getTitle()
+
+        val count = arguments?.let {
+            ChildFragmentArgs.fromBundle(it).count
+        } ?: 0
+
+        button.text = "Child$count"
         button.setOnClickListener {
-            // parentFragment は NavHostFragment になる
-            val parentFragment = parentFragment?.parentFragment
-            if (parentFragment is ParentFragment) {
-                parentFragment.pushFragment(count + 1)
-            }
+            pushFragment(count + 1)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val activity = activity
-        if (activity is MainActivity) {
-            activity.updateToolbar(getTitle(), true)
-        }
+        Log.d(TAG, "onResume")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(getTitle(), "onDestroyView")
+        Log.d(TAG, "onDestroyView")
     }
 
-    fun getTitle(): String = "Child$count"
+    private fun pushFragment(count: Int) {
+        Log.d(TAG, "pushFragment : $count")
+        val action = ChildFragmentDirections.actionChild()
+        action.count = count
+        findNavController().navigate(action)
+    }
 }
