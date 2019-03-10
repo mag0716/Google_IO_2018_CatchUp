@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation_graph"
+    android:label="home_navigation_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.github.mag0716.navigationsample.ParentFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_parent">
+        <action
+            android:id="@+id/actionChild"
+            app:destination="@id/homeChildFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeChildFragment"
+        android:name="com.github.mag0716.navigationsample.ChildFragment"
+        android:label="HomeChildFragment"
+        tools:layout="@layout/fragment_child">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:argType="integer"
+            app:nullable="false" />
+        <action
+            android:id="@+id/actionChild"
+            app:destination="@id/homeChildFragment" />
+    </fragment>
+
+    <!-- TODO: 各 Navigation Graph に存在するのでまとめたいが include では動作しなかった -->
+    <action
+        android:id="@+id/actionSettings"
+        app:destination="@id/settingsActivity" />
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.github.mag0716.navigationsample.SettingsActivity"
+        android:label="SettingsActivity"
+        tools:layout="@layout/activity_settings">
+        <argument
+            android:name="dummy"
+            app:argType="string" />
+    </activity>
+</navigation>
