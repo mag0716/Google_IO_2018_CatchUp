@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.android.navigationadvancedsample.setupWithNavController
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         val TAG = MainActivity::class.java.simpleName
     }
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +35,7 @@ class MainActivity : AppCompatActivity() {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
 
-//        // ActionBar と Navigation Graph の連動(Codelabを参考にした)
-//        // FIXME:これで共存させても動作するようになるが、stack に積まれると Navigation Drawer が Up キーとなる。BottomNavigationView のタブ切り替えでも stack に積まれるので希望の動作ではない
-//        NavigationUI.setupActionBarWithNavController(this, container.navController, drawer_layout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.dashboardFragment, R.id.notificationsFragment))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
-            setupActionBarWithNavController(navController)
+            setupActionBarWithNavController(navController, appBarConfiguration)
             // NavigationView と Navigation Graph の連動
             NavigationUI.setupWithNavController(navigation_view, navController)
         })
