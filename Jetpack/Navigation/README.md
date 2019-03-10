@@ -10,7 +10,7 @@
 
 | モジュール名 | 概要 | 作成バージョン |
 | --- | --- | --- |
-| app | デフォルト動作でない使い方のサンプルで不正な挙動となっている(#6) | 1.0.0-alpha02 |
+| app | 各タブのバックスタックを保持するサンプル(#6, #13) | 1.0.0-alpha02 |
 | blankdestination | startDestination にレイアウトのない Fragment を利用した(#8)<br/>スプラッシュを想定 | 1.0.0-alpha02 |
 | bottomnavigation | 通常の BottomNavigationView の動作(#12)<br/>タブタップではreplaceし直されるので、EditText の内容は復帰しない<br/>バックキーでの遷移では、EditText の内容が復帰する | 1.0.0-alpha02 |
 | nestednavigation | conditional navigation の動作<br/>Profile 画面で未ログインだったら Login 画面へ遷移する。(#5) | 1.0.0-alpha02 |
@@ -23,14 +23,13 @@
 
 ### app
 
-* Home, Dashboard, Notifications に切り替えで、ParentFragment へ遷移
-  * タブ切り替えで、各タブのバックスタックは復帰せず、必ず ParentFragment へ遷移する
-  * ただし、バックキーを使う場合は、バックスタックも保持した状態でタブの切り替えが行われる
-    * TODO: 1.0.0-alpha06で動作が変わったのかを確認する
-* ParentFragment は ChildFragment へ遷移する
-  * ChildFragment のバックキーで前画面に遷移する
-* ChildFragment はさらに ChildFragment へ遷移する
-  * ChildFragment のボタンをタップで、ChildFragment へ遷移するが、タイトル、ボタン名が正しく反映されていない
+* https://github.com/googlesamples/android-architecture-components/tree/master/NavigationAdvancedSample を参考
+* 各タブ毎のバックスタックを制御し、タブ切り替えでバックスタックをクリアしない
+* メニューの ID と各タブで利用する Navigation Graph のファイル名を同じにする必要がある
+
+#### TODO
+
+* どのタブにいても、Toolbar のメニューから SettingActivity に遷移させたいが、同じ定義が各 Navigation Graph に存在していて気持ち悪い
 
 ## 更新履歴
 
