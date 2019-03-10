@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.android.navigationadvancedsample.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,9 +35,6 @@ class MainActivity : AppCompatActivity() {
 //        // ActionBar と Navigation Graph の連動(Codelabを参考にした)
 //        // FIXME:これで共存させても動作するようになるが、stack に積まれると Navigation Drawer が Up キーとなる。BottomNavigationView のタブ切り替えでも stack に積まれるので希望の動作ではない
 //        NavigationUI.setupActionBarWithNavController(this, container.navController, drawer_layout)
-//
-//        // NavigationView と Navigation Graph の連動
-//        NavigationUI.setupWithNavController(navigation_view, container.navController)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -90,6 +88,8 @@ class MainActivity : AppCompatActivity() {
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
+            // NavigationView と Navigation Graph の連動
+            NavigationUI.setupWithNavController(navigation_view, navController)
         })
         currentNavController = controller
     }

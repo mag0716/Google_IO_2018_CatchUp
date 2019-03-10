@@ -31,7 +31,17 @@
             app:destination="@id/notificationsChildFragment" />
     </fragment>
 
-    <!--
-    <include app:graph="@navigation/global_navigation_graph" />
-    -->
+    <!-- TODO: 各 Navigation Graph に存在するのでまとめたいが include では動作しなかった -->
+    <action
+        android:id="@+id/actionSettings"
+        app:destination="@id/settingsActivity" />
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.github.mag0716.navigationsample.SettingsActivity"
+        android:label="SettingsActivity"
+        tools:layout="@layout/activity_settings">
+        <argument
+            android:name="dummy"
+            app:argType="string" />
+    </activity>
 </navigation>
