@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val navGraphIds = listOf(
                 R.navigation.home_navigation_graph,
                 R.navigation.dashboard_navigation_graph,
-                R.navigation.dashboard_navigation_graph)
+                R.navigation.notifications_navigation_graph)
 
         // Setup the bottom navigation view with a list of navigation graphs
         val controller = bottomNavigationView.setupWithNavController(
