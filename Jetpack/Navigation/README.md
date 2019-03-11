@@ -33,6 +33,67 @@
 
 ## 更新履歴
 
+### 2.0.0-rc2
+
+1.0.0-rc02 の AndroidX 対応版
+
+### 1.0.0-rc02
+
+Bug Fixes のみ
+
+### 1.0.0-rc01
+
+Bug Fixes のみ
+
+### 1.0.0-beta02
+
+#### New Features
+
+* reference の defaultValue に 0 を使えるようになった(https://issuetracker.google.com/issues/124248602)
+
+#### Behavior changes
+
+* `.*` が指定されている Deep Link が優先されるようになった(https://issuetracker.google.com/issues/123969518)
+
+### 1.0.0-beta01
+
+#### Behavior changes
+
+* argType で指定した型のみしか defaultValue に指定できないようになった(https://issuetracker.google.com/issues/123551990)
+* Safe Args が Android Gradle Plugin 3.3.0 に依存するようになった(https://android-review.googlesource.com/c/platform/frameworks/support/+/888413/)
+* Safe Args が Kotlin 1.3.20 に依存するようになった(https://android-review.googlesource.com/c/platform/frameworks/support/+/888414/)
+
+### 1.0.0-alpha11
+
+#### Bug Fixes
+
+* 1.0.0-alpha10 の不具合の hotfix(https://issuetracker.google.com/issues/123307342)
+
+### 1.0.0-alpha10
+
+#### Known Issues
+
+* Global Actions の Directions の import に失敗する(https://issuetracker.google.com/issues/123307342)
+
+#### New Features
+
+* 遅延取得するために `by navArgs()` が追加(https://issuetracker.google.com/issues/122603367)
+* Safe Args が生成する Kotlin のコードが `androidx.navigation.safeargs.kotlin` が利用されるようになった(https://issuetracker.google.com/issues/110263087)
+
+#### Behavior Changes
+
+* Deep Link で期待しない Destination に遷移する不具合を修正(https://issuetracker.google.com/issues/118393029)
+* `setGraph()` でバックスタックがリセットされるようになった(https://issuetracker.google.com/issues/111450672)
+* 不明な Deep Link のときに `IllegalStateException` が throw されずに無視されるようになった(https://issuetracker.google.com/issues/121340440)
+
+#### Breaking Changes
+
+* `NavOptions.applyPopAnimationsToPendingTransition()` が `ActivityNavigator` に移動した(https://issuetracker.google.com/issues/122413117)
+* Safe Args が同一の引数を定義できなくなった(https://issuetracker.google.com/issues/123233147)
+* Safe Args が Directions のコンストラクタを生成しなくなった(https://issuetracker.google.com/issues/123031660)
+* Safe Args が　NavDirections のコンストラクタを生成しなくなった(https://issuetracker.google.com/issues/122963206)
+* NavDirections の getArgument() に @NonNull が指定された(https://issuetracker.google.com/issues/123243957)
+
 ### 1.0.0-alpha09
 
 * https://developer.android.com/jetpack/docs/release-notes#december_18_2018
