@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_second.*
 
 class SecondFragment : Fragment() {
+
+    private val args by navArgs<SecondFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -18,10 +21,7 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val data = arguments?.let {
-            SecondFragmentArgs.fromBundle(it).data
-        }
 
-        text.text = data?.toString()
+        text.text = args.data.toString()
     }
 }

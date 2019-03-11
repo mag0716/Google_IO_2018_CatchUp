@@ -33,6 +33,23 @@
 
 ## 更新履歴
 
+### 1.0.0-alpha10
+
+#### Known Issues
+
+* Global Actions の Directions の import に失敗する(https://issuetracker.google.com/issues/123307342)
+
+#### New Features
+
+* 遅延取得するために `by navArgs()` が追加(https://issuetracker.google.com/issues/122603367)
+* Safe Args が生成する Kotlin のコードが `androidx.navigation.safeargs.kotlin` が利用されるようになった(https://issuetracker.google.com/issues/110263087)
+
+#### Behavior Changes
+
+#### Breaking Changes
+
+#### Bug Fixes
+
 ### 1.0.0-alpha09
 
 * https://developer.android.com/jetpack/docs/release-notes#december_18_2018
