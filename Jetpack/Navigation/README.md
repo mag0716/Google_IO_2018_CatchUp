@@ -33,6 +33,42 @@
 
 ## 更新履歴
 
+### 2.0.0-rc2
+
+1.0.0-rc02 の AndroidX 対応版
+
+### 1.0.0-rc02
+
+Bug Fixes のみ
+
+### 1.0.0-rc01
+
+Bug Fixes のみ
+
+### 1.0.0-beta02
+
+#### New Features
+
+* reference の defaultValue に 0 を使えるようになった(https://issuetracker.google.com/issues/124248602)
+
+#### Behavior changes
+
+* `.*` が指定されている Deep Link が優先されるようになった(https://issuetracker.google.com/issues/123969518)
+
+### 1.0.0-beta01
+
+#### Behavior changes
+
+* argType で指定した型のみしか defaultValue に指定できないようになった(https://issuetracker.google.com/issues/123551990)
+* Safe Args が Android Gradle Plugin 3.3.0 に依存するようになった(https://android-review.googlesource.com/c/platform/frameworks/support/+/888413/)
+* Safe Args が Kotlin 1.3.20 に依存するようになった(https://android-review.googlesource.com/c/platform/frameworks/support/+/888414/)
+
+### 1.0.0-alpha11
+
+#### Bug Fixes
+
+* 1.0.0-alpha10 の不具合の hotfix(https://issuetracker.google.com/issues/123307342)
+
 ### 1.0.0-alpha10
 
 #### Known Issues
