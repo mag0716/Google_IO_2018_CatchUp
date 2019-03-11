@@ -46,9 +46,17 @@
 
 #### Behavior Changes
 
+* Deep Link で期待しない Destination に遷移する不具合を修正(https://issuetracker.google.com/issues/118393029)
+* `setGraph()` でバックスタックがリセットされるようになった(https://issuetracker.google.com/issues/111450672)
+* 不明な Deep Link のときに `IllegalStateException` が throw されずに無視されるようになった(https://issuetracker.google.com/issues/121340440)
+
 #### Breaking Changes
 
-#### Bug Fixes
+* `NavOptions.applyPopAnimationsToPendingTransition()` が `ActivityNavigator` に移動した(https://issuetracker.google.com/issues/122413117)
+* Safe Args が同一の引数を定義できなくなった(https://issuetracker.google.com/issues/123233147)
+* Safe Args が Directions のコンストラクタを生成しなくなった(https://issuetracker.google.com/issues/123031660)
+* Safe Args が　NavDirections のコンストラクタを生成しなくなった(https://issuetracker.google.com/issues/122963206)
+* NavDirections の getArgument() に @NonNull が指定された(https://issuetracker.google.com/issues/123243957)
 
 ### 1.0.0-alpha09
 
