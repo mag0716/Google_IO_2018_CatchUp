@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_first.*
 
 class SecondFragment : androidx.fragment.app.Fragment() {
@@ -18,6 +18,6 @@ class SecondFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button.setOnClickListener { view.findNavController().navigate(R.id.action_move_to_third) }
+        button.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_move_to_third))
     }
 }

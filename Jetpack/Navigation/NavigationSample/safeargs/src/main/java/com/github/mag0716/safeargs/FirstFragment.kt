@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_first.*
 
 class FirstFragment : Fragment() {
@@ -19,9 +19,12 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button.setOnClickListener {
-            val action = FirstFragmentDirections.actionMoveToSecond(Data(0, "name"))
-            view.findNavController().navigate(action)
-        }
+        button.setOnClickListener(
+                Navigation.createNavigateOnClickListener(
+                        FirstFragmentDirections.actionMoveToSecond(
+                                Data(0, "name")
+                        )
+                )
+        )
     }
 }

@@ -34,6 +34,26 @@
 
 ## 更新履歴
 
+https://developer.android.com/jetpack/androidx/releases/navigation
+
+### 2.1.0-alpha01
+
+#### Dependency changes
+
+* 依存している core, fragment, material のバージョンが更新、legacy-support-core-utils への依存を削除(https://issuetracker.google.com/issues/128632612)
+
+#### API Changes
+
+* `Navigation.crateNavigatinoOnClickListener(NavDirections)` が追加された(https://issuetracker.google.com/issues/127631752)
+  * ID, Bundle の引数を持つメソッドのオーバーロード
+* `FragmentNavigator.instantiateFragment` が deprecated になった(https://issuetracker.google.com/issues/119054429)
+  * 内部実装の変更のみ。動作に変化はない
+
+#### Bug Fixes
+
+* `android:defaultValue="@null"` を指定している時に引数を渡しても null を送れなかった不具合を修正(https://issuetracker.google.com/issues/128531879)
+* KotlinPoet のバージョンが上がり、長いパッケージ名が扱えるようになった(https://issuetracker.google.com/issues/123654948)
+
 ### 2.0.0
 
 2.0.0-rc02 のバージョン違い
