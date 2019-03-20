@@ -10,16 +10,17 @@
 
 | モジュール名 | 概要 | 作成バージョン |
 | --- | --- | --- |
+| activitytransition | Activity への遷移を行うサンプル(#2) | 1.0.0-alpha01 |
 | app | 各タブのバックスタックを保持するサンプル(#6, #13) | 1.0.0-alpha02 |
+| appbarconfiguration | Toolbar と AppBarConfiguration を紐づけて Up Button が表示される画面をカスタマイズする<br>SecondFragment で Up Button が表示されないようにしている | 1.0.0-alpha07 |
 | blankdestination | startDestination にレイアウトのない Fragment を利用した(#8)<br/>スプラッシュを想定 | 1.0.0-alpha02 |
 | bottomnavigation | 通常の BottomNavigationView の動作(#12)<br/>タブタップではreplaceし直されるので、EditText の内容は復帰しない<br/>バックキーでの遷移では、EditText の内容が復帰する | 1.0.0-alpha02 |
+| bottomsheetdialog | BottomSheetDialogFragment 内の NavigationView と Navigation Graph を連動させる<br/>画面遷移だけでは BottomSheetDialogFragment は非表示にはならず、バックキーで戻ってくると表示された状態となっている(#48) | 1.0.0-alpha06 |
 | nestednavigation | conditional navigation の動作<br/>Profile 画面で未ログインだったら Login 画面へ遷移する。(#5) | 1.0.0-alpha02 |
-| toolbar | Toolbar 単体で利用する Activity のサンプル | 1.0.0-alpha03 |
-| safeargs | Safe Args Plugin のサンプル | 1.0.0-alpha03 |
+| onnavigationuplistener | [WIP] navigationUp をカスタマイズ<br/>ユースケースが思いつかなかったので OnNavigationUpListener#onNavigateUp が呼び出される条件のみ調査(#60) | 1.0.0-alpha08 |
+| safeargs | Safe Args Plugin のサンプル(#33) | 1.0.0-alpha03 |
 | sharedelementtransition | [WIP] Fragment 間の遷移時に Shared Element Transition を利用するサンプル<br/>RecyclerView のセルからの遷移は上手くいかない | 1.0.0-alpha06 |
-| bottomsheetdialog | BottomSheetDialogFragment 内の NavigationView と Navigation Graph を連動させる | 1.0.0-alpha06 |
-| appbarconfiguration | Toolbar と AppBarConfiguration を紐づけて Up Button が表示される画面をカスタマイズする | 1.0.0-alpha07 |
-| onnavigationuplistener | [WIP] navigationUp をカスタマイズ<br/>ユースケースが思いつかなかったので OnNavigationUpListener#onNavigateUp が呼び出される条件のみ調査 | 1.0.0-alpha08 |
+| toolbar | Toolbar 単体で利用する Activity のサンプル(#33) | 1.0.0-alpha03 |
 
 ### app
 
@@ -32,6 +33,10 @@
 * どのタブにいても、Toolbar のメニューから SettingActivity に遷移させたいが、同じ定義が各 Navigation Graph に存在していて気持ち悪い
 
 ## 更新履歴
+
+### 2.0.0
+
+2.0.0-rc02 のバージョン違い
 
 ### 2.0.0-rc2
 
