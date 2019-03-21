@@ -18,7 +18,13 @@
     <fragment
         android:id="@+id/second"
         android:name="com.github.mag0716.toolbar.SecondFragment"
-        android:label="fragment_second"
-        tools:layout="@layout/fragment_second" />
+        android:label="fragment_second{count}"
+        tools:layout="@layout/fragment_second">
+        <argument
+            android:name="count"
+            android:defaultValue="0"
+            app:argType="integer"
+            app:nullable="false" />
+    </fragment>
 
 </navigation>
