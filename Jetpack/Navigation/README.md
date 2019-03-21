@@ -20,7 +20,7 @@
 | onnavigationuplistener | [WIP] navigationUp をカスタマイズ<br/>ユースケースが思いつかなかったので OnNavigationUpListener#onNavigateUp が呼び出される条件のみ調査(#60) | 1.0.0-alpha08 |
 | safeargs | Safe Args Plugin のサンプル(#33) | 1.0.0-alpha03 |
 | sharedelementtransition | [WIP] Fragment 間の遷移時に Shared Element Transition を利用するサンプル<br/>RecyclerView のセルからの遷移は上手くいかない | 1.0.0-alpha06 |
-| toolbar | Toolbar 単体で利用する Activity のサンプル(#33) | 1.0.0-alpha03 |
+| toolbar | Toolbar 単体で利用する Activity のサンプル(#33)<br/>argument を Toolbar のタイトルに利用している(#58) | 1.0.0-alpha03 |
 
 ### app
 
