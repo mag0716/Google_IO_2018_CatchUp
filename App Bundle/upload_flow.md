@@ -26,7 +26,8 @@ https://support.google.com/googleplay/android-developer/answer/7384423
 ![](./screenshot/new_application/flow5.png)
 1. 「Google Play アプリ署名」で「次へ」を選択し、Google App Signing を有効にする
 ![](./screenshot/new_application/flow6.png)
-  * Google Play App Signing が有効化されている他のアプリと同じ署名ファイル利用する場合は、「署名鍵の再利用」から選択することもできます
+  * Google Play App Signing が有効化されている他のアプリと同じ署名ファイルを選択したり、リリース用の署名ファイルを指定することができます。デフォルトだと Google Play が生成した署名ファイルが利用されます。
+  ![](./screenshot/new_application/flow7.png)
 1. 「追加する Android App Bundle と APK」で、**アップロード用の署名ファイルで** 生成した、`*.aab`　を選択する
 1. 「リリース名」、「このリリースの新機能」などに適切な内容を設定し、「保存」を選択
 ![](./screenshot/new_application/flow8.png)
@@ -47,16 +48,18 @@ https://support.google.com/googleplay/android-developer/answer/7384423
 1. アプリを選択し、「リリース管理」->「アプリの署名」を選択する
 ![](./screenshot/exsisting_application/flow3.png)
   * 利用規約が表示されたら同意する
-1. 「アプリ署名鍵がエクスポートされていません」を選択する
+1. 「Java Keystoreから鍵をエクスポートしてアップロードする」を選択する
   * 「PEPK ツール」をタップし、ツールをダウンロードする
   * ツールを利用し、今までリリースに利用していた署名ファイルから、秘密鍵のエクスポートと暗号化を行う
   * 「アプリ署名の秘密鍵」から秘密鍵を選択する
   * 「アップロード公開鍵の証明書」からアップロード鍵の証明書をアップロードする
   ![](./screenshot/exsisting_application/flow4.png)
 1. 「省略可: アプリ署名鍵のセキュリティを強化する」を選択する
+  * **この手順を省略すると、リリース用とアップロード用の署名ファイルが同じになります**
   * 記載の方法で、アップロード用の署名ファイルから PEM ファイルをエクスポートする
   * 「アップロード公開鍵の証明書」から、エクポートした PEM ファイルを選択する
-1. 「登録」ボタンをタップする
+  ![](./screenshot/exsisting_application/flow5.png)
+1. 「完了」ボタンをタップする
 1. 成功すると、以下のような画面が表示されます
 ![](./screenshot/exsisting_application/flow7.png)
 
