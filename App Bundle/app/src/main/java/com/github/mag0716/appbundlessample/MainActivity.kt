@@ -43,6 +43,12 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
             loadModuleIfNeeded(getString(R.string.dependency_dynamic_feature_name))
         }
         textView = findViewById(R.id.text)
+
+        if (savedInstanceState == null) {
+            logWithText("installed languages")
+            val installedLanguages = manager.installedLanguages
+            logWithText("$installedLanguages")
+        }
     }
 
     override fun onResume() {
