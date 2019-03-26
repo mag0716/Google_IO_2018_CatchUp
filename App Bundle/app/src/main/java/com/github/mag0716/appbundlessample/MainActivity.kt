@@ -3,10 +3,14 @@ package com.github.mag0716.appbundlessample
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.*
+import java.util.*
 
 /**
  * Android Studio から通常通りにインストールすると、Dynamic Feature Module は全て含まれた状態で起動する
@@ -16,7 +20,7 @@ import com.google.android.play.core.splitinstall.*
  *
  * Internal Test Track で動作確認するしかない
  */
-class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
+class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, AdapterView.OnItemSelectedListener {
 
     companion object {
         const val TAG = "DynamicFeature"
@@ -25,6 +29,9 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
     private lateinit var independentModuleButton: Button
     private lateinit var dependencyModuleButton: Button
     private lateinit var textView: TextView
+
+    private lateinit var localeText: TextView
+    private lateinit var spinner: Spinner
 
     private lateinit var manager: SplitInstallManager
 
@@ -43,6 +50,9 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
             loadModuleIfNeeded(getString(R.string.dependency_dynamic_feature_name))
         }
         textView = findViewById(R.id.text)
+        spinner = findViewById(R.id.spinner)
+        spinner.onItemSelectedListener = this
+        localeText = findViewById(R.id.locale_text)
 
         if (savedInstanceState == null) {
             logWithText("installed languages")
@@ -65,6 +75,20 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener {
         // dynamic_feature が module に依存していると、status が 3(DOWNLOADED)になるが起動できない状態になる
         // module は app で依存している or module も dynamic_feature にする必要がある？
         logWithText("onStateUpdate : $state")
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Log.d(TAG, "onItemSelected : $position")
+        val languages = listOf(Locale.JAPANESE, Locale.ENGLISH, Locale.CHINESE)
+        val configuration = resources.configuration
+        configuration.setLocale(languages[position])
+        // TODO: deprecated API
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+        localeText.text = getString(R.string.test_text)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // noop
     }
 
     private fun loadModuleIfNeeded(moduleName: String) {
