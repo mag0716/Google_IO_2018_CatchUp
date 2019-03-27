@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
             }
             SplitInstallSessionStatus.INSTALLED -> {
                 if (installedLanguage) {
+                    // FIXME: デバッグのために固定している
                     updateText(Locale.CHINESE)
                 }
             }
