@@ -10,6 +10,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.*
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import java.util.*
 
 /**
@@ -75,16 +76,35 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         // dynamic_feature が module に依存していると、status が 3(DOWNLOADED)になるが起動できない状態になる
         // module は app で依存している or module も dynamic_feature にする必要がある？
         logWithText("onStateUpdate : $state")
+
+        if (state == null) {
+            return
+        }
+
+        val installedLanguage = state.languages().isEmpty().not()
+
+        when (state.status()) {
+            SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
+                // TODO:REQUIRES_USER_CONFIRMATIONのハンドリング
+            }
+            SplitInstallSessionStatus.INSTALLED -> {
+                if (installedLanguage) {
+                    updateText(Locale.CHINESE)
+                }
+            }
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         Log.d(TAG, "onItemSelected : $position")
-        val languages = listOf(Locale.JAPANESE, Locale.ENGLISH, Locale.CHINESE)
-        val configuration = resources.configuration
-        configuration.setLocale(languages[position])
-        // TODO: deprecated API
-        resources.updateConfiguration(configuration, resources.displayMetrics)
-        localeText.text = getString(R.string.test_text)
+        val locales = listOf(Locale.JAPANESE, Locale.ENGLISH, Locale.CHINESE)
+        val locale = locales[position]
+        val installedLanguages = manager.installedLanguages
+        if (installedLanguages.contains(locale.language)) {
+            updateText(locale)
+        } else {
+            installLanguage(locale)
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -115,6 +135,32 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         }
         val intent = Intent(Intent.ACTION_VIEW).setClassName(packageName, className)
         startActivity(intent)
+    }
+
+    private fun installLanguage(locale: Locale) {
+        val request = SplitInstallRequest.newBuilder()
+                .addLanguage(locale)
+                .build()
+        // Task だけど onSuccess などは呼び出されない？
+        manager.startInstall(request)
+                .addOnSuccessListener {
+                    logWithText("success : $it")
+                    updateText(locale)
+                }
+                .addOnFailureListener { logWithText("failure : $it") }
+                .addOnCompleteListener {
+                    logWithText("complete : $it")
+                    updateText(locale)
+                }
+
+    }
+
+    private fun updateText(locale: Locale) {
+        logWithText("updateText : $locale")
+        val configuration = resources.configuration
+        configuration.setLocale(locale)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+        localeText.text = getString(R.string.test_text)
     }
 
     private fun logWithText(message: String) {
