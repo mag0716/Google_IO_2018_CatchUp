@@ -9,6 +9,11 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.splitinstall.*
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import java.util.*
@@ -25,8 +30,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     companion object {
         const val TAG = "DynamicFeature"
+        private const val REQUEST_IMMEDIATE_UPDATES = 100
     }
 
+    private lateinit var immediateUpdatesButton: Button
     private lateinit var independentModuleButton: Button
     private lateinit var dependencyModuleButton: Button
     private lateinit var textView: TextView
@@ -34,14 +41,22 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     private lateinit var localeText: TextView
     private lateinit var spinner: Spinner
 
+    private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var manager: SplitInstallManager
+
+    private var appUpdateInfo: AppUpdateInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        appUpdateManager = AppUpdateManagerFactory.create(this)
         manager = SplitInstallManagerFactory.create(this)
 
+        immediateUpdatesButton = findViewById(R.id.immediate_updates_button)
+        immediateUpdatesButton.setOnClickListener {
+            requestImmediateUpdatesIfNeeded()
+        }
         independentModuleButton = findViewById(R.id.independent_dynamic_feature_button)
         independentModuleButton.setOnClickListener {
             loadModuleIfNeeded(getString(R.string.independent_dynamic_feature_name))
@@ -64,12 +79,32 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     override fun onResume() {
         super.onResume()
+        appUpdateManager.appUpdateInfo
+                .addOnSuccessListener { appUpdateInfo ->
+                    Log.d(TAG, "in-app updates success : $appUpdateInfo")
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                        this.appUpdateInfo = appUpdateInfo
+                        if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                            immediateUpdatesButton.isEnabled = true
+                        }
+                    }
+                }
+                .addOnFailureListener {
+                    Log.e(TAG, "in-app updates failed", it)
+                }
+                .addOnCompleteListener {
+                    Log.d(TAG, "in-app updates complete")
+                }
         manager.registerListener(this)
     }
 
     override fun onPause() {
         manager.unregisterListener(this)
         super.onPause()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onStateUpdate(state: SplitInstallSessionState?) {
@@ -126,6 +161,15 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
                     .addOnFailureListener { logWithText("failure : $it") }
                     .addOnCompleteListener { logWithText("complete : $it") }
         }
+    }
+
+    private fun requestImmediateUpdatesIfNeeded() {
+        appUpdateManager.startUpdateFlowForResult(
+                appUpdateInfo,
+                AppUpdateType.IMMEDIATE,
+                this,
+                REQUEST_IMMEDIATE_UPDATES
+        )
     }
 
     private fun launchFeatureModule(moduleName: String) {
