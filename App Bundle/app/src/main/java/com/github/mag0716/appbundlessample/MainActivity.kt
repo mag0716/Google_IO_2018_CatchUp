@@ -82,11 +82,20 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         appUpdateManager.appUpdateInfo
                 .addOnSuccessListener { appUpdateInfo ->
                     Log.d(TAG, "in-app updates success : $appUpdateInfo")
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                    val updateAvailability = appUpdateInfo.updateAvailability()
+                    if (updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
                         this.appUpdateInfo = appUpdateInfo
                         if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
                             immediateUpdatesButton.isEnabled = true
                         }
+                    } else if (updateAvailability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                        // アプリ更新中なので再開する
+                        appUpdateManager.startUpdateFlowForResult(
+                                appUpdateInfo,
+                                AppUpdateType.IMMEDIATE,
+                                this,
+                                REQUEST_IMMEDIATE_UPDATES
+                        )
                     }
                 }
                 .addOnFailureListener {
