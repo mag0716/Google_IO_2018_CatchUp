@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.splitinstall.*
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var manager: SplitInstallManager
+
+    private val installStateUpdatedListener = InstallStateUpdatedListener { state -> logWithText("install State : $state") }
 
     private var appUpdateInfo: AppUpdateInfo? = null
 
@@ -79,9 +82,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     override fun onResume() {
         super.onResume()
+        appUpdateManager.registerListener(installStateUpdatedListener)
         appUpdateManager.appUpdateInfo
                 .addOnSuccessListener { appUpdateInfo ->
-                    logWithText("in-app updates success : $appUpdateInfo")
+                    logWithText("in-app updates success : ${appUpdateInfo.toStringForLog()}")
                     val updateAvailability = appUpdateInfo.updateAvailability()
                     if (updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
                         this.appUpdateInfo = appUpdateInfo
@@ -109,6 +113,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     override fun onPause() {
         manager.unregisterListener(this)
+        appUpdateManager.unregisterListener(installStateUpdatedListener)
         super.onPause()
     }
 
@@ -228,3 +233,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         }
     }
 }
+
+private fun AppUpdateInfo.toStringForLog(): String = """availableVersionCode=${availableVersionCode()}
+        updateAvailability=${updateAvailability()}
+        installStatus=${installStatus()}"""
