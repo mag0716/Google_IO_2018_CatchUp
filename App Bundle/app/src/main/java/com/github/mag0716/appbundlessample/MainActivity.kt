@@ -9,6 +9,12 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.splitinstall.*
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import java.util.*
@@ -25,8 +31,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     companion object {
         const val TAG = "DynamicFeature"
+        private const val REQUEST_IMMEDIATE_UPDATES = 100
     }
 
+    private lateinit var immediateUpdatesButton: Button
     private lateinit var independentModuleButton: Button
     private lateinit var dependencyModuleButton: Button
     private lateinit var textView: TextView
@@ -34,14 +42,24 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     private lateinit var localeText: TextView
     private lateinit var spinner: Spinner
 
+    private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var manager: SplitInstallManager
+
+    private val installStateUpdatedListener = InstallStateUpdatedListener { state -> logWithText("install State : $state") }
+
+    private var appUpdateInfo: AppUpdateInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        appUpdateManager = AppUpdateManagerFactory.create(this)
         manager = SplitInstallManagerFactory.create(this)
 
+        immediateUpdatesButton = findViewById(R.id.immediate_updates_button)
+        immediateUpdatesButton.setOnClickListener {
+            requestImmediateUpdatesIfNeeded()
+        }
         independentModuleButton = findViewById(R.id.independent_dynamic_feature_button)
         independentModuleButton.setOnClickListener {
             loadModuleIfNeeded(getString(R.string.independent_dynamic_feature_name))
@@ -64,12 +82,44 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     override fun onResume() {
         super.onResume()
+        appUpdateManager.registerListener(installStateUpdatedListener)
+        appUpdateManager.appUpdateInfo
+                .addOnSuccessListener { appUpdateInfo ->
+                    logWithText("in-app updates success : ${appUpdateInfo.toStringForLog()}")
+                    val updateAvailability = appUpdateInfo.updateAvailability()
+                    if (updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
+                        this.appUpdateInfo = appUpdateInfo
+                        if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                            immediateUpdatesButton.isEnabled = true
+                        }
+                    } else if (updateAvailability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                        // アプリ更新中なので再開する
+                        appUpdateManager.startUpdateFlowForResult(
+                                appUpdateInfo,
+                                AppUpdateType.IMMEDIATE,
+                                this,
+                                REQUEST_IMMEDIATE_UPDATES
+                        )
+                    }
+                }
+                .addOnFailureListener {
+                    logWithText("in-app updates failed", it)
+                }
+                .addOnCompleteListener {
+                    logWithText("in-app updates complete")
+                }
         manager.registerListener(this)
     }
 
     override fun onPause() {
         manager.unregisterListener(this)
+        appUpdateManager.unregisterListener(installStateUpdatedListener)
         super.onPause()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        logWithText("onActivityResult : $requestCode, $resultCode")
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onStateUpdate(state: SplitInstallSessionState?) {
@@ -128,6 +178,17 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         }
     }
 
+    private fun requestImmediateUpdatesIfNeeded() {
+        appUpdateManager.startUpdateFlowForResult(
+                appUpdateInfo,
+                AppUpdateType.IMMEDIATE,
+                this,
+                REQUEST_IMMEDIATE_UPDATES
+        )
+        // 擬似強制アップデート
+        finish()
+    }
+
     private fun launchFeatureModule(moduleName: String) {
         val className = when (moduleName) {
             getString(R.string.independent_dynamic_feature_name) -> "com.github.mag0716.independent_dynamic_feature.IndependentFeatureActivity"
@@ -164,10 +225,18 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         localeText.text = getString(R.string.test_text)
     }
 
-    private fun logWithText(message: String) {
+    private fun logWithText(message: String, exception: Exception? = null) {
         val sb = StringBuilder(textView.text)
         sb.append("$message\n")
         textView.text = sb.toString()
-        Log.d(TAG, message)
+        if (exception == null) {
+            Log.d(TAG, message)
+        } else {
+            Log.e(TAG, message, exception)
+        }
     }
 }
+
+private fun AppUpdateInfo.toStringForLog(): String = """availableVersionCode=${availableVersionCode()}
+        updateAvailability=${updateAvailability()}
+        installStatus=${installStatus()}"""
