@@ -118,6 +118,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        logWithText("onActivityResult : $requestCode, $resultCode")
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -184,6 +185,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
                 this,
                 REQUEST_IMMEDIATE_UPDATES
         )
+        // 擬似強制アップデート
+        finish()
     }
 
     private fun launchFeatureModule(moduleName: String) {
