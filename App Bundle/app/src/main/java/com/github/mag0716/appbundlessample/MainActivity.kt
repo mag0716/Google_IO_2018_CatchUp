@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         super.onResume()
         appUpdateManager.appUpdateInfo
                 .addOnSuccessListener { appUpdateInfo ->
-                    Log.d(TAG, "in-app updates success : $appUpdateInfo")
+                    logWithText("in-app updates success : $appUpdateInfo")
                     val updateAvailability = appUpdateInfo.updateAvailability()
                     if (updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
                         this.appUpdateInfo = appUpdateInfo
@@ -99,10 +99,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
                     }
                 }
                 .addOnFailureListener {
-                    Log.e(TAG, "in-app updates failed", it)
+                    logWithText("in-app updates failed", it)
                 }
                 .addOnCompleteListener {
-                    Log.d(TAG, "in-app updates complete")
+                    logWithText("in-app updates complete")
                 }
         manager.registerListener(this)
     }
@@ -217,10 +217,14 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         localeText.text = getString(R.string.test_text)
     }
 
-    private fun logWithText(message: String) {
+    private fun logWithText(message: String, exception: Exception? = null) {
         val sb = StringBuilder(textView.text)
         sb.append("$message\n")
         textView.text = sb.toString()
-        Log.d(TAG, message)
+        if (exception == null) {
+            Log.d(TAG, message)
+        } else {
+            Log.e(TAG, message, exception)
+        }
     }
 }
