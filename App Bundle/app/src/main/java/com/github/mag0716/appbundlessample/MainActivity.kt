@@ -9,11 +9,13 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.splitinstall.*
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
@@ -32,9 +34,11 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     companion object {
         const val TAG = "DynamicFeature"
         private const val REQUEST_IMMEDIATE_UPDATES = 100
+        private const val REQUEST_FLEXIBLE_UPDATES = 200
     }
 
     private lateinit var immediateUpdatesButton: Button
+    private lateinit var flexibleUpdatesButton: Button
     private lateinit var independentModuleButton: Button
     private lateinit var dependencyModuleButton: Button
     private lateinit var textView: TextView
@@ -45,7 +49,12 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var manager: SplitInstallManager
 
-    private val installStateUpdatedListener = InstallStateUpdatedListener { state -> logWithText("install State : $state") }
+    private val installStateUpdatedListener = InstallStateUpdatedListener { state ->
+        logWithText("install State : $state")
+        if (state.installStatus() == InstallStatus.DOWNLOADED) {
+            popupSnackbarForCompleteUpdate()
+        }
+    }
 
     private var appUpdateInfo: AppUpdateInfo? = null
 
@@ -59,6 +68,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         immediateUpdatesButton = findViewById(R.id.immediate_updates_button)
         immediateUpdatesButton.setOnClickListener {
             requestImmediateUpdatesIfNeeded()
+        }
+        flexibleUpdatesButton = findViewById(R.id.flexible_updates_button)
+        flexibleUpdatesButton.setOnClickListener {
+            requestFlexibleUpdatesIfNeeded()
         }
         independentModuleButton = findViewById(R.id.independent_dynamic_feature_button)
         independentModuleButton.setOnClickListener {
@@ -86,20 +99,28 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         appUpdateManager.appUpdateInfo
                 .addOnSuccessListener { appUpdateInfo ->
                     logWithText("in-app updates success : ${appUpdateInfo.toStringForLog()}")
-                    val updateAvailability = appUpdateInfo.updateAvailability()
-                    if (updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
-                        this.appUpdateInfo = appUpdateInfo
-                        if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                            immediateUpdatesButton.isEnabled = true
+                    if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                        // Immediate は自動的に再起動が行われるのでここには到達しない
+                        popupSnackbarForCompleteUpdate()
+                    } else {
+                        val updateAvailability = appUpdateInfo.updateAvailability()
+                        if (updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
+                            this.appUpdateInfo = appUpdateInfo
+                            if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                                immediateUpdatesButton.isEnabled = true
+                            }
+                            if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                                flexibleUpdatesButton.isEnabled = true
+                            }
+                        } else if (updateAvailability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                            // アプリ更新中なので再開する
+                            appUpdateManager.startUpdateFlowForResult(
+                                    appUpdateInfo,
+                                    AppUpdateType.IMMEDIATE,
+                                    this,
+                                    REQUEST_IMMEDIATE_UPDATES
+                            )
                         }
-                    } else if (updateAvailability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                        // アプリ更新中なので再開する
-                        appUpdateManager.startUpdateFlowForResult(
-                                appUpdateInfo,
-                                AppUpdateType.IMMEDIATE,
-                                this,
-                                REQUEST_IMMEDIATE_UPDATES
-                        )
                     }
                 }
                 .addOnFailureListener {
@@ -187,6 +208,27 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         )
         // 擬似強制アップデート
         finish()
+    }
+
+    private fun requestFlexibleUpdatesIfNeeded() {
+        appUpdateManager.startUpdateFlowForResult(
+                appUpdateInfo,
+                AppUpdateType.FLEXIBLE,
+                this,
+                REQUEST_FLEXIBLE_UPDATES
+        )
+    }
+
+    private fun popupSnackbarForCompleteUpdate() {
+        Snackbar.make(
+                findViewById(R.id.container),
+                "in-app updates",
+                Snackbar.LENGTH_INDEFINITE
+        ).apply {
+            setAction("更新") {
+                appUpdateManager.completeUpdate()
+            }
+        }.show()
     }
 
     private fun launchFeatureModule(moduleName: String) {
