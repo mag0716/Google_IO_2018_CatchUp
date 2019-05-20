@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     }
 
     private var appUpdateInfo: AppUpdateInfo? = null
+    private var preUpdateType: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
 
     override fun onResume() {
         super.onResume()
+        logWithText("onResume : $preUpdateType")
         appUpdateManager.registerListener(installStateUpdatedListener)
         appUpdateManager.appUpdateInfo
                 .addOnSuccessListener { appUpdateInfo ->
@@ -113,13 +115,16 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
                                 flexibleUpdatesButton.isEnabled = true
                             }
                         } else if (updateAvailability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                            // アプリ更新中なので再開する
-                            appUpdateManager.startUpdateFlowForResult(
-                                    appUpdateInfo,
-                                    AppUpdateType.IMMEDIATE,
-                                    this,
-                                    REQUEST_IMMEDIATE_UPDATES
-                            )
+                            // Flexible のダイアログを閉じたあとにここに入ってしまうのでチェック
+                            if (preUpdateType == AppUpdateType.IMMEDIATE) {
+                                // アプリ更新中なので再開する
+                                appUpdateManager.startUpdateFlowForResult(
+                                        appUpdateInfo,
+                                        AppUpdateType.IMMEDIATE,
+                                        this,
+                                        REQUEST_IMMEDIATE_UPDATES
+                                )
+                            }
                         }
                     }
                 }
@@ -200,6 +205,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     }
 
     private fun requestImmediateUpdatesIfNeeded() {
+        preUpdateType = AppUpdateType.IMMEDIATE
         appUpdateManager.startUpdateFlowForResult(
                 appUpdateInfo,
                 AppUpdateType.IMMEDIATE,
@@ -211,6 +217,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     }
 
     private fun requestFlexibleUpdatesIfNeeded() {
+        preUpdateType = AppUpdateType.FLEXIBLE
         appUpdateManager.startUpdateFlowForResult(
                 appUpdateInfo,
                 AppUpdateType.FLEXIBLE,
