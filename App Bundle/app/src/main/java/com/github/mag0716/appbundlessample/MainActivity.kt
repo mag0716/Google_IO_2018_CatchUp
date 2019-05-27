@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     private lateinit var flexibleUpdatesButton: Button
     private lateinit var independentModuleButton: Button
     private lateinit var dependencyModuleButton: Button
+    private lateinit var startModuleButton: Button
+    private lateinit var uninstallModuleButton: Button
     private lateinit var textView: TextView
 
     private lateinit var localeText: TextView
@@ -82,6 +84,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         dependencyModuleButton.setOnClickListener {
             loadModuleIfNeeded(getString(R.string.dependency_dynamic_feature_name))
         }
+        startModuleButton = findViewById(R.id.start_feature_button)
+        startModuleButton.setOnClickListener { startModule() }
+        uninstallModuleButton = findViewById(R.id.uninstall_feature_button)
+        uninstallModuleButton.setOnClickListener { uninstallModule() }
         textView = findViewById(R.id.text)
         spinner = findViewById(R.id.spinner)
         spinner.onItemSelectedListener = this
@@ -242,6 +248,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         val className = when (moduleName) {
             getString(R.string.independent_dynamic_feature_name) -> "com.github.mag0716.independent_dynamic_feature.IndependentFeatureActivity"
             getString(R.string.dependency_dynamic_feature_name) -> "com.github.mag0716.dependency_dynamic_feature.DependencyFeatureActivity"
+            getString(R.string.uninstallable_feature_name) -> "com.github.mag0716.uninstallable_feature.UninstallableFeatureActivity"
             else -> throw IllegalArgumentException("invalid parameter : $moduleName")
         }
         val intent = Intent(Intent.ACTION_VIEW).setClassName(packageName, className)
@@ -263,7 +270,14 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
                     logWithText("complete : $it")
                     updateText(locale)
                 }
+    }
 
+    private fun startModule() {
+        launchFeatureModule(getString(R.string.uninstallable_feature_name))
+    }
+
+    private fun uninstallModule() {
+        // TODO:
     }
 
     private fun updateText(locale: Locale) {
