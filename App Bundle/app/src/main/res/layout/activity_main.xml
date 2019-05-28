@@ -68,24 +68,37 @@
         </LinearLayout>
     </ScrollView>
 
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="independent_dynamic_feature_button,dependency_dynamic_feature_button,start_feature_button,uninstall_feature_button"
+        app:flow_wrapMode="chain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+
     <Button
         android:id="@+id/independent_dynamic_feature_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Independent Module"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/dependency_dynamic_feature_button"
-        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+        android:text="Independent Module" />
 
     <Button
         android:id="@+id/dependency_dynamic_feature_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dependency Module"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/independent_dynamic_feature_button"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+        android:text="Dependency Module" />
 
+    <Button
+        android:id="@+id/start_feature_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Module" />
+
+    <Button
+        android:id="@+id/uninstall_feature_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uninstall Module" />
 </androidx.constraintlayout.widget.ConstraintLayout>

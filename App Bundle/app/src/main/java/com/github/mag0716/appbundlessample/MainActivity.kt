@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     private lateinit var flexibleUpdatesButton: Button
     private lateinit var independentModuleButton: Button
     private lateinit var dependencyModuleButton: Button
+    private lateinit var startModuleButton: Button
+    private lateinit var uninstallModuleButton: Button
     private lateinit var textView: TextView
 
     private lateinit var localeText: TextView
@@ -82,12 +84,20 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         dependencyModuleButton.setOnClickListener {
             loadModuleIfNeeded(getString(R.string.dependency_dynamic_feature_name))
         }
+        startModuleButton = findViewById(R.id.start_feature_button)
+        startModuleButton.setOnClickListener { startModule() }
+        uninstallModuleButton = findViewById(R.id.uninstall_feature_button)
+        uninstallModuleButton.setOnClickListener { uninstallModule() }
         textView = findViewById(R.id.text)
         spinner = findViewById(R.id.spinner)
         spinner.onItemSelectedListener = this
         localeText = findViewById(R.id.locale_text)
 
         if (savedInstanceState == null) {
+            logWithText("installed modules")
+            val installModules = manager.installedModules
+            logWithText("$installModules")
+
             logWithText("installed languages")
             val installedLanguages = manager.installedLanguages
             logWithText("$installedLanguages")
@@ -242,6 +252,7 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         val className = when (moduleName) {
             getString(R.string.independent_dynamic_feature_name) -> "com.github.mag0716.independent_dynamic_feature.IndependentFeatureActivity"
             getString(R.string.dependency_dynamic_feature_name) -> "com.github.mag0716.dependency_dynamic_feature.DependencyFeatureActivity"
+            getString(R.string.uninstallable_feature_name) -> "com.github.mag0716.uninstallable_feature.UninstallableFeatureActivity"
             else -> throw IllegalArgumentException("invalid parameter : $moduleName")
         }
         val intent = Intent(Intent.ACTION_VIEW).setClassName(packageName, className)
@@ -263,7 +274,30 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
                     logWithText("complete : $it")
                     updateText(locale)
                 }
+    }
 
+    private fun startModule() {
+        val uninstallModuleName = getString(R.string.uninstallable_feature_name)
+        if (manager.installedModules.contains(uninstallModuleName)) {
+            launchFeatureModule(getString(R.string.uninstallable_feature_name))
+        } else {
+            logWithText("startModule : $uninstallModuleName is already uninstalled")
+        }
+    }
+
+    private fun uninstallModule() {
+        val uninstallModuleName = getString(R.string.uninstallable_feature_name)
+        // 呼び出し直後に success, complete が呼ばれるが画面遷移可能
+        manager.deferredUninstall(listOf(uninstallModuleName))
+                .addOnSuccessListener {
+                    logWithText("uninstallModule success")
+                }
+                .addOnFailureListener {
+                    logWithText("uninstallModule failure", it)
+                }
+                .addOnCompleteListener {
+                    logWithText("uninstallModule complete")
+                }
     }
 
     private fun updateText(locale: Locale) {
