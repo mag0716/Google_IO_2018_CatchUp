@@ -273,11 +273,27 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
     }
 
     private fun startModule() {
-        launchFeatureModule(getString(R.string.uninstallable_feature_name))
+        val uninstallModuleName = getString(R.string.uninstallable_feature_name)
+        if (manager.installedModules.contains(uninstallModuleName)) {
+            launchFeatureModule(getString(R.string.uninstallable_feature_name))
+        } else {
+            logWithText("startModule : $uninstallModuleName is already uninstalled")
+        }
     }
 
     private fun uninstallModule() {
-        // TODO:
+        val uninstallModuleName = getString(R.string.uninstallable_feature_name)
+        // 呼び出し直後に success, complete が呼ばれるが画面遷移可能
+        manager.deferredUninstall(listOf(uninstallModuleName))
+                .addOnSuccessListener {
+                    logWithText("uninstallModule success")
+                }
+                .addOnFailureListener {
+                    logWithText("uninstallModule failure", it)
+                }
+                .addOnCompleteListener {
+                    logWithText("uninstallModule complete")
+                }
     }
 
     private fun updateText(locale: Locale) {
