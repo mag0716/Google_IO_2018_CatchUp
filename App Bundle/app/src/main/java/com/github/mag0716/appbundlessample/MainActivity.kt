@@ -94,6 +94,10 @@ class MainActivity : AppCompatActivity(), SplitInstallStateUpdatedListener, Adap
         localeText = findViewById(R.id.locale_text)
 
         if (savedInstanceState == null) {
+            logWithText("installed modules")
+            val installModules = manager.installedModules
+            logWithText("$installModules")
+
             logWithText("installed languages")
             val installedLanguages = manager.installedLanguages
             logWithText("$installedLanguages")
