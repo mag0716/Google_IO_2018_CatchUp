@@ -19,7 +19,7 @@ android {
     }
 
     dynamicFeatures = [
-            ":instant",
+            //":instant",
             ":independent_dynamic_feature",
             ":dependency_dynamic_feature",
             ":uninstallable_feature"
