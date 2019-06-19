@@ -1,12 +1,11 @@
 # ConstraintLayout Sample
 
 * ConstraintLayout の機能を試すサンプルプロジェクト
-* 2.0.0-alpha2
+* 2.0.0-beta1
 
 ## [WIP] virtual_layout
 
 * Linear
-* Flow
 
 を試すサンプル
 
@@ -52,3 +51,26 @@
 
 * measure, layout の回数を調べる方法
   * Systrace は googlesamples/android-constraint-layout-performance を試したが記載通りの結果にならなかった
+
+## flow
+
+* [Flow](https://developer.android.com/reference/android/support/constraint/helper/Flow.html)
+  * flat のレイアウト構成で Flexbox 的なレイアウトを実現する
+
+![](./screenshots/flow1.png)![](./screenshots/flow2.png)
+
+### 詳細
+
+* `flow_wrapMode`
+  * `none`：デフォルト値。水平、垂直に並べるだけで、Flow のサイズを超えた場合でも何もしない
+  * `chain`：水平、垂直に並べ、要素が Flow のサイズを超えた場合は折り返す。要素間には Chains が指定された状態となる
+  * `aligned`：水平、垂直に並べ、要素が Flow のサイズを超えた場合は折り返す。 Style, Bias は効かない
+* `flow_horizontalStyle`, `flow_VerticalStyle`：行、列の要素間の Chains の Style(デフォルトは spread)
+* `flow_horizontalBias`, `flow_vertiacalBias`：行、列の要素の Bias(デフォルトは0.5)
+* `flow_horizontalGap`, `flow_verticalGap`：要素間のマージン
+* `flow_horizontalAlign`, `flow_verticalAlign`：要素間の配置指定。水平に並べる場合は、`flow_verticalAlign` のみ効く
+
+### 疑問点
+
+* `Flow` に指定する View のレイアウト制約は何を指定するべきなのか？
+  * 何も指定しておかないと、IDE 上でエラーになる
