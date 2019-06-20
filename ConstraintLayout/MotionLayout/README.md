@@ -1,5 +1,12 @@
 # README
 
+## TODO
+
+* KeyTrigger Collision
+* Derived Constraints
+* OnSwipe regions
+* OnSwipe onTouchUp
+
 ## app
 
 * https://github.com/googlesamples/android-ConstraintLayoutExamples と同じサンプルを1から実装
@@ -88,3 +95,96 @@
   * `MotionLayout` に `MotionHelper` が定義し、`onShow` or `onHide` を指定する
     * `MotionLayout` で `onShow` or `onHide` が指定された、`MotionHelper` を管理する
   * `MotionLayout` の `setOnShow` or `setOnHide`　が呼ばれると、`onShow` or `onHide` が指定された `MotionHelper` 全てに対して、`setProgress` が呼ばれる
+
+## diff
+
+## 2.0.0-beta2
+
+https://androidstudio.googleblog.com/2019/06/constraintlayout-200-beta-2.html
+
+* `MotionScene.Transition.setEnable`
+  * `allowsTransition` の代わり
+* `MotionScene`, `Transition` のコンストラクタが追加
+* `Transition` に ID が指定できるようになった
+* `Transition` の有効・無効をどうてきに切り替えられるようになった
+* アニメーション中の加速度にアクセスできるようになった
+  * `MockView` をベースにした `MotionTelltales` で使われていてデバッグ用？
+* `triggerReceiver`
+  * 他の View の `KeyTrigger` を指定できるようになった
+* bug fixes
+
+## 2.0.0-beta1
+
+https://androidstudio.googleblog.com/2019/05/constraintlayout-200-beta-1.html
+
+* `motionStagger`
+  * Transition に複数の motionStagger を指定できるようになった
+* `onTouchUp`
+  * `autoComplete` が `onToutchUp` に変わった
+* `visibilityMode`
+  * visibility が操作できるようになり、MotionLayout での設定が不要になる
+* `TransitionListener` の interface が変わった
+* attribute のリネーム
+  * app -> android
+
+## 2.0.0-alpha5
+
+https://androidstudio.googleblog.com/2019/04/constraintlayout-200-alpha-5.html
+
+* `autoTransition`
+  * start, end に到達したら自動的に元に戻るアニメーションを定義できる
+* `deriveConstraintsFrom`
+  * 別の `ConstraintSet` を使い、差分の Constraint だけ定義することでコード量を減らすことができる
+* `touchRegionId`
+  * スワイプ可能な領域を指定できる？
+* `layout_constraintTag, motionTarget`
+* `OnSwipe`：`autoComplete="false"`
+  * 特定の方向のみアニメーションするカスタムスライダーを実装できる
+* `OnClick`：target を指定していなかったら `MotionLayout` がターゲットになる
+
+## 2.0.0-alpha4
+
+https://androidstudio.googleblog.com/2019/04/constraintlayout-200-alpha-4.html
+
+* Barrier, Helpers をサポート
+* `OnClick` のアクションが追加
+  * toggle や start, end へのアニメーションあり・なしでの切り替えを指定が可能
+* `customPixelDimentions` のサポート
+  * `textSize` の変更などを `CustomAttribute` で定義できるようになった
+* `ImageFilterView` のオーバレイのサポート
+  * クロスフェードするかどうかを切り替えられるように
+* KeyTrigger collision のサポート
+  * 指定した View が衝突したタイミングでアニメーションを開始することができる？
+* attribute のリネーム
+
+## 2.0.0-alpha3
+
+https://androidstudio.googleblog.com/2018/12/constraintlayout-200-alpha-3.html
+
+* xml で ConstraintSets の指定が可能になった
+  * レイアウトとは別のファイルに `Constraint` を定義できるようになった
+* `KeyTimeCycle`：時間で動作するアニメーションを定義できる
+* `KeyPosition`：`percentWidth`, `percentHeight` が追加
+* `KeyTrigger`：現在のアニメーションの進行状況に依存する keyframe を定義できる
+* interpolator のカスタム
+* タッチ操作で複数の状態をシームレスに変化させることが可能になった
+* MotionScene ごとに複数の `OnClick` が指定できるようになった
+  * `motion:mode` が `motion:clickAction` にリネーム
+* `InageFilterButton` の追加
+* `TransitionListener` の追加
+
+## 2.0.0-alpha2
+
+https://androidstudio.googleblog.com/2018/08/constraintlayout-200-alpha-2.html
+
+* 色の変化が可能になった
+* Arc Motion の追加
+* View に紐づけなくても `OnSwipe` が使えるようになった
+* `TimeCycle` の追加
+* `motion:keyPositionType` にリネーム
+
+### 2.0.0-alpha1
+
+https://androidstudio.googleblog.com/2018/06/constraintlayout-200-alpha-1.html
+
+* `MotionLayout` の追加
