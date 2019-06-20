@@ -74,3 +74,54 @@
 
 * `Flow` に指定する View のレイアウト制約は何を指定するべきなのか？
   * 何も指定しておかないと、IDE 上でエラーになる
+
+# diff
+
+## 2.0.0-beta2
+
+https://androidstudio.googleblog.com/2019/06/constraintlayout-200-beta-2.html
+
+* Flow の最後の列、行の chain の Style, Bias を個別に指定できるようになった
+
+## 2.0.0-beta1
+
+https://androidstudio.googleblog.com/2019/05/constraintlayout-200-beta-1.html
+
+* Flow の bug fixes
+
+## 2.0.0-alpha5
+
+https://androidstudio.googleblog.com/2019/04/constraintlayout-200-alpha-5.html
+
+* Flow の追加
+  * Flexbox をフラットなレイアウト定義で実現できる
+
+## 2.0.0-alpha4
+
+https://androidstudio.googleblog.com/2019/04/constraintlayout-200-alpha-4.html
+
+* bug fix
+  * Dynamic feature modules で Barrier, Helpers の利用時の bug fix
+  * Chains で RTL が正しく動作するように
+  * Barrier で RTL が正しく動作するように
+  など
+
+## 2.0.0-alpha3
+
+https://androidstudio.googleblog.com/2018/12/constraintlayout-200-alpha-3.html
+
+bug fix と最適化
+
+## 2.0.0-alpha2
+
+https://androidstudio.googleblog.com/2018/08/constraintlayout-200-alpha-2.html
+
+* min SDK が 14 に変更
+* `layout_optimizationLevel` に `groups` が追加
+
+## 2.0.0-alpha1
+
+https://androidstudio.googleblog.com/2018/06/constraintlayout-200-alpha-1.html
+
+* ConstraintLayout のプロパティを動的に変更するために `ConstraitnProperties` の追加
+* 状態をコード上から指定するための `setState` の追加
