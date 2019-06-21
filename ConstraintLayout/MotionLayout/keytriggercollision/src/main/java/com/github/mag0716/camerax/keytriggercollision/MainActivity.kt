@@ -1,7 +1,7 @@
 package com.github.mag0716.camerax.keytriggercollision
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
