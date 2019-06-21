@@ -10,16 +10,16 @@
             <KeyPosition
                 motion:framePosition="50"
                 motion:keyPositionType="parentRelative"
-                motion:percentY="0.25"
-                motion:target="@id/view" />
+                motion:motionTarget="@id/view"
+                motion:percentY="0.25" />
         </KeyFrameSet>
         <OnSwipe
             motion:dragDirection="dragRight"
             motion:touchAnchorId="@id/view"
             motion:touchAnchorSide="right" />
         <OnClick
-            motion:mode="toggle"
-            motion:target="@id/button" />
+            motion:clickAction="toggle"
+            motion:targetId="@id/button" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
