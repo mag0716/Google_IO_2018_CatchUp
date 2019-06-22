@@ -7,12 +7,21 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000">
         <OnSwipe
-            motion:dragDirection="dragRight"
+            motion:dragDirection="dragDown"
             motion:touchAnchorId="@id/view"
-            motion:touchAnchorSide="right" />
-        <OnClick
-            motion:clickAction="toggle"
-            motion:targetId="@id/button" />
+            motion:touchAnchorSide="top" />
+
+        <KeyFrameSet>
+            <KeyTrigger
+                motion:motionTarget="@id/fab"
+                motion:motion_triggerOnCollision="@id/view"
+                motion:onPositiveCross="hide" />
+
+            <KeyTrigger
+                motion:motionTarget="@id/fab"
+                motion:motion_triggerOnCollision="@id/view"
+                motion:onNegativeCross="show" />
+        </KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -20,8 +29,8 @@
             android:id="@id/view"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
@@ -31,9 +40,9 @@
             android:id="@id/view"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent" />
+            motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 </MotionScene>
