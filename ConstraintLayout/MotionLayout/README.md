@@ -2,7 +2,6 @@
 
 ## TODO
 
-* Derived Constraints
 * OnSwipe regions
 * OnSwipe onTouchUp
 
