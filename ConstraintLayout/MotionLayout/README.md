@@ -87,12 +87,11 @@
   * View が FAB に触れると非表示になり、離れると表示される
 * `motion_triggerOnCollision` で指定した View が該当の View に触れた場合に `onCross` などで指定したメソッドを呼び出す
   * `callOnClick` を指定すると `OnClickListener` に設定された処理が呼び出される
-* FAB のように show/hide でアニメーションするような View で使うとよさそう
 
 ### 考察
 
-`KeyTrigger` の `framePosition` である程度のケースは実装できるが、
-他の View のアニメーションが完了したら、FAB を非表示にするのような場合は以下の定義では実現できない。
+`KeyTrigger` は FAB の show/hide のように View 側にアニメーションさせることができる View で使う。
+`framePosition` である程度のケースは実装できるが、他の View のアニメーションが完了したら FAB を非表示にするのような場合は以下の定義では実現できない。
 
 ```
 <KeyTrigger
