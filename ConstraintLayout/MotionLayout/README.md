@@ -2,7 +2,6 @@
 
 ## TODO
 
-* KeyTrigger Collision
 * Derived Constraints
 * OnSwipe regions
 * OnSwipe onTouchUp
