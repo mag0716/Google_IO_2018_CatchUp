@@ -81,6 +81,30 @@
 * `transitionEasing` を指定した場合の動作を試すサンプル
 * `cubic` での指定でどう変わるのかが理解できていない
 
+## keytriggercollision
+
+* `KeyTrigger` の collision の動作を試すサンプル
+  * View が FAB に触れると非表示になり、離れると表示される
+* `motion_triggerOnCollision` で指定した View が該当の View に触れた場合に `onCross` などで指定したメソッドを呼び出す
+  * `callOnClick` を指定すると `OnClickListener` に設定された処理が呼び出される
+* FAB のように show/hide でアニメーションするような View で使うとよさそう
+
+### 考察
+
+`KeyTrigger` の `framePosition` である程度のケースは実装できるが、
+他の View のアニメーションが完了したら、FAB を非表示にするのような場合は以下の定義では実現できない。
+
+```
+<KeyTrigger
+  motion:framePosition="100"
+  motion:motionTarget="@id/fab"
+  motion:onPositiveCross="hide" />
+```
+
+最終的な View の位置が隣り合っていれば、Collision を利用することで、
+他の View が最終的な位置に来たら(FAB に触れた)、アニメーションさせるという定義が実現できる。
+
+
 ### 概要
 
 * `Animatable` を実装
