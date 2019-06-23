@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="items">
-        <item>motion_parentrelative</item>
-        <item>motion_pathrelative</item>
-        <item>motion_deltarelative</item>
-    </string-array>
-</resources>
